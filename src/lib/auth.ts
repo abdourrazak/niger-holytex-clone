@@ -1,6 +1,8 @@
 import { betterAuth } from "better-auth"
 import { prismaAdapter } from "better-auth/adapters/prisma"
-import { prisma } from "./prisma"
+import { PrismaClient } from "@prisma/client"
+
+const prisma = new PrismaClient()
 
 export const auth = betterAuth({
   database: prismaAdapter(prisma, {
@@ -10,7 +12,7 @@ export const auth = betterAuth({
   secret: process.env.BETTER_AUTH_SECRET,
   emailAndPassword: {
     enabled: true,
-    requireEmailVerification: false, // Set to true in production
+    requireEmailVerification: false,
     minPasswordLength: 8,
     maxPasswordLength: 128,
   },
@@ -40,6 +42,7 @@ export const auth = betterAuth({
       enabled: false,
     },
   },
+  trustedOrigins: ["http://localhost:3000"],
 })
 
 export type Session = typeof auth.$Infer.Session
