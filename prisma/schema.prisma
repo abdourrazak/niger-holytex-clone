@@ -6,8 +6,9 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
-  url      = "file:./dev.db"
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
 }
 
 // ============================================
@@ -48,12 +49,12 @@ model Account {
   type              String
   provider          String
   providerAccountId String
-  refresh_token     String?
-  access_token      String?
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
   expires_at        Int?
   token_type        String?
   scope             String?
-  id_token          String?
+  id_token          String? @db.Text
   session_state     String?
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
@@ -89,7 +90,7 @@ model Category {
   id          String    @id @default(cuid())
   name        String    @unique
   slug        String    @unique
-  description String?
+  description String?  @db.Text
   image       String?
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
@@ -102,10 +103,10 @@ model Product {
   id          String   @id @default(cuid())
   name        String
   slug        String   @unique
-  description String?
+  description String?  @db.Text
   price       Float
   comparePrice Float?
-  images      String  // JSON string for SQLite
+  images      String[]
   categoryId  String
   inStock     Boolean  @default(true)
   featured    Boolean  @default(false)
@@ -246,7 +247,7 @@ model Review {
   userId    String
   productId String
   rating    Int
-  comment   String?
+  comment   String? @db.Text
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 

@@ -1,10 +1,13 @@
 import { betterAuth } from "better-auth"
+import { prismaAdapter } from "better-auth/adapters/prisma"
+import { PrismaClient } from "@prisma/client"
+
+const prisma = new PrismaClient()
 
 export const auth = betterAuth({
-  database: {
-    provider: "sqlite",
-    url: "file:./prisma/auth.db",
-  },
+  database: prismaAdapter(prisma, {
+    provider: "postgresql",
+  }),
   baseURL: process.env.BETTER_AUTH_URL || "http://localhost:3000",
   secret: process.env.BETTER_AUTH_SECRET,
   emailAndPassword: {
@@ -12,6 +15,7 @@ export const auth = betterAuth({
     requireEmailVerification: false,
     minPasswordLength: 8,
     maxPasswordLength: 128,
+    autoSignIn: true,
   },
   socialProviders: {
     google: {
