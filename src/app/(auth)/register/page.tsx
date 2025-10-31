@@ -41,22 +41,33 @@ export default function RegisterPage() {
     setIsLoading(true)
 
     try {
+      console.log('Attempting signup with:', { email, name, passwordLength: password.length })
+      
       const result = await signUp.email({
         email,
         password,
         name,
       })
 
+      console.log('Signup result:', result)
+
       if (result.error) {
+        console.error('Signup error details:', result.error)
         setError(result.error.message || 'Erreur lors de l\'inscription')
       } else {
         // Inscription réussie, redirection
+        console.log('Signup successful!')
         router.push('/')
         router.refresh()
       }
-    } catch (err) {
-      setError('Une erreur est survenue lors de l\'inscription')
+    } catch (err: any) {
       console.error('Register error:', err)
+      console.error('Error details:', {
+        message: err.message,
+        response: err.response,
+        status: err.status,
+      })
+      setError(err.message || 'Une erreur est survenue lors de l\'inscription')
     } finally {
       setIsLoading(false)
     }
