@@ -46,7 +46,7 @@ export const auth = betterAuth({
   trustedOrigins: [
     "http://localhost:3000",
     "https://niger-holytex.vercel.app",
-    /https:\/\/niger-holytex-.*\.vercel\.app$/, // Allow all Vercel preview deployments
+    "https://*.vercel.app", // Allow all Vercel preview deployments
   ],
 })
 
