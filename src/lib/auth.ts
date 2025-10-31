@@ -43,7 +43,11 @@ export const auth = betterAuth({
       enabled: false,
     },
   },
-  trustedOrigins: ["http://localhost:3000"],
+  trustedOrigins: [
+    "http://localhost:3000",
+    "https://niger-holytex.vercel.app",
+    /https:\/\/niger-holytex-.*\.vercel\.app$/, // Allow all Vercel preview deployments
+  ],
 })
 
 export type Session = typeof auth.$Infer.Session
