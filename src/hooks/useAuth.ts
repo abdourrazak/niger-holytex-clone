@@ -107,7 +107,12 @@ export function useAuth() {
           isLoading: false,
           isAuthenticated: true,
         })
-        return { success: true, user: result.user }
+        return { 
+          success: true, 
+          user: result.user,
+          verificationCodeSent: result.verificationCodeSent,
+          verificationCode: result.verificationCode
+        }
       } else {
         return { success: false, error: result.error }
       }
