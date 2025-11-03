@@ -1,7 +1,8 @@
 'use client'
 
-import { useAuth } from '@/hooks/use-auth'
+import { useAuth } from '@/hooks/useAuth'
 import Link from 'next/link'
+import { LogOut, User as UserIcon } from 'lucide-react'
 
 export function UserNav() {
   const { user, isAuthenticated, isLoading, signOut } = useAuth()
@@ -15,13 +16,13 @@ export function UserNav() {
       <div className="flex items-center gap-4">
         <Link
           href="/login"
-          className="text-sm font-medium text-gray-700 hover:text-gray-900"
+          className="text-sm font-medium text-gray-700 hover:text-gray-900 transition-colors"
         >
           Connexion
         </Link>
         <Link
           href="/register"
-          className="rounded-md bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-700"
+          className="rounded-md bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-700 transition-colors"
         >
           S'inscrire
         </Link>
@@ -31,14 +32,19 @@ export function UserNav() {
 
   return (
     <div className="flex items-center gap-4">
-      <span className="text-sm font-medium text-gray-700">
-        {user?.name || user?.email}
-      </span>
+      <div className="flex items-center gap-2 rounded-lg bg-gray-100 px-3 py-2">
+        <UserIcon className="h-4 w-4 text-gray-600" />
+        <span className="text-sm font-medium text-gray-900">
+          {user?.name || user?.email}
+        </span>
+      </div>
       <button
         onClick={() => signOut()}
-        className="text-sm font-medium text-gray-700 hover:text-gray-900"
+        className="flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 hover:text-gray-900 transition-colors"
+        title="Se déconnecter"
       >
-        Déconnexion
+        <LogOut className="h-4 w-4" />
+        <span>Déconnexion</span>
       </button>
     </div>
   )
