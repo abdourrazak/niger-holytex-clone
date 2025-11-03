@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { UserNav } from '@/components/layout/user-nav'
-import { useAuth } from '@/hooks/use-auth'
+import { useAuth } from '@/hooks/useAuth'
 
 export default function Home() {
   const { user, isAuthenticated, isLoading } = useAuth()
