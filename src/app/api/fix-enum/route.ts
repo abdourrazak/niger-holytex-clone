@@ -23,11 +23,21 @@ export async function POST(request: Request) {
       END $$;
     `)
 
+    // Supprimer la valeur par défaut
+    await prisma.$executeRawUnsafe(`
+      ALTER TABLE users ALTER COLUMN role DROP DEFAULT;
+    `)
+
     // Modifier la colonne role pour utiliser l'ENUM
     await prisma.$executeRawUnsafe(`
       ALTER TABLE users 
       ALTER COLUMN role TYPE "UserRole" 
       USING role::"UserRole";
+    `)
+
+    // Remettre la valeur par défaut
+    await prisma.$executeRawUnsafe(`
+      ALTER TABLE users ALTER COLUMN role SET DEFAULT 'USER'::"UserRole";
     `)
 
     // Vérifier que l'ENUM existe
