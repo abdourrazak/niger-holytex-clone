@@ -5,31 +5,34 @@ const prisma = new PrismaClient()
 
 export async function POST(request: Request) {
   try {
-    const { token } = await request.json()
+    const { code, email } = await request.json()
 
-    if (!token) {
+    if (!code || !email) {
       return NextResponse.json(
-        { error: 'Token is required' },
+        { error: 'Code and email are required' },
         { status: 400 }
       )
     }
 
-    // Vérifier le token
-    const verificationToken = await prisma.verificationToken.findUnique({
-      where: { token },
+    // Vérifier le code pour cet email
+    const verificationToken = await prisma.verificationToken.findFirst({
+      where: { 
+        identifier: email,
+        token: code 
+      },
     })
 
     if (!verificationToken) {
       return NextResponse.json(
-        { error: 'Invalid token' },
+        { error: 'Invalid verification code' },
         { status: 400 }
       )
     }
 
-    // Vérifier si le token n'a pas expiré
+    // Vérifier si le code n'a pas expiré
     if (verificationToken.expires < new Date()) {
       await prisma.verificationToken.delete({
-        where: { token },
+        where: { token: code },
       })
 
       return NextResponse.json(
@@ -58,9 +61,9 @@ export async function POST(request: Request) {
       },
     })
 
-    // Supprimer le token utilisé
+    // Supprimer le code utilisé
     await prisma.verificationToken.delete({
-      where: { token },
+      where: { token: code },
     })
 
     return NextResponse.json({

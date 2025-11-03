@@ -36,32 +36,29 @@ export async function POST(request: Request) {
       )
     }
 
-    // Générer un token de vérification
-    const verificationToken = crypto.randomBytes(32).toString('hex')
-    const verificationTokenExpiry = new Date(Date.now() + 24 * 3600000) // 24 heures
+    // Générer un code de vérification à 6 chiffres
+    const verificationCode = Math.floor(100000 + Math.random() * 900000).toString()
+    const verificationTokenExpiry = new Date(Date.now() + 15 * 60000) // 15 minutes
 
-    // Supprimer les anciens tokens pour cet email
+    // Supprimer les anciens codes pour cet email
     await prisma.verificationToken.deleteMany({
       where: { identifier: email },
     })
 
-    // Créer un nouveau token
+    // Créer un nouveau code
     await prisma.verificationToken.create({
       data: {
         identifier: email,
-        token: verificationToken,
+        token: verificationCode,
         expires: verificationTokenExpiry,
       },
     })
 
-    // Créer l'URL de vérification
-    const verificationUrl = `${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/verify-email?token=${verificationToken}`
-
-    // Envoyer l'email
+    // Envoyer l'email avec le code
     const emailResult = await sendEmail({
       to: email,
-      subject: 'Vérifiez votre email - Niger Holytex',
-      html: getVerificationEmailTemplate(verificationUrl, user.name || undefined),
+      subject: 'Code de vérification - Niger Holytex',
+      html: getVerificationEmailTemplate(verificationCode, user.name || undefined),
     })
 
     if (!emailResult.success) {
@@ -73,9 +70,9 @@ export async function POST(request: Request) {
 
     return NextResponse.json({
       success: true,
-      message: 'Verification email sent successfully',
-      // En dev, retourner l'URL
-      verificationUrl: process.env.NODE_ENV === 'development' ? verificationUrl : undefined,
+      message: 'Verification code sent successfully',
+      // En dev, retourner le code
+      verificationCode: process.env.NODE_ENV === 'development' ? verificationCode : undefined,
     })
   } catch (error: any) {
     console.error('[SEND-VERIFICATION] Error:', error)

@@ -33,14 +33,14 @@ export async function sendEmail({ to, subject, html }: SendEmailOptions) {
   }
 }
 
-export function getVerificationEmailTemplate(verificationUrl: string, userName?: string) {
+export function getVerificationEmailTemplate(verificationCode: string, userName?: string) {
   return `
     <!DOCTYPE html>
     <html>
       <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Vérifiez votre email</title>
+        <title>Code de vérification</title>
       </head>
       <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px;">
         <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 30px; text-align: center; border-radius: 10px 10px 0 0;">
@@ -51,32 +51,38 @@ export function getVerificationEmailTemplate(verificationUrl: string, userName?:
         <div style="background: #f9f9f9; padding: 30px; border-radius: 0 0 10px 10px;">
           <h2 style="color: #333; margin-top: 0;">Bienvenue ${userName ? userName : ''} !</h2>
           
-          <p>Merci de vous être inscrit sur Niger Holytex. Pour finaliser votre inscription, veuillez vérifier votre adresse email en cliquant sur le bouton ci-dessous :</p>
+          <p>Merci de vous être inscrit sur Niger Holytex. Pour finaliser votre inscription et accéder à l'application, veuillez entrer ce code de vérification :</p>
           
-          <div style="text-align: center; margin: 30px 0;">
-            <a href="${verificationUrl}" 
-               style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
-                      color: white; 
-                      padding: 15px 40px; 
-                      text-decoration: none; 
-                      border-radius: 5px; 
-                      display: inline-block;
-                      font-weight: bold;">
-              Vérifier mon email
-            </a>
+          <div style="text-align: center; margin: 40px 0;">
+            <div style="background: white; 
+                        border: 3px dashed #667eea; 
+                        border-radius: 10px; 
+                        padding: 20px; 
+                        display: inline-block;">
+              <p style="margin: 0; color: #999; font-size: 12px; text-transform: uppercase; letter-spacing: 1px;">Votre code de vérification</p>
+              <p style="margin: 10px 0 0 0; 
+                        font-size: 42px; 
+                        font-weight: bold; 
+                        color: #667eea; 
+                        letter-spacing: 8px;
+                        font-family: 'Courier New', monospace;">
+                ${verificationCode}
+              </p>
+            </div>
           </div>
           
-          <p style="color: #666; font-size: 14px;">Si le bouton ne fonctionne pas, copiez et collez ce lien dans votre navigateur :</p>
-          <p style="background: white; padding: 10px; border-radius: 5px; word-break: break-all; font-size: 12px;">
-            ${verificationUrl}
+          <p style="text-align: center; color: #666; font-size: 14px;">
+            Entrez ce code sur la page de vérification pour activer votre compte.
           </p>
           
-          <p style="color: #666; font-size: 14px; margin-top: 30px;">
-            Ce lien expirera dans 24 heures.
-          </p>
+          <div style="background: #fff3cd; border-left: 4px solid #ffc107; padding: 15px; margin: 20px 0; border-radius: 4px;">
+            <p style="margin: 0; color: #856404; font-size: 14px;">
+              ⚠️ <strong>Important :</strong> Ce code expire dans <strong>15 minutes</strong>. Ne le partagez avec personne !
+            </p>
+          </div>
           
           <p style="color: #666; font-size: 14px;">
-            Si vous n'avez pas créé de compte, vous pouvez ignorer cet email.
+            Si vous n'avez pas créé de compte, vous pouvez ignorer cet email en toute sécurité.
           </p>
         </div>
         

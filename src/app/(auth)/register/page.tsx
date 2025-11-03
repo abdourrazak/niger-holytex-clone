@@ -48,24 +48,36 @@ export default function RegisterPage() {
       if (result.success) {
         toast.success('Compte créé avec succès !', { id: loadingToast })
         
-        // Envoyer l'email de vérification
-        toast.loading('Envoi de l\'email de vérification...')
+        // Envoyer le code de vérification
+        const verifyToast = toast.loading('Envoi du code de vérification...')
         try {
-          await fetch('/api/auth/send-verification', {
+          const verifyResponse = await fetch('/api/auth/send-verification', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ email }),
           })
-          toast.success('Email de vérification envoyé ! Vérifiez votre boîte mail.')
+          
+          const verifyResult = await verifyResponse.json()
+          
+          if (verifyResponse.ok) {
+            toast.success('Code envoyé ! Vérifiez votre email.', { id: verifyToast })
+            
+            // En dev, afficher le code
+            if (verifyResult.verificationCode) {
+              toast.success(`Code (dev): ${verifyResult.verificationCode}`, { duration: 10000 })
+            }
+            
+            // Redirection vers la page de vérification
+            setTimeout(() => {
+              router.push(`/verify-code?email=${encodeURIComponent(email)}`)
+            }, 1500)
+          } else {
+            toast.error('Erreur lors de l\'envoi du code', { id: verifyToast })
+          }
         } catch (err) {
-          console.error('Verification email error:', err)
+          console.error('Verification code error:', err)
+          toast.error('Erreur lors de l\'envoi du code')
         }
-
-        // Redirection
-        setTimeout(() => {
-          router.push('/')
-          router.refresh()
-        }, 1500)
       } else {
         toast.error(result.error || 'Erreur lors de l\'inscription', { id: loadingToast })
         setError(result.error || 'Erreur lors de l\'inscription')
