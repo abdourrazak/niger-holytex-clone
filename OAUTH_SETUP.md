@@ -85,8 +85,8 @@ Copiez le résultat et utilisez-le comme `NEXTAUTH_SECRET`
 ### Étape 3 : Générer le Client Secret
 1. Sur la page de votre app, cliquez sur **Generate a new client secret**
 2. **Copiez** :
-   - `Client ID` → `GITHUB_CLIENT_ID`
-   - `Client Secret` → `GITHUB_CLIENT_SECRET`
+   - `Client ID` → `Ov23limfJS8RdDFc2QQU`
+   - `Client Secret` → `94f0df672796b1c2857817b7ff5c172e48866e6d`
 
 ---
 
