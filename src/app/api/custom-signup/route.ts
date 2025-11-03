@@ -104,8 +104,8 @@ export async function POST(request: Request) {
         expires: session.expires,
       },
       verificationCodeSent: true,
-      // En dev, retourner le code
-      verificationCode: process.env.NODE_ENV === 'development' ? verificationCode : undefined,
+      // TEMPORAIRE : Afficher le code même en production pour déboguer
+      verificationCode: verificationCode,
     })
   } catch (error: any) {
     console.error('[CUSTOM-SIGNUP] Error:', error)
