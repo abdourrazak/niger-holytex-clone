@@ -1,17 +1,17 @@
 'use client'
 
-import { useAuth } from '@/hooks/useAuth'
+import { useSession, signOut } from 'next-auth/react'
 import Link from 'next/link'
 import { LogOut, User as UserIcon } from 'lucide-react'
 
 export function UserNav() {
-  const { user, isAuthenticated, isLoading, signOut } = useAuth()
+  const { data: session, status } = useSession()
 
-  if (isLoading) {
+  if (status === 'loading') {
     return <div className="h-8 w-8 animate-pulse rounded-full bg-gray-200" />
   }
 
-  if (!isAuthenticated) {
+  if (!session) {
     return (
       <div className="flex items-center gap-4">
         <Link
@@ -38,11 +38,11 @@ export function UserNav() {
       >
         <UserIcon className="h-4 w-4 text-gray-600" />
         <span className="text-sm font-medium text-gray-900">
-          {user?.name || user?.email}
+          {session.user?.name || session.user?.email}
         </span>
       </Link>
       <button
-        onClick={() => signOut()}
+        onClick={() => signOut({ callbackUrl: '/' })}
         className="flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 hover:text-gray-900 transition-colors"
         title="Se déconnecter"
       >
