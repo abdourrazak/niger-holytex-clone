@@ -43,20 +43,25 @@ export default function RegisterPage() {
     try {
       console.log('Attempting signup with:', { email, name, passwordLength: password.length })
       
-      const result = await signUp.email({
-        email,
-        password,
-        name,
+      // Utiliser notre endpoint custom au lieu de Better Auth
+      const response = await fetch('/api/custom-signup', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password, name }),
       })
 
+      const result = await response.json()
       console.log('Signup result:', result)
 
-      if (result.error) {
-        console.error('Signup error details:', result.error)
-        setError(result.error.message || 'Erreur lors de l\'inscription')
+      if (!response.ok || result.error) {
+        console.error('Signup error details:', result)
+        setError(result.error || result.details || 'Erreur lors de l\'inscription')
       } else {
-        // Inscription réussie, redirection
-        console.log('Signup successful!')
+        // Inscription réussie, stocker le token de session
+        if (result.session?.sessionToken) {
+          localStorage.setItem('sessionToken', result.session.sessionToken)
+        }
+        console.log('Signup successful!', result.user)
         router.push('/')
         router.refresh()
       }
