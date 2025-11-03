@@ -22,21 +22,33 @@ export default function LoginPage() {
     setIsLoading(true)
 
     try {
-      const result = await signIn.email({
-        email,
-        password,
+      console.log('Attempting signin with:', { email })
+      
+      // Utiliser notre endpoint custom au lieu de Better Auth
+      const response = await fetch('/api/custom-signin', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password }),
       })
 
-      if (result.error) {
-        setError(result.error.message || 'Email ou mot de passe incorrect')
+      const result = await response.json()
+      console.log('Signin result:', result)
+
+      if (!response.ok || result.error) {
+        console.error('Signin error details:', result)
+        setError(result.error || 'Email ou mot de passe incorrect')
       } else {
-        // Connexion réussie
+        // Connexion réussie, stocker le token de session
+        if (result.session?.sessionToken) {
+          localStorage.setItem('sessionToken', result.session.sessionToken)
+        }
+        console.log('Signin successful!', result.user)
         router.push('/')
         router.refresh()
       }
-    } catch (err) {
-      setError('Une erreur est survenue lors de la connexion')
+    } catch (err: any) {
       console.error('Login error:', err)
+      setError('Une erreur est survenue lors de la connexion')
     } finally {
       setIsLoading(false)
     }
