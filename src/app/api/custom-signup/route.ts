@@ -1,6 +1,8 @@
 import { NextResponse } from 'next/server'
 import { PrismaClient } from '@prisma/client'
 import bcrypt from 'bcryptjs'
+import { sendEmail, getVerificationEmailTemplate } from '@/lib/email'
+import crypto from 'crypto'
 
 const prisma = new PrismaClient()
 
@@ -67,6 +69,33 @@ export async function POST(request: Request) {
       },
     })
 
+    // Générer et envoyer le code de vérification
+    const verificationCode = Math.floor(100000 + Math.random() * 900000).toString()
+    const verificationTokenExpiry = new Date(Date.now() + 15 * 60000) // 15 minutes
+
+    // Supprimer les anciens codes pour cet email
+    await prisma.verificationToken.deleteMany({
+      where: { identifier: email },
+    })
+
+    // Créer un nouveau code
+    await prisma.verificationToken.create({
+      data: {
+        identifier: email,
+        token: verificationCode,
+        expires: verificationTokenExpiry,
+      },
+    })
+
+    // Envoyer l'email avec le code (en arrière-plan, ne pas bloquer la réponse)
+    sendEmail({
+      to: email,
+      subject: 'Code de vérification - Niger Holytex',
+      html: getVerificationEmailTemplate(verificationCode, user.name || undefined),
+    }).catch(err => {
+      console.error('[SIGNUP] Failed to send verification email:', err)
+    })
+
     return NextResponse.json({
       success: true,
       user,
@@ -74,6 +103,9 @@ export async function POST(request: Request) {
         sessionToken: session.sessionToken,
         expires: session.expires,
       },
+      verificationCodeSent: true,
+      // En dev, retourner le code
+      verificationCode: process.env.NODE_ENV === 'development' ? verificationCode : undefined,
     })
   } catch (error: any) {
     console.error('[CUSTOM-SIGNUP] Error:', error)

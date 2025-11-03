@@ -48,36 +48,20 @@ export default function RegisterPage() {
       if (result.success) {
         toast.success('Compte créé avec succès !', { id: loadingToast })
         
-        // Envoyer le code de vérification
-        const verifyToast = toast.loading('Envoi du code de vérification...')
-        try {
-          const verifyResponse = await fetch('/api/auth/send-verification', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ email }),
-          })
+        // Le code est déjà envoyé par l'API
+        if (result.verificationCodeSent) {
+          toast.success('Code de vérification envoyé ! Vérifiez votre email.')
           
-          const verifyResult = await verifyResponse.json()
-          
-          if (verifyResponse.ok) {
-            toast.success('Code envoyé ! Vérifiez votre email.', { id: verifyToast })
-            
-            // En dev, afficher le code
-            if (verifyResult.verificationCode) {
-              toast.success(`Code (dev): ${verifyResult.verificationCode}`, { duration: 10000 })
-            }
-            
-            // Redirection vers la page de vérification
-            setTimeout(() => {
-              router.push(`/verify-code?email=${encodeURIComponent(email)}`)
-            }, 1500)
-          } else {
-            toast.error('Erreur lors de l\'envoi du code', { id: verifyToast })
+          // En dev, afficher le code
+          if (result.verificationCode) {
+            toast.success(`Code (dev): ${result.verificationCode}`, { duration: 10000 })
           }
-        } catch (err) {
-          console.error('Verification code error:', err)
-          toast.error('Erreur lors de l\'envoi du code')
         }
+        
+        // Redirection vers la page de vérification
+        setTimeout(() => {
+          router.push(`/verify-code?email=${encodeURIComponent(email)}`)
+        }, 1500)
       } else {
         toast.error(result.error || 'Erreur lors de l\'inscription', { id: loadingToast })
         setError(result.error || 'Erreur lors de l\'inscription')
