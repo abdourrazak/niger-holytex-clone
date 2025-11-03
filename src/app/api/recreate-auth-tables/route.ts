@@ -75,7 +75,7 @@ export async function POST(request: Request) {
         "userId" TEXT NOT NULL,
         "expires" TIMESTAMP(3) NOT NULL,
         CONSTRAINT "sessions_pkey" PRIMARY KEY ("id"),
-        "sessions_sessionToken_key" UNIQUE ("sessionToken"),
+        CONSTRAINT "sessions_sessionToken_key" UNIQUE ("sessionToken"),
         CONSTRAINT "sessions_userId_fkey" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE CASCADE
       );
     `)
