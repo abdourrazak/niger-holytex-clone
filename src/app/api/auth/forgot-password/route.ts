@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import { PrismaClient } from '@prisma/client'
 import crypto from 'crypto'
+import { sendEmail, getPasswordResetEmailTemplate } from '@/lib/email'
 
 const prisma = new PrismaClient()
 
@@ -42,16 +43,20 @@ export async function POST(request: Request) {
       },
     })
 
-    // TODO: Envoyer l'email avec le lien de réinitialisation
-    // Pour l'instant, on retourne le token dans la réponse (à supprimer en production)
+    // Envoyer l'email avec le lien de réinitialisation
     const resetUrl = `${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/reset-password?token=${resetToken}`
 
-    console.log('Reset password URL:', resetUrl)
+    // Envoyer l'email
+    await sendEmail({
+      to: email,
+      subject: 'Réinitialisation de votre mot de passe - Niger Holytex',
+      html: getPasswordResetEmailTemplate(resetUrl, user.name || undefined),
+    })
 
     return NextResponse.json({
       success: true,
       message: 'Si cet email existe, un lien de réinitialisation a été envoyé',
-      // À SUPPRIMER EN PRODUCTION - seulement pour le développement
+      // En développement, retourner l'URL
       resetUrl: process.env.NODE_ENV === 'development' ? resetUrl : undefined,
     })
   } catch (error: any) {
