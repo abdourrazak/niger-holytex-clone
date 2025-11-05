@@ -1,4 +1,4 @@
-import { HeroSection } from '@/components/home/HeroSection'
+import { HeroCarousel } from '@/components/home/HeroCarousel'
 import { CategoryCard } from '@/components/products/CategoryCard'
 import { ProductGrid } from '@/components/products/ProductGrid'
 import { NewsletterSection } from '@/components/home/NewsletterSection'
@@ -32,8 +32,8 @@ export default async function Home() {
       {/* Header */}
       <Header />
 
-      {/* Hero Section */}
-      <HeroSection />
+      {/* Hero Carousel */}
+      <HeroCarousel />
 
       {/* Categories Section */}
       <section className="py-16 bg-white">
