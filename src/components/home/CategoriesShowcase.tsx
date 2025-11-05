@@ -193,21 +193,8 @@ function CategorySection({ category }: { category: typeof categories[0] }) {
             </div>
           </div>
         ) : (
-          <div className="flex-1 relative min-h-[300px] flex items-center justify-center">
-            {/* Navigation Buttons - Empty state */}
-            <button
-              className="absolute -left-4 top-1/2 -translate-y-1/2 z-10 h-10 w-10 rounded-full bg-white hover:bg-gray-100 border border-gray-300 flex items-center justify-center transition-all shadow-md"
-              aria-label="Produits précédents"
-            >
-              <ChevronLeft className="h-5 w-5 text-gray-700" />
-            </button>
-
-            <button
-              className="absolute -right-4 top-1/2 -translate-y-1/2 z-10 h-10 w-10 rounded-full bg-white hover:bg-gray-100 border border-gray-300 flex items-center justify-center transition-all shadow-md"
-              aria-label="Produits suivants"
-            >
-              <ChevronRight className="h-5 w-5 text-gray-700" />
-            </button>
+          <div className="flex-1 relative min-h-[300px]">
+            {/* Empty state - No products */}
           </div>
         )}
 
