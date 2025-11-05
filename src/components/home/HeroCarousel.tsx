@@ -21,7 +21,7 @@ const slides = [
   },
   {
     id: 2,
-    image: '/IMG_5821-600x600.jpg',
+    image: '/holyyy.png',
     title: 'Des abayas de qualité supérieure !',
     badge: 'NOUVELLE COLLECTION',
     description: 'Découvrez notre collection d\'abayas de qualité supérieure, conçues pour allier confort, style et foi.',
@@ -32,7 +32,7 @@ const slides = [
   },
   {
     id: 3,
-    image: '/IMG_5870-600x600.jpg',
+    image: '/Acc-holytex.png',
     title: 'Élégance et modestie',
     badge: 'COLLECTION JILBABS',
     description: 'Des jilbabs élégants pour toutes les occasions',
