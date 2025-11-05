@@ -1,6 +1,7 @@
 import { HeroCarousel } from '@/components/home/HeroCarousel'
 import { BestSellersSection } from '@/components/home/BestSellersSection'
 import { CategoriesShowcase } from '@/components/home/CategoriesShowcase'
+import { DeliveryBanner } from '@/components/home/DeliveryBanner'
 import { ProductGrid } from '@/components/products/ProductGrid'
 import { NewsletterSection } from '@/components/home/NewsletterSection'
 import { Header } from '@/components/layout/Header'
@@ -35,6 +36,9 @@ export default async function Home() {
 
       {/* Categories Showcase Section */}
       <CategoriesShowcase />
+
+      {/* Delivery Banner */}
+      <DeliveryBanner />
 
       {/* Featured Products Section */}
       <section className="py-16 bg-gray-50">
