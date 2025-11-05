@@ -48,31 +48,6 @@ export default async function Home() {
       {/* Recently Viewed Section */}
       <RecentlyViewedSection />
 
-      {/* Featured Products Section */}
-      <section className="py-16 bg-gray-50">
-        <div className="container-custom">
-          {featuredProducts.length > 0 ? (
-            <ProductGrid
-              products={featuredProducts}
-              title="Coups de Cœur"
-              subtitle="Découvrez notre sélection de produits exceptionnels"
-            />
-          ) : (
-            <div className="text-center">
-              <h2 className="text-3xl md:text-4xl font-bold text-secondary mb-4">
-                Coups de Cœur
-              </h2>
-              <p className="text-lg text-muted-foreground mb-8">
-                Nos produits seront bientôt disponibles
-              </p>
-            </div>
-          )}
-        </div>
-      </section>
-
-      {/* Newsletter Section */}
-      <NewsletterSection />
-
       {/* Footer */}
       <Footer />
     </div>

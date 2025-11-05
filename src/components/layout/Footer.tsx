@@ -5,7 +5,7 @@ import { Facebook, Instagram, Mail, MessageCircle } from 'lucide-react'
 export function Footer() {
   return (
     <footer className="bg-[#0A1F44] text-white">
-      <div className="container-custom py-12">
+      <div className="container-custom py-8">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
           {/* Brand Section */}
           <div>
@@ -162,30 +162,12 @@ export function Footer() {
 
       {/* Bottom Bar */}
       <div className="border-t border-white/10">
-        <div className="container-custom py-4">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-            <div className="flex items-center gap-2">
-              <button className="flex items-center gap-2 px-3 py-1.5 border border-white/30 rounded text-sm">
-                <span className="text-xl">🇫🇷</span>
-                <span>FR</span>
-              </button>
-            </div>
-            
-            <p className="text-center text-sm text-white/60">
-              2025 • Tous droits réservés à Niger – Holytex • Conçu avec ❤️ par ABIB DIGIT.
-            </p>
-          </div>
+        <div className="container-custom py-3">
+          <p className="text-center text-sm text-white/60">
+            2025 • Tous droits réservés à Niger – Holytex • Conçu avec ❤️ par ABIB DIGIT.
+          </p>
         </div>
       </div>
-
-      {/* WhatsApp Button */}
-      <Link
-        href="https://wa.me/22792242416"
-        target="_blank"
-        className="fixed bottom-6 right-6 h-14 w-14 rounded-full bg-green-500 hover:bg-green-600 flex items-center justify-center shadow-lg transition-all z-50"
-      >
-        <MessageCircle className="h-7 w-7 text-white" />
-      </Link>
     </footer>
   )
 }
