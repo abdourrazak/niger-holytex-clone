@@ -1,5 +1,5 @@
 import { HeroCarousel } from '@/components/home/HeroCarousel'
-import { FeaturesSection } from '@/components/home/FeaturesSection'
+import { BestSellersSection } from '@/components/home/BestSellersSection'
 import { CategoryCard } from '@/components/products/CategoryCard'
 import { ProductGrid } from '@/components/products/ProductGrid'
 import { NewsletterSection } from '@/components/home/NewsletterSection'
@@ -36,8 +36,8 @@ export default async function Home() {
       {/* Hero Carousel */}
       <HeroCarousel />
 
-      {/* Features Section */}
-      <FeaturesSection />
+      {/* Best Sellers Section */}
+      <BestSellersSection />
 
       {/* Categories Section */}
       <section className="py-16 bg-white">
