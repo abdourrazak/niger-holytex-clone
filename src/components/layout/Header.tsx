@@ -49,16 +49,22 @@ export function Header() {
           </Link>
 
           {/* Search Bar - Desktop */}
-          <div className="hidden lg:flex flex-1 max-w-xl mx-8">
-            <div className="relative w-full">
+          <div className="hidden lg:flex flex-1 max-w-2xl mx-8">
+            <div className="relative w-full flex items-center border border-gray-300 rounded-md overflow-hidden bg-white">
               <Input
                 type="search"
-                placeholder="Rechercher des produits..."
-                className="w-full pl-4 pr-12 h-11"
+                placeholder="Rechercher n'importe quoi"
+                className="flex-1 border-0 h-11 focus-visible:ring-0 focus-visible:ring-offset-0"
               />
+              <select className="border-l border-gray-300 px-4 h-11 bg-white text-sm text-gray-700 focus:outline-none cursor-pointer">
+                <option>Toutes Les Catégories</option>
+                <option>Abayas</option>
+                <option>Ensembles</option>
+                <option>Accessoires</option>
+              </select>
               <Button
                 size="icon"
-                className="absolute right-0 top-0 h-11 w-11 rounded-l-none"
+                className="h-11 w-11 rounded-none bg-secondary hover:bg-secondary/90"
               >
                 <Search className="h-5 w-5" />
               </Button>

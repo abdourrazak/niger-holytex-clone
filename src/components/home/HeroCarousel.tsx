@@ -153,7 +153,7 @@ export function HeroCarousel() {
 
                     {/* Image - Droite */}
                     <div className="relative flex justify-center lg:justify-end">
-                      <div className="relative w-full h-[350px] md:h-[400px] lg:h-[450px] rounded-3xl overflow-hidden">
+                      <div className="relative w-full h-[400px] md:h-[450px] lg:h-[500px] rounded-3xl overflow-hidden">
                         <Image
                           src={slide.image}
                           alt={slide.title}
@@ -174,7 +174,7 @@ export function HeroCarousel() {
       {/* Navigation Buttons */}
       <button
         onClick={scrollPrev}
-        className={`absolute left-6 lg:left-12 top-1/2 -translate-y-1/2 z-10 h-10 w-10 md:h-12 md:w-12 rounded-full ${slides[selectedIndex]?.arrowBg || 'bg-white/10 hover:bg-white/20'} backdrop-blur-sm flex items-center justify-center transition-all`}
+        className={`absolute left-8 lg:left-16 top-1/2 -translate-y-1/2 z-10 h-10 w-10 md:h-12 md:w-12 rounded-full ${slides[selectedIndex]?.arrowBg || 'bg-white/10 hover:bg-white/20'} backdrop-blur-sm flex items-center justify-center transition-all`}
         aria-label="Slide précédent"
       >
         <ChevronLeft className={`h-6 w-6 ${slides[selectedIndex]?.arrowColor || 'text-white'}`} />
@@ -182,7 +182,7 @@ export function HeroCarousel() {
 
       <button
         onClick={scrollNext}
-        className={`absolute right-6 lg:right-12 top-1/2 -translate-y-1/2 z-10 h-10 w-10 md:h-12 md:w-12 rounded-full ${slides[selectedIndex]?.arrowBg || 'bg-white/10 hover:bg-white/20'} backdrop-blur-sm flex items-center justify-center transition-all`}
+        className={`absolute right-8 lg:right-16 top-1/2 -translate-y-1/2 z-10 h-10 w-10 md:h-12 md:w-12 rounded-full ${slides[selectedIndex]?.arrowBg || 'bg-white/10 hover:bg-white/20'} backdrop-blur-sm flex items-center justify-center transition-all`}
         aria-label="Slide suivant"
       >
         <ChevronRight className={`h-6 w-6 ${slides[selectedIndex]?.arrowColor || 'text-white'}`} />
