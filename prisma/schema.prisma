@@ -29,6 +29,13 @@ model User {
   // Relations essentielles pour Better Auth
   accounts  Account[]
   sessions  Session[]
+  
+  // Relations e-commerce
+  cart      Cart?
+  orders    Order[]
+  wishlist  Wishlist[]
+  reviews   Review[]
+  addresses Address[]
 
   @@map("users")
 }
@@ -106,10 +113,10 @@ model Product {
   // Relations
   category       Category         @relation(fields: [categoryId], references: [id])
   variants       ProductVariant[]
-  // cartItems      CartItem[]
-  // orderItems     OrderItem[]
-  // wishlistItems  Wishlist[]
-  // reviews        Review[]
+  cartItems      CartItem[]
+  orderItems     OrderItem[]
+  wishlistItems  Wishlist[]
+  reviews        Review[]
 
   @@map("products")
 }
@@ -130,142 +137,142 @@ model ProductVariant {
 }
 
 // ============================================
-// CART & WISHLIST - TEMPORAIREMENT DÉSACTIVÉ
+// CART & WISHLIST
 // ============================================
 
-// model Cart {
-//   id        String     @id @default(cuid())
-//   userId    String     @unique
-//   createdAt DateTime   @default(now())
-//   updatedAt DateTime   @updatedAt
-//   items     CartItem[]
-//   user      User       @relation(fields: [userId], references: [id], onDelete: Cascade)
-//
-//   @@map("carts")
-// }
+model Cart {
+  id        String     @id @default(cuid())
+  userId    String     @unique
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  items     CartItem[]
+  user      User       @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-// model CartItem {
-//   id        String   @id @default(cuid())
-//   cartId    String
-//   productId String
-//   quantity  Int      @default(1)
-//   size      String?
-//   color     String?
-//   createdAt DateTime @default(now())
-//   updatedAt DateTime @updatedAt
-//
-//   cart    Cart    @relation(fields: [cartId], references: [id], onDelete: Cascade)
-//   product Product @relation(fields: [productId], references: [id])
-//
-//   @@map("cart_items")
-// }
+  @@map("carts")
+}
 
-// model Wishlist {
-//   id        String   @id @default(cuid())
-//   userId    String
-//   productId String
-//   createdAt DateTime @default(now())
-//
-//   user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
-//   product Product @relation(fields: [productId], references: [id])
-//
-//   @@unique([userId, productId])
-//   @@map("wishlists")
-// }
+model CartItem {
+  id        String   @id @default(cuid())
+  cartId    String
+  productId String
+  quantity  Int      @default(1)
+  size      String?
+  color     String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-// ============================================
-// ORDERS - TEMPORAIREMENT DÉSACTIVÉ
-// ============================================
+  cart    Cart    @relation(fields: [cartId], references: [id], onDelete: Cascade)
+  product Product @relation(fields: [productId], references: [id])
 
-// model Order {
-//   id              String      @id @default(cuid())
-//   userId          String
-//   orderNumber     String      @unique
-//   status          OrderStatus @default(PENDING)
-//   total           Float
-//   subtotal        Float
-//   shippingCost    Float       @default(0)
-//   paymentMethod   String
-//   paymentStatus   PaymentStatus @default(PENDING)
-//   shippingAddress Json
-//   createdAt       DateTime    @default(now())
-//   updatedAt       DateTime    @updatedAt
-//
-//   user  User        @relation(fields: [userId], references: [id])
-//   items OrderItem[]
-//
-//   @@map("orders")
-// }
+  @@map("cart_items")
+}
 
-// enum OrderStatus {
-//   PENDING
-//   PROCESSING
-//   SHIPPED
-//   DELIVERED
-//   CANCELLED
-// }
+model Wishlist {
+  id        String   @id @default(cuid())
+  userId    String
+  productId String
+  createdAt DateTime @default(now())
 
-// enum PaymentStatus {
-//   PENDING
-//   PAID
-//   FAILED
-//   REFUNDED
-// }
+  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  product Product @relation(fields: [productId], references: [id])
 
-// model OrderItem {
-//   id        String   @id @default(cuid())
-//   orderId   String
-//   productId String
-//   quantity  Int
-//   price     Float
-//   size      String?
-//   color     String?
-//   createdAt DateTime @default(now())
-//
-//   order   Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
-//   product Product @relation(fields: [productId], references: [id])
-//
-//   @@map("order_items")
-// }
+  @@unique([userId, productId])
+  @@map("wishlists")
+}
 
 // ============================================
-// REVIEWS - TEMPORAIREMENT DÉSACTIVÉ
+// ORDERS
 // ============================================
 
-// model Review {
-//   id        String   @id @default(cuid())
-//   userId    String
-//   productId String
-//   rating    Int
-//   comment   String? @db.Text
-//   createdAt DateTime @default(now())
-//   updatedAt DateTime @updatedAt
-//
-//   user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
-//   product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
-//
-//   @@unique([userId, productId])
-//   @@map("reviews")
-// }
+model Order {
+  id              String        @id @default(cuid())
+  userId          String
+  orderNumber     String        @unique
+  status          OrderStatus   @default(PENDING)
+  total           Float
+  subtotal        Float
+  shippingCost    Float         @default(0)
+  paymentMethod   String
+  paymentStatus   PaymentStatus @default(PENDING)
+  shippingAddress Json
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+
+  user  User        @relation(fields: [userId], references: [id])
+  items OrderItem[]
+
+  @@map("orders")
+}
+
+enum OrderStatus {
+  PENDING
+  PROCESSING
+  SHIPPED
+  DELIVERED
+  CANCELLED
+}
+
+enum PaymentStatus {
+  PENDING
+  PAID
+  FAILED
+  REFUNDED
+}
+
+model OrderItem {
+  id        String   @id @default(cuid())
+  orderId   String
+  productId String
+  quantity  Int
+  price     Float
+  size      String?
+  color     String?
+  createdAt DateTime @default(now())
+
+  order   Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  product Product @relation(fields: [productId], references: [id])
+
+  @@map("order_items")
+}
 
 // ============================================
-// ADDRESSES - TEMPORAIREMENT DÉSACTIVÉ
+// REVIEWS
 // ============================================
 
-// model Address {
-//   id          String   @id @default(cuid())
-//   userId      String
-//   fullName    String
-//   phone       String
-//   address     String
-//   city        String
-//   postalCode  String?
-//   country     String   @default("Niger")
-//   isDefault   Boolean  @default(false)
-//   createdAt   DateTime @default(now())
-//   updatedAt   DateTime @updatedAt
-//
-//   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
-//
-//   @@map("addresses")
-// }
+model Review {
+  id        String   @id @default(cuid())
+  userId    String
+  productId String
+  rating    Int
+  comment   String?  @db.Text
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, productId])
+  @@map("reviews")
+}
+
+// ============================================
+// ADDRESSES
+// ============================================
+
+model Address {
+  id          String   @id @default(cuid())
+  userId      String
+  fullName    String
+  phone       String
+  address     String
+  city        String
+  postalCode  String?
+  country     String   @default("Niger")
+  isDefault   Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("addresses")
+}
