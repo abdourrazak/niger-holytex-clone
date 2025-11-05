@@ -11,6 +11,12 @@ const categories = [
   {
     id: 'abayas',
     title: 'Abayas',
+    featuredProduct: {
+      name: 'Sandy',
+      subtitle: 'Chaussettes Sandy',
+      image: '/Sandy.png',
+      bgColor: 'bg-white',
+    },
     products: [
       {
         id: 1,
@@ -41,12 +47,74 @@ const categories = [
   {
     id: 'ensembles',
     title: 'Ensembles Modestes',
-    products: [],
+    featuredProduct: {
+      name: 'Sandy',
+      subtitle: 'Chaussettes Sandy',
+      image: '/Sandy.png',
+      bgColor: 'bg-white',
+    },
+    products: [
+      {
+        id: 5,
+        image: '/Niger5.jpg',
+        name: 'Ensemble Amina - 2 Pièces',
+        price: '28000 CFA',
+      },
+      {
+        id: 6,
+        image: '/Niger6.jpg',
+        name: 'Ensemble Leila - 3 pièces',
+        price: '32000 CFA',
+      },
+      {
+        id: 7,
+        image: '/Niger7.jpg',
+        name: 'Ensemble Yasmine - 2 pièces',
+        price: '29000 CFA',
+      },
+      {
+        id: 8,
+        image: '/Niger8.jpg',
+        name: 'Ensemble Salma - Une pièce',
+        price: '25000 CFA',
+      },
+    ],
   },
   {
     id: 'accessoires',
     title: 'Accessoires de couvrement',
-    products: [],
+    featuredProduct: {
+      name: 'Zam Zam',
+      subtitle: 'En gros & en détail',
+      image: '/ZamZam.png',
+      bgColor: 'bg-[#B8E5F0]',
+    },
+    products: [
+      {
+        id: 9,
+        image: '/Niger9.jpg',
+        name: 'Hijab Premium - Soie',
+        price: '8000 CFA',
+      },
+      {
+        id: 10,
+        image: '/Niger10.jpg',
+        name: 'Hijab Jersey - Coton',
+        price: '6000 CFA',
+      },
+      {
+        id: 11,
+        image: '/Niger1.jpg',
+        name: 'Turban Élégant',
+        price: '7000 CFA',
+      },
+      {
+        id: 12,
+        image: '/Niger2.jpg',
+        name: 'Sous-hijab Bonnet',
+        price: '3000 CFA',
+      },
+    ],
   },
 ]
 
@@ -153,37 +221,39 @@ function CategorySection({ category }: { category: typeof categories[0] }) {
         </div>
 
         {/* Featured Product - Right Side */}
-        <div className="hidden lg:block w-80 bg-white rounded-lg p-6 shadow-sm border border-gray-200">
-          <p className="text-xs text-gray-500 uppercase tracking-wide mb-2">POPULAIRE</p>
-          <h3 className="text-2xl font-bold text-gray-900 mb-2">Sandy</h3>
-          <p className="text-sm text-gray-600 mb-6">Chaussettes Sandy</p>
+        {category.featuredProduct && (
+          <div className={`hidden lg:block w-80 ${category.featuredProduct.bgColor} rounded-lg p-6 shadow-sm border border-gray-200`}>
+            <p className="text-xs text-blue-600 uppercase tracking-wide mb-2 font-semibold">POPULAIRE</p>
+            <h3 className="text-2xl font-bold text-blue-600 mb-2">{category.featuredProduct.name}</h3>
+            <p className="text-sm text-gray-700 mb-6">{category.featuredProduct.subtitle}</p>
 
-          <div className="flex gap-2 mb-6">
-            <Button
-              asChild
-              className="flex-1 bg-[#0A1F44] hover:bg-[#0A1F44]/90 text-white"
-            >
-              <Link href="/products/sandy">Acheter</Link>
-            </Button>
-            <Button
-              asChild
-              variant="outline"
-              className="flex-1 border-gray-900 text-gray-900 hover:bg-gray-900 hover:text-white"
-            >
-              <Link href="/products/sandy">Voir le produit</Link>
-            </Button>
-          </div>
+            <div className="flex gap-2 mb-6">
+              <Button
+                asChild
+                className="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-semibold"
+              >
+                <Link href={`/products/${category.featuredProduct.name.toLowerCase()}`}>Acheter</Link>
+              </Button>
+              <Button
+                asChild
+                variant="outline"
+                className="flex-1 border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white font-semibold"
+              >
+                <Link href={`/products/${category.featuredProduct.name.toLowerCase()}`}>Voir le produit</Link>
+              </Button>
+            </div>
 
-          {/* Product Image */}
-          <div className="relative aspect-square rounded-lg overflow-hidden">
-            <Image
-              src="/Sandy.png"
-              alt="Sandy Chaussettes"
-              fill
-              className="object-contain"
-            />
+            {/* Product Image */}
+            <div className="relative aspect-square rounded-lg overflow-hidden">
+              <Image
+                src={category.featuredProduct.image}
+                alt={category.featuredProduct.name}
+                fill
+                className="object-contain"
+              />
+            </div>
           </div>
-        </div>
+        )}
       </div>
     </div>
   )
