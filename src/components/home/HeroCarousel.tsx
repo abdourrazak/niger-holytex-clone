@@ -78,13 +78,13 @@ export function HeroCarousel() {
   }, [emblaApi])
 
   return (
-    <section className="relative w-full bg-[#0A1F44]">
-      <div className="overflow-hidden" ref={emblaRef}>
+    <section className="relative w-full bg-[#0A1F44] min-h-[500px] flex items-center">
+      <div className="overflow-hidden w-full" ref={emblaRef}>
         <div className="flex">
           {slides.map((slide) => (
             <div key={slide.id} className="flex-[0_0_100%] min-w-0">
               <div className="relative">
-                <div className="container-custom py-12 md:py-14 lg:py-16">
+                <div className="container-custom py-16 md:py-20 lg:py-24">
                   <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center">
                     {/* Contenu Texte - Gauche */}
                     <div className="text-white space-y-4">
