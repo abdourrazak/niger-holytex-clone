@@ -5,8 +5,8 @@ import { Facebook, Instagram, MessageCircle } from 'lucide-react'
 export function Footer() {
   return (
     <footer className="bg-[#0A1F44] text-white">
-      <div className="container mx-auto px-6 py-16 max-w-7xl">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-12">
+      <div className="container mx-auto px-6 py-20 max-w-7xl">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-16">
           {/* Brand Section */}
           <div className="space-y-5">
             <div className="flex items-start gap-3">
@@ -154,8 +154,8 @@ export function Footer() {
       </div>
 
       {/* Bottom Bar */}
-      <div className="border-t border-white/20 mt-8">
-        <div className="container mx-auto px-6 py-5 max-w-7xl">
+      <div className="border-t border-white/20 mt-12">
+        <div className="container mx-auto px-6 py-6 max-w-7xl">
           <p className="text-center text-sm text-white/80 font-normal">
             2025 • Tous droits réservés à Niger – Holytex • Conçu avec ❤️ par ABIB DIGIT.
           </p>
