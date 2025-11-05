@@ -1,142 +1,127 @@
-'use client'
+import { HeroSection } from '@/components/home/HeroSection'
+import { CategoryCard } from '@/components/products/CategoryCard'
+import { ProductGrid } from '@/components/products/ProductGrid'
+import { NewsletterSection } from '@/components/home/NewsletterSection'
+import { Header } from '@/components/layout/Header'
+import { Footer } from '@/components/layout/Footer'
+import { PrismaClient } from '@prisma/client'
 
-import Link from 'next/link'
-import { UserNav } from '@/components/layout/user-nav'
-import { useAuth } from '@/hooks/useAuth'
+const prisma = new PrismaClient()
 
-export default function Home() {
-  const { user, isAuthenticated, isLoading } = useAuth()
+export default async function Home() {
+  // Récupérer les catégories
+  const categories = await prisma.category.findMany({
+    take: 4,
+    orderBy: { createdAt: 'desc' },
+  })
+
+  // Récupérer les produits mis en avant
+  const featuredProducts = await prisma.product.findMany({
+    where: { featured: true },
+    take: 8,
+    include: {
+      category: {
+        select: { name: true },
+      },
+    },
+    orderBy: { createdAt: 'desc' },
+  })
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
+    <div className="min-h-screen">
       {/* Header */}
-      <header className="border-b bg-white">
-        <div className="container mx-auto flex h-16 items-center justify-between px-4">
-          <Link href="/" className="text-2xl font-bold">
-            Niger Holytex
-          </Link>
-          <UserNav />
-        </div>
-      </header>
+      <Header />
 
-      {/* Main Content */}
-      <main className="container mx-auto px-4 py-16">
-        <div className="mx-auto max-w-3xl text-center">
-          <h1 className="mb-6 text-5xl font-bold tracking-tight">
-            Bienvenue sur Niger Holytex
-          </h1>
-          <p className="mb-8 text-xl text-gray-600">
-            La grâce au service de la pudeur
-          </p>
+      {/* Hero Section */}
+      <HeroSection />
 
-          {isLoading ? (
-            <div className="rounded-lg bg-white p-8 shadow-md">
-              <p className="text-gray-600">Chargement...</p>
-            </div>
-          ) : isAuthenticated ? (
-            <div className="rounded-lg bg-white p-8 shadow-md">
-              <div className="mb-6">
-                <div className="mx-auto mb-4 flex h-20 w-20 items-center justify-center rounded-full bg-green-100">
-                  <svg
-                    className="h-10 w-10 text-green-600"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M5 13l4 4L19 7"
-                    />
-                  </svg>
-                </div>
-                <h2 className="mb-2 text-2xl font-bold text-gray-900">
-                  Connexion réussie !
-                </h2>
-                <p className="text-lg text-gray-600">
-                  Bienvenue, <span className="font-semibold">{user?.name || user?.email}</span>
-                </p>
-              </div>
-              <div className="space-y-4">
-                <p className="text-gray-600">
-                  Vous êtes maintenant connecté à votre compte Niger Holytex.
-                </p>
-                <div className="flex flex-col gap-3 sm:flex-row sm:justify-center">
-                  <Link
-                    href="/boutique"
-                    className="rounded-md bg-indigo-600 px-6 py-3 text-white hover:bg-indigo-700"
-                  >
-                    Découvrir la boutique
-                  </Link>
-                  <Link
-                    href="/account"
-                    className="rounded-md border border-gray-300 bg-white px-6 py-3 text-gray-700 hover:bg-gray-50"
-                  >
-                    Mon compte
-                  </Link>
-                </div>
-              </div>
-            </div>
-          ) : (
-            <div className="rounded-lg bg-white p-8 shadow-md">
-              <h2 className="mb-4 text-2xl font-bold text-gray-900">
-                Commencez votre expérience
-              </h2>
-              <p className="mb-6 text-gray-600">
-                Créez un compte ou connectez-vous pour accéder à toutes nos fonctionnalités
-              </p>
-              <div className="flex flex-col gap-3 sm:flex-row sm:justify-center">
-                <Link
-                  href="/register"
-                  className="rounded-md bg-indigo-600 px-6 py-3 text-white hover:bg-indigo-700"
-                >
-                  Créer un compte
-                </Link>
-                <Link
-                  href="/login"
-                  className="rounded-md border border-gray-300 bg-white px-6 py-3 text-gray-700 hover:bg-gray-50"
-                >
-                  Se connecter
-                </Link>
-              </div>
-            </div>
-          )}
+      {/* Categories Section */}
+      <section className="py-16 bg-white">
+        <div className="container-custom">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold text-secondary mb-4">
+              Nos Catégories
+            </h2>
+            <p className="text-lg text-muted-foreground">
+              Découvrez notre sélection de vêtements modestes et élégants
+            </p>
+          </div>
 
-          {/* Features */}
-          <div className="mt-16 grid gap-8 sm:grid-cols-3">
-            <div className="rounded-lg bg-white p-6 shadow-sm">
-              <div className="mb-4 text-4xl">👗</div>
-              <h3 className="mb-2 font-semibold">Collections Exclusives</h3>
-              <p className="text-sm text-gray-600">
-                Découvrez nos abayas et jilbabs de qualité
-              </p>
-            </div>
-            <div className="rounded-lg bg-white p-6 shadow-sm">
-              <div className="mb-4 text-4xl">🚚</div>
-              <h3 className="mb-2 font-semibold">Livraison Rapide</h3>
-              <p className="text-sm text-gray-600">
-                Recevez vos commandes dans les meilleurs délais
-              </p>
-            </div>
-            <div className="rounded-lg bg-white p-6 shadow-sm">
-              <div className="mb-4 text-4xl">💳</div>
-              <h3 className="mb-2 font-semibold">Paiement Sécurisé</h3>
-              <p className="text-sm text-gray-600">
-                Plusieurs options de paiement disponibles
-              </p>
-            </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {categories.length > 0 ? (
+              categories.map((category, index) => (
+                <CategoryCard
+                  key={category.id}
+                  name={category.name}
+                  slug={category.slug}
+                  image={category.image || '/placeholder.jpg'}
+                  index={index}
+                />
+              ))
+            ) : (
+              // Catégories par défaut si la base est vide
+              <>
+                <CategoryCard
+                  name="Abayas"
+                  slug="abayas"
+                  image="/IMG_5821-600x600.jpg"
+                  productCount={12}
+                  index={0}
+                />
+                <CategoryCard
+                  name="Tuniques"
+                  slug="tuniques"
+                  image="/IMG_5846-1-300x300.jpg"
+                  productCount={8}
+                  index={1}
+                />
+                <CategoryCard
+                  name="Jilbabs"
+                  slug="jilbabs"
+                  image="/IMG_5870-600x600.jpg"
+                  productCount={15}
+                  index={2}
+                />
+                <CategoryCard
+                  name="Accessoires"
+                  slug="accessoires"
+                  image="/Acc-holytex.png"
+                  productCount={20}
+                  index={3}
+                />
+              </>
+            )}
           </div>
         </div>
-      </main>
+      </section>
+
+      {/* Featured Products Section */}
+      <section className="py-16 bg-gray-50">
+        <div className="container-custom">
+          {featuredProducts.length > 0 ? (
+            <ProductGrid
+              products={featuredProducts}
+              title="Coups de Cœur"
+              subtitle="Découvrez notre sélection de produits exceptionnels"
+            />
+          ) : (
+            <div className="text-center">
+              <h2 className="text-3xl md:text-4xl font-bold text-secondary mb-4">
+                Coups de Cœur
+              </h2>
+              <p className="text-lg text-muted-foreground mb-8">
+                Nos produits seront bientôt disponibles
+              </p>
+            </div>
+          )}
+        </div>
+      </section>
+
+      {/* Newsletter Section */}
+      <NewsletterSection />
 
       {/* Footer */}
-      <footer className="border-t bg-white py-8">
-        <div className="container mx-auto px-4 text-center text-gray-600">
-          <p>© 2025 Niger Holytex - Tous droits réservés</p>
-          <p className="mt-2 text-sm">La grâce au service de la pudeur</p>
-        </div>
-      </footer>
+      <Footer />
     </div>
   )
 }
