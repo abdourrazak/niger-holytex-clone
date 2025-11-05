@@ -89,32 +89,7 @@ const categories = [
       image: '/ZamZam.png',
       bgColor: 'bg-[#B8E5F0]',
     },
-    products: [
-      {
-        id: 9,
-        image: '/Niger9.jpg',
-        name: 'Hijab Premium - Soie',
-        price: '8000 CFA',
-      },
-      {
-        id: 10,
-        image: '/Niger10.jpg',
-        name: 'Hijab Jersey - Coton',
-        price: '6000 CFA',
-      },
-      {
-        id: 11,
-        image: '/Niger1.jpg',
-        name: 'Turban Élégant',
-        price: '7000 CFA',
-      },
-      {
-        id: 12,
-        image: '/Niger2.jpg',
-        name: 'Sous-hijab Bonnet',
-        price: '3000 CFA',
-      },
-    ],
+    products: [],
   },
 ]
 
@@ -146,10 +121,7 @@ function CategorySection({ category }: { category: typeof categories[0] }) {
     if (emblaApi) emblaApi.scrollNext()
   }, [emblaApi])
 
-  // Si pas de produits, ne rien afficher
-  if (!category.products || category.products.length === 0) {
-    return null
-  }
+  const hasProducts = category.products && category.products.length > 0
 
   return (
     <div>
@@ -169,28 +141,29 @@ function CategorySection({ category }: { category: typeof categories[0] }) {
       {/* Products Grid with Carousel */}
       <div className="flex gap-8">
         {/* Products Carousel - Left Side */}
-        <div className="flex-1 relative">
-          {/* Navigation Buttons */}
-          <button
-            onClick={scrollPrev}
-            className="absolute -left-4 top-1/2 -translate-y-1/2 z-10 h-10 w-10 rounded-full bg-white hover:bg-gray-100 border border-gray-300 flex items-center justify-center transition-all shadow-md"
-            aria-label="Produits précédents"
-          >
-            <ChevronLeft className="h-5 w-5 text-gray-700" />
-          </button>
+        {hasProducts ? (
+          <div className="flex-1 relative">
+            {/* Navigation Buttons */}
+            <button
+              onClick={scrollPrev}
+              className="absolute -left-4 top-1/2 -translate-y-1/2 z-10 h-10 w-10 rounded-full bg-white hover:bg-gray-100 border border-gray-300 flex items-center justify-center transition-all shadow-md"
+              aria-label="Produits précédents"
+            >
+              <ChevronLeft className="h-5 w-5 text-gray-700" />
+            </button>
 
-          <button
-            onClick={scrollNext}
-            className="absolute -right-4 top-1/2 -translate-y-1/2 z-10 h-10 w-10 rounded-full bg-white hover:bg-gray-100 border border-gray-300 flex items-center justify-center transition-all shadow-md"
-            aria-label="Produits suivants"
-          >
-            <ChevronRight className="h-5 w-5 text-gray-700" />
-          </button>
+            <button
+              onClick={scrollNext}
+              className="absolute -right-4 top-1/2 -translate-y-1/2 z-10 h-10 w-10 rounded-full bg-white hover:bg-gray-100 border border-gray-300 flex items-center justify-center transition-all shadow-md"
+              aria-label="Produits suivants"
+            >
+              <ChevronRight className="h-5 w-5 text-gray-700" />
+            </button>
 
-          {/* Carousel */}
-          <div className="overflow-hidden" ref={emblaRef}>
-            <div className="flex gap-4">
-              {category.products.map((product) => (
+            {/* Carousel */}
+            <div className="overflow-hidden" ref={emblaRef}>
+              <div className="flex gap-4">
+                {category.products.map((product) => (
                 <div
                   key={product.id}
                   className="flex-[0_0_100%] sm:flex-[0_0_48%] md:flex-[0_0_32%] lg:flex-[0_0_23%] min-w-0"
@@ -216,9 +189,27 @@ function CategorySection({ category }: { category: typeof categories[0] }) {
                   </Link>
                 </div>
               ))}
+              </div>
             </div>
           </div>
-        </div>
+        ) : (
+          <div className="flex-1 relative min-h-[300px] flex items-center justify-center">
+            {/* Navigation Buttons - Empty state */}
+            <button
+              className="absolute -left-4 top-1/2 -translate-y-1/2 z-10 h-10 w-10 rounded-full bg-white hover:bg-gray-100 border border-gray-300 flex items-center justify-center transition-all shadow-md"
+              aria-label="Produits précédents"
+            >
+              <ChevronLeft className="h-5 w-5 text-gray-700" />
+            </button>
+
+            <button
+              className="absolute -right-4 top-1/2 -translate-y-1/2 z-10 h-10 w-10 rounded-full bg-white hover:bg-gray-100 border border-gray-300 flex items-center justify-center transition-all shadow-md"
+              aria-label="Produits suivants"
+            >
+              <ChevronRight className="h-5 w-5 text-gray-700" />
+            </button>
+          </div>
+        )}
 
         {/* Featured Product - Right Side */}
         {category.featuredProduct && (
