@@ -87,10 +87,8 @@ export function BestSellersSection() {
     loop: false,
     align: 'start',
     slidesToScroll: 1,
-    breakpoints: {
-      '(min-width: 640px)': { slidesToScroll: 2 },
-      '(min-width: 1024px)': { slidesToScroll: 5 },
-    },
+    duration: 25,
+    dragFree: false,
   })
 
   const [selectedIndex, setSelectedIndex] = useState(0)
