@@ -129,7 +129,7 @@ export function HeroCarousel() {
 
                     {/* Image - Droite */}
                     <div className="relative flex justify-center lg:justify-end">
-                      <div className="relative w-full max-w-lg aspect-[4/3] rounded-3xl overflow-hidden shadow-2xl">
+                      <div className="relative w-full max-w-lg aspect-[3/2] rounded-3xl overflow-hidden shadow-2xl">
                         <Image
                           src={slide.image}
                           alt={slide.title}
@@ -150,7 +150,7 @@ export function HeroCarousel() {
       {/* Navigation Buttons */}
       <button
         onClick={scrollPrev}
-        className="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 z-10 h-10 w-10 md:h-12 md:w-12 rounded-full bg-white/20 hover:bg-white/30 backdrop-blur-sm flex items-center justify-center transition-all"
+        className="absolute left-2 md:left-4 top-1/2 -translate-y-1/2 z-10 h-10 w-10 md:h-12 md:w-12 rounded-full bg-white/20 hover:bg-white/30 backdrop-blur-sm flex items-center justify-center transition-all"
         aria-label="Slide précédent"
       >
         <ChevronLeft className="h-5 w-5 md:h-6 md:w-6 text-white" />
@@ -158,7 +158,7 @@ export function HeroCarousel() {
 
       <button
         onClick={scrollNext}
-        className="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 z-10 h-10 w-10 md:h-12 md:w-12 rounded-full bg-white/20 hover:bg-white/30 backdrop-blur-sm flex items-center justify-center transition-all"
+        className="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 z-10 h-10 w-10 md:h-12 md:w-12 rounded-full bg-white/20 hover:bg-white/30 backdrop-blur-sm flex items-center justify-center transition-all"
         aria-label="Slide suivant"
       >
         <ChevronRight className="h-5 w-5 md:h-6 md:w-6 text-white" />
