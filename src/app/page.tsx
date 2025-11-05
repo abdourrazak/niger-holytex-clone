@@ -3,6 +3,7 @@ import { BestSellersSection } from '@/components/home/BestSellersSection'
 import { CategoriesShowcase } from '@/components/home/CategoriesShowcase'
 import { DeliveryBanner } from '@/components/home/DeliveryBanner'
 import { AdditionalCategories } from '@/components/home/AdditionalCategories'
+import { RecentlyViewedSection } from '@/components/home/RecentlyViewedSection'
 import { ProductGrid } from '@/components/products/ProductGrid'
 import { NewsletterSection } from '@/components/home/NewsletterSection'
 import { Header } from '@/components/layout/Header'
@@ -43,6 +44,9 @@ export default async function Home() {
 
       {/* Additional Categories Section */}
       <AdditionalCategories />
+
+      {/* Recently Viewed Section */}
+      <RecentlyViewedSection />
 
       {/* Featured Products Section */}
       <section className="py-16 bg-gray-50">
