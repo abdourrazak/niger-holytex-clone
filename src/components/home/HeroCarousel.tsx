@@ -18,6 +18,14 @@ const slides = [
     cta2: 'Découvrir Holytex',
     link1: '/products',
     link2: '/about',
+    bgColor: 'bg-[#0A1F44]',
+    textColor: 'text-white',
+    badgeColor: 'text-white/60',
+    descColor: 'text-white/70',
+    btn1Color: 'bg-primary hover:bg-primary/90 text-white',
+    btn2Color: 'border-white text-white hover:bg-white hover:text-secondary',
+    arrowColor: 'text-white',
+    arrowBg: 'bg-white/10 hover:bg-white/20',
   },
   {
     id: 2,
@@ -29,17 +37,33 @@ const slides = [
     cta2: 'Voir la collection',
     link1: '/products',
     link2: '/categories/abayas',
+    bgColor: 'bg-white',
+    textColor: 'text-gray-900',
+    badgeColor: 'text-gray-600',
+    descColor: 'text-gray-700',
+    btn1Color: 'bg-[#0A1F44] hover:bg-[#0A1F44]/90 text-white',
+    btn2Color: 'border-gray-900 text-gray-900 hover:bg-gray-900 hover:text-white',
+    arrowColor: 'text-gray-900',
+    arrowBg: 'bg-gray-900/10 hover:bg-gray-900/20',
   },
   {
     id: 3,
     image: '/Acc-holytex.png',
-    title: 'Élégance et modestie',
-    badge: 'COLLECTION JILBABS',
-    description: 'Des jilbabs élégants pour toutes les occasions',
-    cta1: 'Boutique',
-    cta2: 'Explorer',
+    title: 'Accessoires Islamiques',
+    badge: 'NOUVEL ARRIVAGE',
+    description: 'Des accessoires islamiques pour enrichir votre quotidien ! Découvrez notre sélection d\'objets conçus pour accompagner votre spiritualité et faciliter votre pratique.',
+    cta1: 'Acheter',
+    cta2: 'Voir plus',
     link1: '/products',
-    link2: '/categories/jilbabs',
+    link2: '/categories/accessoires',
+    bgColor: 'bg-white',
+    textColor: 'text-gray-900',
+    badgeColor: 'text-gray-600',
+    descColor: 'text-gray-700',
+    btn1Color: 'bg-[#0A1F44] hover:bg-[#0A1F44]/90 text-white',
+    btn2Color: 'border-gray-900 text-gray-900 hover:bg-gray-900 hover:text-white',
+    arrowColor: 'text-gray-900',
+    arrowBg: 'bg-gray-900/10 hover:bg-gray-900/20',
   },
 ]
 
@@ -78,18 +102,18 @@ export function HeroCarousel() {
   }, [emblaApi])
 
   return (
-    <section className="relative w-full bg-[#0A1F44] min-h-[550px] flex items-center">
+    <section className="relative w-full">
       <div className="overflow-hidden w-full" ref={emblaRef}>
         <div className="flex">
           {slides.map((slide) => (
-            <div key={slide.id} className="flex-[0_0_100%] min-w-0">
-              <div className="relative">
-                <div className="container-custom py-16 md:py-20 lg:py-24">
-                  <div className="grid lg:grid-cols-2 gap-6 lg:gap-10 items-center max-w-6xl mx-auto">
+            <div key={slide.id} className={`flex-[0_0_100%] min-w-0 ${slide.bgColor}`}>
+              <div className="relative min-h-[550px] flex items-center">
+                <div className="container-custom py-16 md:py-20 lg:py-24 w-full">
+                  <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center max-w-5xl mx-auto">
                     {/* Contenu Texte - Gauche */}
-                    <div className="text-white space-y-4">
+                    <div className={`${slide.textColor} space-y-4`}>
                       {/* Badge */}
-                      <p className="text-[10px] md:text-xs font-semibold tracking-wider text-white/60 uppercase">
+                      <p className={`text-[10px] md:text-xs font-semibold tracking-wider ${slide.badgeColor} uppercase`}>
                         {slide.badge}
                       </p>
 
@@ -99,7 +123,7 @@ export function HeroCarousel() {
                       </h1>
 
                       {/* Description */}
-                      <p className="text-sm md:text-base text-white/70 max-w-lg">
+                      <p className={`text-sm md:text-base ${slide.descColor} max-w-lg`}>
                         {slide.description}
                       </p>
 
@@ -108,7 +132,7 @@ export function HeroCarousel() {
                         <Button 
                           asChild 
                           size="default"
-                          className="bg-primary hover:bg-primary/90 text-white rounded-full px-6"
+                          className={`${slide.btn1Color} rounded-full px-6`}
                         >
                           <Link href={slide.link1}>
                             {slide.cta1}
@@ -118,7 +142,7 @@ export function HeroCarousel() {
                           asChild 
                           size="default"
                           variant="outline"
-                          className="border-white text-white hover:bg-white hover:text-secondary rounded-full px-6"
+                          className={`${slide.btn2Color} rounded-full px-6`}
                         >
                           <Link href={slide.link2}>
                             {slide.cta2}
@@ -150,18 +174,18 @@ export function HeroCarousel() {
       {/* Navigation Buttons */}
       <button
         onClick={scrollPrev}
-        className="absolute left-4 lg:left-8 top-1/2 -translate-y-1/2 z-10 h-10 w-10 md:h-12 md:w-12 rounded-full bg-white/10 hover:bg-white/20 backdrop-blur-sm flex items-center justify-center transition-all"
+        className={`absolute left-6 lg:left-12 top-1/2 -translate-y-1/2 z-10 h-10 w-10 md:h-12 md:w-12 rounded-full ${slides[selectedIndex]?.arrowBg || 'bg-white/10 hover:bg-white/20'} backdrop-blur-sm flex items-center justify-center transition-all`}
         aria-label="Slide précédent"
       >
-        <ChevronLeft className="h-6 w-6 text-white" />
+        <ChevronLeft className={`h-6 w-6 ${slides[selectedIndex]?.arrowColor || 'text-white'}`} />
       </button>
 
       <button
         onClick={scrollNext}
-        className="absolute right-4 lg:right-8 top-1/2 -translate-y-1/2 z-10 h-10 w-10 md:h-12 md:w-12 rounded-full bg-white/10 hover:bg-white/20 backdrop-blur-sm flex items-center justify-center transition-all"
+        className={`absolute right-6 lg:right-12 top-1/2 -translate-y-1/2 z-10 h-10 w-10 md:h-12 md:w-12 rounded-full ${slides[selectedIndex]?.arrowBg || 'bg-white/10 hover:bg-white/20'} backdrop-blur-sm flex items-center justify-center transition-all`}
         aria-label="Slide suivant"
       >
-        <ChevronRight className="h-6 w-6 text-white" />
+        <ChevronRight className={`h-6 w-6 ${slides[selectedIndex]?.arrowColor || 'text-white'}`} />
       </button>
 
       {/* Dots Indicator */}
