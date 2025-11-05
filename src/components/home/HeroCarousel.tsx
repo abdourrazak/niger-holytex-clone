@@ -84,31 +84,31 @@ export function HeroCarousel() {
           {slides.map((slide) => (
             <div key={slide.id} className="flex-[0_0_100%] min-w-0">
               <div className="relative">
-                <div className="container-custom py-16 md:py-20 lg:py-24">
-                  <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+                <div className="container-custom py-12 md:py-14 lg:py-16">
+                  <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center">
                     {/* Contenu Texte - Gauche */}
-                    <div className="text-white space-y-6">
+                    <div className="text-white space-y-4">
                       {/* Badge */}
-                      <p className="text-xs md:text-sm font-semibold tracking-wider text-white/70 uppercase">
+                      <p className="text-[10px] md:text-xs font-semibold tracking-wider text-white/60 uppercase">
                         {slide.badge}
                       </p>
 
                       {/* Title */}
-                      <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
+                      <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold leading-tight">
                         {slide.title}
                       </h1>
 
                       {/* Description */}
-                      <p className="text-base md:text-lg text-white/80 max-w-xl">
+                      <p className="text-sm md:text-base text-white/70 max-w-lg">
                         {slide.description}
                       </p>
 
                       {/* CTA Buttons */}
-                      <div className="flex flex-wrap gap-4 pt-4">
+                      <div className="flex flex-wrap gap-3 pt-2">
                         <Button 
                           asChild 
-                          size="lg" 
-                          className="bg-primary hover:bg-primary/90 text-white rounded-full px-8"
+                          size="default"
+                          className="bg-primary hover:bg-primary/90 text-white rounded-full px-6"
                         >
                           <Link href={slide.link1}>
                             {slide.cta1}
@@ -116,9 +116,9 @@ export function HeroCarousel() {
                         </Button>
                         <Button 
                           asChild 
-                          size="lg" 
+                          size="default"
                           variant="outline"
-                          className="border-white text-white hover:bg-white hover:text-secondary rounded-full px-8"
+                          className="border-white text-white hover:bg-white hover:text-secondary rounded-full px-6"
                         >
                           <Link href={slide.link2}>
                             {slide.cta2}
@@ -128,8 +128,8 @@ export function HeroCarousel() {
                     </div>
 
                     {/* Image - Droite */}
-                    <div className="relative">
-                      <div className="relative aspect-[4/3] lg:aspect-square rounded-3xl overflow-hidden shadow-2xl">
+                    <div className="relative flex justify-end">
+                      <div className="relative w-full max-w-md aspect-[4/3] rounded-3xl overflow-hidden shadow-2xl">
                         <Image
                           src={slide.image}
                           alt={slide.title}

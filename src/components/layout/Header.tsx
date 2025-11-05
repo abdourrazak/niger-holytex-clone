@@ -133,12 +133,18 @@ export function Header() {
       {/* Navigation Bar */}
       <div className="border-t">
         <div className="container-custom">
-          <nav className="hidden md:flex items-center justify-center gap-8 py-4">
+          <nav className="hidden md:flex items-center gap-8 py-4">
             <Link
               href="/"
               className="text-sm font-medium text-secondary hover:text-primary transition-colors"
             >
               Accueil
+            </Link>
+            <Link
+              href="/products"
+              className="text-sm font-medium text-secondary hover:text-primary transition-colors"
+            >
+              Boutique
             </Link>
             <Link
               href="/categories/abayas"
@@ -147,34 +153,10 @@ export function Header() {
               Abayas
             </Link>
             <Link
-              href="/categories/tuniques"
+              href="/categories/ensembles"
               className="text-sm font-medium text-secondary hover:text-primary transition-colors"
             >
-              Tuniques
-            </Link>
-            <Link
-              href="/categories/jilbabs"
-              className="text-sm font-medium text-secondary hover:text-primary transition-colors"
-            >
-              Jilbabs
-            </Link>
-            <Link
-              href="/categories/accessoires"
-              className="text-sm font-medium text-secondary hover:text-primary transition-colors"
-            >
-              Accessoires
-            </Link>
-            <Link
-              href="/products"
-              className="text-sm font-medium text-secondary hover:text-primary transition-colors"
-            >
-              Tous les produits
-            </Link>
-            <Link
-              href="/about"
-              className="text-sm font-medium text-secondary hover:text-primary transition-colors"
-            >
-              À propos
+              Ensembles
             </Link>
           </nav>
         </div>
@@ -192,6 +174,13 @@ export function Header() {
               Accueil
             </Link>
             <Link
+              href="/products"
+              className="block py-2 text-sm font-medium text-secondary hover:text-primary transition-colors"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              Boutique
+            </Link>
+            <Link
               href="/categories/abayas"
               className="block py-2 text-sm font-medium text-secondary hover:text-primary transition-colors"
               onClick={() => setMobileMenuOpen(false)}
@@ -199,39 +188,11 @@ export function Header() {
               Abayas
             </Link>
             <Link
-              href="/categories/tuniques"
+              href="/categories/ensembles"
               className="block py-2 text-sm font-medium text-secondary hover:text-primary transition-colors"
               onClick={() => setMobileMenuOpen(false)}
             >
-              Tuniques
-            </Link>
-            <Link
-              href="/categories/jilbabs"
-              className="block py-2 text-sm font-medium text-secondary hover:text-primary transition-colors"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              Jilbabs
-            </Link>
-            <Link
-              href="/categories/accessoires"
-              className="block py-2 text-sm font-medium text-secondary hover:text-primary transition-colors"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              Accessoires
-            </Link>
-            <Link
-              href="/products"
-              className="block py-2 text-sm font-medium text-secondary hover:text-primary transition-colors"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              Tous les produits
-            </Link>
-            <Link
-              href="/about"
-              className="block py-2 text-sm font-medium text-secondary hover:text-primary transition-colors"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              À propos
+              Ensembles
             </Link>
             <div className="pt-4 border-t">
               <UserNav />
