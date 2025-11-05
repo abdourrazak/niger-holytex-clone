@@ -12,29 +12,30 @@ const slides = [
   {
     id: 1,
     image: '/IMG_5821-600x600.jpg',
-    title: 'Nouvelle Collection Abayas',
-    subtitle: 'Élégance et Modestie',
-    description: 'Découvrez notre collection exclusive d\'abayas pour toutes les occasions',
+    title: 'Des abayas de qualité supérieure !',
+    subtitle: 'Élégance et raffinement au quotidien !',
+    description: 'Découvrez notre collection d\'abayas de qualité supérieure, conçues pour allier confort, style et foi.',
     cta: 'Découvrir',
     link: '/categories/abayas',
+    badge: 'Nouvelle Collection',
   },
   {
     id: 2,
-    image: '/Holytex-Haut-.png',
-    title: 'Variété de Couleurs',
-    subtitle: 'Trouvez Votre Style',
-    description: 'Des couleurs vibrantes pour exprimer votre personnalité',
+    image: '/IMG_5870-600x600.jpg',
+    title: 'Collection Jilbabs',
+    subtitle: 'L\'élégance et la chasteté de la Femme',
+    description: 'Offrir des tenues qui incarnent la beauté et la modestie',
     cta: 'Voir la collection',
-    link: '/products',
+    link: '/categories/jilbabs',
   },
   {
     id: 3,
-    image: '/IMG_5870-600x600.jpg',
-    title: 'Jilbabs Premium',
-    subtitle: 'Confort et Qualité',
-    description: 'Des jilbabs confortables pour votre quotidien',
+    image: '/IMG_5911-600x600.jpg',
+    title: 'Tuniques Modernes',
+    subtitle: 'Confort et Style',
+    description: 'Des tuniques élégantes pour toutes les occasions',
     cta: 'Explorer',
-    link: '/categories/jilbabs',
+    link: '/categories/tuniques',
   },
 ]
 
@@ -74,6 +75,13 @@ export function HeroCarousel() {
                 {/* Contenu */}
                 <div className="relative h-full container-custom flex items-center">
                   <div className="max-w-2xl text-white">
+                    {/* Badge */}
+                    {slide.badge && (
+                      <div className="inline-block bg-primary text-white px-4 py-2 rounded-full text-sm font-semibold mb-4 animate-fade-in">
+                        {slide.badge}
+                      </div>
+                    )}
+
                     {/* Subtitle */}
                     <p className="text-primary font-semibold text-lg md:text-xl mb-4 animate-fade-in">
                       {slide.subtitle}
