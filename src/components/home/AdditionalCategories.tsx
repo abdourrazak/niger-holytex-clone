@@ -9,14 +9,9 @@ import { Button } from '@/components/ui/button'
 
 const categories = [
   {
-    id: 'accessoires-islamiques',
-    title: 'Accessoires Islamiques',
-    featuredProduct: null,
-    products: [],
-  },
-  {
     id: 'chaussures',
-    title: 'Chaussures',
+    title: '',
+    showHeader: false,
     featuredProduct: {
       name: 'Veilleuse',
       subtitle: 'Coranique',
@@ -29,8 +24,8 @@ const categories = [
 
 export function AdditionalCategories() {
   return (
-    <section className="py-12 bg-white">
-      <div className="container-custom space-y-16">
+    <section className="py-8 bg-white">
+      <div className="container-custom">
         {categories.map((category) => (
           <CategorySection key={category.id} category={category} />
         ))}
@@ -60,17 +55,19 @@ function CategorySection({ category }: { category: typeof categories[0] }) {
   return (
     <div>
       {/* Header */}
-      <div className="flex items-center justify-between mb-6">
-        <h2 className="text-2xl md:text-3xl font-bold text-gray-900">
-          {category.title}
-        </h2>
-        <Link
-          href={`/categories/${category.id}`}
-          className="text-sm text-gray-700 hover:text-primary transition-colors underline"
-        >
-          Voir tous les produits
-        </Link>
-      </div>
+      {category.showHeader !== false && (
+        <div className="flex items-center justify-between mb-6">
+          <h2 className="text-2xl md:text-3xl font-bold text-gray-900">
+            {category.title}
+          </h2>
+          <Link
+            href={`/categories/${category.id}`}
+            className="text-sm text-gray-700 hover:text-primary transition-colors underline"
+          >
+            Voir tous les produits
+          </Link>
+        </div>
+      )}
 
       {/* Products Grid with Carousel */}
       <div className="flex gap-8">
