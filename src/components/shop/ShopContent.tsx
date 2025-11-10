@@ -103,6 +103,39 @@ const products = [
     image: '/Niger2.jpg',
     rating: 5,
   },
+  {
+    id: 13,
+    name: 'Abaya Hind - Une Pièce',
+    category: 'Abayas',
+    price: 22000,
+    image: '/Niger3.jpg',
+    rating: 5,
+    outOfStock: true,
+  },
+  {
+    id: 14,
+    name: 'Abaya Houdna - Une Pièce',
+    category: 'Abayas',
+    price: 16000,
+    image: '/Niger4.jpg',
+    rating: 5,
+  },
+  {
+    id: 15,
+    name: 'Abaya Lina - 2 Pièces',
+    category: 'Abayas',
+    price: 27000,
+    image: '/Niger5.jpg',
+    rating: 5,
+  },
+  {
+    id: 16,
+    name: 'Abaya Liyan - 2 pièces',
+    category: 'Abayas',
+    price: 30000,
+    image: '/Niger6.jpg',
+    rating: 5,
+  },
 ]
 
 const categories = [
@@ -297,57 +330,93 @@ export function ShopContent() {
             </div>
 
             {/* Products Grid */}
-            <div className={`grid ${getGridClass()} gap-6`}>
+            <div className={`grid ${getGridClass()} gap-6 mb-12`}>
               {products.map((product) => (
-                <Link
+                <div
                   key={product.id}
-                  href={`/products/${product.id}`}
-                  className="group block"
+                  className="group relative bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow"
                 >
-                  {/* Product Image */}
-                  <div className="relative aspect-[3/4] bg-gray-100 rounded-lg overflow-hidden mb-3">
-                    <div className="absolute top-2 left-2 z-10">
-                      <span className="inline-block px-2 py-1 bg-orange-500 text-white text-xs font-semibold rounded">
-                        Niger - Holytex
-                      </span>
-                    </div>
-                    <Image
-                      src={product.image}
-                      alt={product.name}
-                      fill
-                      className="object-cover group-hover:scale-105 transition-transform duration-300"
-                    />
-                  </div>
+                  <Link href={`/products/${product.id}`} className="block">
+                    {/* Product Image */}
+                    <div className="relative aspect-[3/4] bg-gray-50 overflow-hidden">
+                      {/* Badge */}
+                      <div className="absolute top-3 left-3 z-10">
+                        <span className="inline-block px-2.5 py-1 bg-orange-500 text-white text-xs font-semibold rounded shadow-sm">
+                          Niger - Holytex
+                        </span>
+                      </div>
+                      
+                      {/* Wishlist Icon */}
+                      <button className="absolute top-3 right-3 z-10 h-8 w-8 rounded-full bg-white/90 hover:bg-white flex items-center justify-center shadow-sm transition-colors">
+                        <svg className="h-4 w-4 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                        </svg>
+                      </button>
 
-                  {/* Product Info */}
-                  <div>
-                    <p className="text-xs text-gray-500 mb-1">{product.category}</p>
-                    <h3 className="text-sm font-medium text-gray-900 mb-2 line-clamp-2">
-                      {product.name}
-                    </h3>
-
-                    {/* Rating */}
-                    <div className="flex items-center gap-1 mb-2">
-                      {[...Array(5)].map((_, i) => (
-                        <Star
-                          key={i}
-                          className={`h-3 w-3 ${
-                            i < product.rating
-                              ? 'fill-orange-400 text-orange-400'
-                              : 'fill-gray-200 text-gray-200'
-                          }`}
-                        />
-                      ))}
-                      <span className="text-xs text-gray-500 ml-1">(1)</span>
+                      <Image
+                        src={product.image}
+                        alt={product.name}
+                        fill
+                        className="object-cover group-hover:scale-105 transition-transform duration-500"
+                      />
+                      
+                      {/* Out of Stock Overlay */}
+                      {product.outOfStock && (
+                        <div className="absolute inset-0 bg-white/80 flex items-center justify-center">
+                          <span className="px-4 py-2 bg-gray-100 text-gray-700 text-sm font-medium rounded">
+                            En Rupture De Stock
+                          </span>
+                        </div>
+                      )}
                     </div>
 
-                    {/* Price */}
-                    <p className="text-base font-bold text-gray-900">
-                      {product.price.toLocaleString()} CFA
-                    </p>
-                  </div>
-                </Link>
+                    {/* Product Info */}
+                    <div className="p-4">
+                      <p className="text-xs text-gray-500 mb-1.5 uppercase tracking-wide">{product.category}</p>
+                      <h3 className="text-sm font-medium text-gray-900 mb-2 line-clamp-2 min-h-[40px]">
+                        {product.name}
+                      </h3>
+
+                      {/* Rating */}
+                      <div className="flex items-center gap-1 mb-3">
+                        {[...Array(5)].map((_, i) => (
+                          <Star
+                            key={i}
+                            className={`h-3.5 w-3.5 ${
+                              i < product.rating
+                                ? 'fill-orange-400 text-orange-400'
+                                : 'fill-gray-200 text-gray-200'
+                            }`}
+                          />
+                        ))}
+                        <span className="text-xs text-gray-500 ml-1">(1)</span>
+                      </div>
+
+                      {/* Price */}
+                      <p className="text-lg font-bold text-gray-900">
+                        {product.price.toLocaleString()} CFA
+                      </p>
+                    </div>
+                  </Link>
+                </div>
               ))}
+            </div>
+
+            {/* Pagination */}
+            <div className="flex items-center justify-center gap-2 pb-16">
+              <button className="h-10 w-10 rounded-full bg-gray-900 text-white flex items-center justify-center font-medium hover:bg-gray-800 transition-colors">
+                1
+              </button>
+              <button className="h-10 w-10 rounded-full bg-white border border-gray-300 text-gray-700 flex items-center justify-center font-medium hover:bg-gray-50 transition-colors">
+                2
+              </button>
+              <button className="h-10 w-10 rounded-full bg-white border border-gray-300 text-gray-700 flex items-center justify-center font-medium hover:bg-gray-50 transition-colors">
+                3
+              </button>
+              <span className="px-2 text-gray-400">...</span>
+              <button className="h-10 w-10 rounded-full bg-white border border-gray-300 text-gray-700 flex items-center justify-center hover:bg-gray-50 transition-colors">
+                <ChevronDown className="h-4 w-4 rotate-[-90deg]" />
+              </button>
             </div>
           </div>
         </div>
