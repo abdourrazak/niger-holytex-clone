@@ -178,20 +178,18 @@ export function ShopContent() {
   return (
     <main className="bg-white">
       {/* Breadcrumb */}
-      <div className="border-b border-gray-200">
-        <div className="container-custom py-4">
-          <nav className="flex items-center gap-2 text-sm">
-            <Link href="/" className="text-gray-600 hover:text-gray-900">
-              Accueil
-            </Link>
-            <span className="text-gray-400">&gt;</span>
-            <span className="text-gray-900 font-medium">Boutique</span>
-          </nav>
-        </div>
+      <div className="container-custom pt-6 pb-4">
+        <nav className="flex items-center gap-2 text-sm">
+          <Link href="/" className="text-gray-600 hover:text-gray-900">
+            Accueil
+          </Link>
+          <span className="text-gray-400">&gt;</span>
+          <span className="text-gray-900 font-medium">Boutique</span>
+        </nav>
       </div>
 
       {/* Page Title */}
-      <div className="container-custom py-8">
+      <div className="container-custom py-12">
         <h1 className="text-4xl font-bold text-gray-900 text-center">Boutique</h1>
       </div>
 
@@ -267,7 +265,7 @@ export function ShopContent() {
           {/* Products Grid */}
           <div className="flex-1">
             {/* Toolbar */}
-            <div className="flex items-center justify-between mb-6 pb-4 border-b border-gray-200">
+            <div className="flex items-center justify-between mb-8 pb-5 border-b border-gray-200">
               <p className="text-sm text-gray-600">
                 1–16 of 46 Results
               </p>
@@ -330,7 +328,7 @@ export function ShopContent() {
             </div>
 
             {/* Products Grid */}
-            <div className={`grid ${getGridClass()} gap-6 mb-12`}>
+            <div className={`grid ${getGridClass()} gap-7 mb-12`}>
               {products.map((product) => (
                 <div
                   key={product.id}
