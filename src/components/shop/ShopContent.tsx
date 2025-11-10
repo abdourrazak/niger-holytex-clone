@@ -345,8 +345,11 @@ export function ShopContent() {
                       </div>
                       
                       {/* Wishlist Icon */}
-                      <button className="absolute top-3 right-3 z-10 h-8 w-8 rounded-full bg-white/90 hover:bg-white flex items-center justify-center shadow-sm transition-colors">
-                        <svg className="h-4 w-4 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <button 
+                        onClick={(e) => e.preventDefault()}
+                        className="absolute top-3 right-3 z-10 h-8 w-8 rounded-full bg-white/90 hover:bg-white flex items-center justify-center shadow-sm transition-colors"
+                      >
+                        <svg className="h-4 w-4 text-gray-600 hover:text-red-500 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
                         </svg>
                       </button>
@@ -357,6 +360,21 @@ export function ShopContent() {
                         fill
                         className="object-cover group-hover:scale-105 transition-transform duration-500"
                       />
+                      
+                      {/* Hover Overlay with Button */}
+                      {!product.outOfStock && (
+                        <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                          <button
+                            onClick={(e) => {
+                              e.preventDefault()
+                              // Add to cart logic here
+                            }}
+                            className="px-6 py-2.5 bg-white text-gray-900 font-medium text-sm rounded hover:bg-gray-100 transition-colors shadow-lg"
+                          >
+                            Choix des options
+                          </button>
+                        </div>
+                      )}
                       
                       {/* Out of Stock Overlay */}
                       {product.outOfStock && (
