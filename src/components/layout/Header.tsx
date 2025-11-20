@@ -165,6 +165,12 @@ export function Header() {
               Tunique
             </Link>
             <Link
+              href="/accessoires"
+              className="text-sm font-medium text-secondary hover:text-primary transition-colors"
+            >
+              Accessoires
+            </Link>
+            <Link
               href="/categories/ensembles"
               className="text-sm font-medium text-secondary hover:text-primary transition-colors"
             >
@@ -205,6 +211,13 @@ export function Header() {
               onClick={() => setMobileMenuOpen(false)}
             >
               Tunique
+            </Link>
+            <Link
+              href="/accessoires"
+              className="block py-2 text-sm font-medium text-secondary hover:text-primary transition-colors"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              Accessoires
             </Link>
             <Link
               href="/categories/ensembles"
