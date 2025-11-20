@@ -171,6 +171,12 @@ export function Header() {
               Accessoires
             </Link>
             <Link
+              href="/jilbab"
+              className="text-sm font-medium text-secondary hover:text-primary transition-colors"
+            >
+              Jilbab
+            </Link>
+            <Link
               href="/categories/ensembles"
               className="text-sm font-medium text-secondary hover:text-primary transition-colors"
             >
@@ -218,6 +224,13 @@ export function Header() {
               onClick={() => setMobileMenuOpen(false)}
             >
               Accessoires
+            </Link>
+            <Link
+              href="/jilbab"
+              className="block py-2 text-sm font-medium text-secondary hover:text-primary transition-colors"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              Jilbab
             </Link>
             <Link
               href="/categories/ensembles"

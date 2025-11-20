@@ -260,6 +260,13 @@ export function ShopContent() {
                       >
                         {cat.name} ({cat.count})
                       </Link>
+                    ) : cat.name === 'Jilbab' ? (
+                      <Link
+                        href="/jilbab"
+                        className="text-sm text-gray-600 hover:text-gray-900 transition-colors"
+                      >
+                        {cat.name} ({cat.count})
+                      </Link>
                     ) : (
                       <button
                         onClick={() => setSelectedCategory(cat.name)}

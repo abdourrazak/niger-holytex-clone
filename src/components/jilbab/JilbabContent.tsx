@@ -8,92 +8,83 @@ import { Star } from 'lucide-react'
 
 const products = [
   {
-    id: 25,
-    name: 'Abaya Soraya - Une pièce',
-    category: 'Abayas',
-    price: 23000,
-    image: '/slide9.jpg',
+    id: 401,
+    name: 'Jilbab Amina - 2 Pièces',
+    category: 'Jilbab',
+    price: 18000,
+    image: '/abaya1.jpg',
     rating: 5,
   },
   {
-    id: 26,
-    name: 'Abaya Taqwa - Une pièce',
-    category: 'Abayas',
-    price: 24000,
-    image: '/slide10.jpg',
+    id: 402,
+    name: 'Jilbab Fatima - Une pièce',
+    category: 'Jilbab',
+    price: 16000,
+    image: '/abaya2.jpg',
     rating: 5,
   },
   {
-    id: 27,
-    name: 'Abaya Umm Kulthum - Une pièce',
-    category: 'Abayas',
-    price: 25000,
-    image: '/slide11.jpg',
+    id: 403,
+    name: 'Jilbab Khadija - 2 Pièces',
+    category: 'Jilbab',
+    price: 20000,
+    image: '/abaya3.jpg',
     rating: 5,
   },
   {
-    id: 28,
-    name: 'Abaya Widad - Une pièce',
-    category: 'Abayas',
-    price: 26000,
-    image: '/slide12.jpg',
+    id: 404,
+    name: 'Jilbab Aicha - Une pièce',
+    category: 'Jilbab',
+    price: 17000,
+    image: '/abaya4.jpg',
     rating: 5,
   },
   {
-    id: 29,
-    name: 'Abaya Yasmin - Une pièce',
-    category: 'Abayas',
-    price: 27000,
-    image: '/slide13.jpg',
+    id: 405,
+    name: 'Jilbab Maryam - 2 Pièces',
+    category: 'Jilbab',
+    price: 19000,
+    image: '/abaya5.jpg',
     rating: 5,
   },
   {
-    id: 30,
-    name: 'Abaya Zeinab - Une pièce',
-    category: 'Abayas',
-    price: 28000,
-    image: '/slide14.jpg',
-    rating: 5,
-  },
-  {
-    id: 31,
-    name: 'Ensemble Amina - 2 pièces',
-    category: 'Ensembles',
-    price: 32000,
-    image: '/Sandy.png',
-    rating: 5,
-  },
-  {
-    id: 32,
-    name: 'Ensemble Khadija - 2 pièces',
-    category: 'Ensembles',
-    price: 35000,
-    image: '/ZamZam.png',
-    rating: 5,
-  },
-  {
-    id: 33,
-    name: 'Accessoire Holytex Premium',
-    category: 'Accessoires',
+    id: 406,
+    name: 'Jilbab Zahra - Une pièce',
+    category: 'Jilbab',
     price: 15000,
-    image: '/Acc-holytex.png',
+    image: '/abaya6.jpg',
     rating: 5,
   },
   {
-    id: 34,
-    name: 'Abaya Malak - Une pièce',
-    category: 'Abayas',
-    price: 19500,
-    image: '/slide18.jpg',
+    id: 407,
+    name: 'Jilbab Safiya - 2 Pièces',
+    category: 'Jilbab',
+    price: 21000,
+    image: '/abaya7.jpg',
     rating: 5,
-    outOfStock: true,
   },
   {
-    id: 35,
-    name: 'Abaya Nadia - Une pièce',
-    category: 'Abayas',
-    price: 21500,
-    image: '/slide19.jpg',
+    id: 408,
+    name: 'Jilbab Hafsa - Une pièce',
+    category: 'Jilbab',
+    price: 16500,
+    image: '/abaya8.jpg',
+    rating: 5,
+  },
+  {
+    id: 409,
+    name: 'Jilbab Umm Salama - 2 Pièces',
+    category: 'Jilbab',
+    price: 22000,
+    image: '/abaya9.jpg',
+    rating: 5,
+  },
+  {
+    id: 410,
+    name: 'Jilbab Ruqayya - Une pièce',
+    category: 'Jilbab',
+    price: 18500,
+    image: '/abaya10.jpg',
     rating: 5,
   },
 ]
@@ -102,20 +93,19 @@ const categories = [
   { name: 'Abayas', count: 25 },
   { name: 'Tunique', count: 3 },
   { name: 'Accessoires', count: 9 },
-  { name: 'Jilbab', count: 10 },
-  { name: 'Ensembles', count: 5 },
+  { name: 'Jilbab', count: 10, active: true },
 ]
 
 type ViewMode = '2' | '3' | '4' | '5' | 'list'
 
-export function ShopContentPage3() {
+export function JilbabContent() {
   const [viewMode, setViewMode] = useState<ViewMode>('4')
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(null)
-  const [priceFilter, setPriceFilter] = useState<string | null>('1500')
+  const [selectedCategory, setSelectedCategory] = useState<string>('Jilbab')
+  const [priceFilter, setPriceFilter] = useState<string | null>('2000')
   const [sortBy, setSortBy] = useState('default')
 
   const clearFilters = () => {
-    setSelectedCategory(null)
+    setSelectedCategory('')
     setPriceFilter(null)
   }
 
@@ -149,13 +139,13 @@ export function ShopContentPage3() {
             Boutique
           </Link>
           <span className="text-gray-400">&gt;</span>
-          <span className="text-gray-900 font-medium">Page 3</span>
+          <span className="text-gray-900 font-medium">Jilbab</span>
         </nav>
       </div>
 
       {/* Page Title */}
       <div className="container-custom py-12">
-        <h1 className="text-4xl font-bold text-gray-900 text-center">Boutique</h1>
+        <h1 className="text-4xl font-bold text-gray-900 text-center">Jilbab</h1>
       </div>
 
       {/* Main Content */}
@@ -168,6 +158,23 @@ export function ShopContentPage3() {
               <SlidersHorizontal className="h-5 w-5" />
               <span className="font-medium">Filtrer les produits</span>
             </button>
+
+            {/* Active Filter */}
+            <div className="mb-6">
+              <h3 className="font-semibold text-gray-900 mb-3">Refine by</h3>
+              <button 
+                onClick={clearFilters}
+                className="text-sm text-blue-600 hover:text-blue-800 mb-4"
+              >
+                Clear All
+              </button>
+              <div className="flex items-center gap-2 mb-4">
+                <span className="inline-flex items-center px-3 py-1 bg-gray-900 text-white text-sm rounded-full">
+                  Jilbab
+                  <X className="h-3 w-3 ml-2" />
+                </span>
+              </div>
+            </div>
 
             {/* Filter by Category */}
             <div className="mb-8">
@@ -199,18 +206,11 @@ export function ShopContentPage3() {
                       >
                         {cat.name} ({cat.count})
                       </Link>
-                    ) : cat.name === 'Jilbab' ? (
-                      <Link
-                        href="/jilbab"
-                        className="text-sm text-gray-600 hover:text-gray-900 transition-colors"
-                      >
-                        {cat.name} ({cat.count})
-                      </Link>
                     ) : (
                       <button
                         onClick={() => setSelectedCategory(cat.name)}
                         className={`text-sm hover:text-gray-900 ${
-                          selectedCategory === cat.name ? 'text-gray-900 font-medium' : 'text-gray-600'
+                          cat.active ? 'text-gray-900 font-medium' : 'text-gray-600'
                         }`}
                       >
                         {cat.name} ({cat.count})
@@ -228,10 +228,10 @@ export function ShopContentPage3() {
                 <ChevronDown className="h-4 w-4" />
               </button>
               <div className="space-y-3">
-                <p className="text-sm text-gray-600">Prix : 1500 CFA — 35000 CFA</p>
+                <p className="text-sm text-gray-600">Prix : 2000 CFA — 40000 CFA</p>
                 <div className="relative">
                   <div className="h-2 bg-gray-200 rounded-full">
-                    <div className="h-2 bg-gray-800 rounded-full" style={{ width: '75%' }}></div>
+                    <div className="h-2 bg-gray-800 rounded-full" style={{ width: '35%' }}></div>
                   </div>
                   <div className="flex justify-between mt-2">
                     <span className="w-3 h-3 bg-gray-800 rounded-full"></span>
@@ -247,7 +247,7 @@ export function ShopContentPage3() {
             {/* Toolbar */}
             <div className="flex items-center justify-between mb-8 pb-5 border-b border-gray-200">
               <p className="text-sm text-gray-600">
-                33–43 of 47 Results
+                10 Results
               </p>
 
               <div className="flex items-center gap-4">
@@ -307,7 +307,7 @@ export function ShopContentPage3() {
               </div>
             </div>
 
-            {/* Products Grid - 11 produits avec grille adaptée */}
+            {/* Products Grid - 10 produits */}
             <div className={`grid ${getGridClass()} gap-5 mb-12`}>
               {products.map((product) => (
                 <div
@@ -342,28 +342,17 @@ export function ShopContentPage3() {
                       />
                       
                       {/* Choix des options Button */}
-                      {!product.outOfStock && (
-                        <div className="absolute bottom-0 left-0 right-0 p-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                          <button
-                            onClick={(e) => {
-                              e.preventDefault()
-                              // Add to cart logic here
-                            }}
-                            className="w-full py-2 bg-[#0A1F44] hover:bg-[#0A1F44]/90 text-white font-medium text-xs rounded transition-colors"
-                          >
-                            Choix des options
-                          </button>
-                        </div>
-                      )}
-
-                      {/* Out of Stock Overlay */}
-                      {product.outOfStock && (
-                        <div className="absolute inset-0 bg-white/80 flex items-center justify-center">
-                          <span className="px-4 py-2 bg-gray-100 text-gray-700 text-sm font-medium rounded">
-                            En Rupture De Stock
-                          </span>
-                        </div>
-                      )}
+                      <div className="absolute bottom-0 left-0 right-0 p-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <button
+                          onClick={(e) => {
+                            e.preventDefault()
+                            // Add to cart logic here
+                          }}
+                          className="w-full py-2 bg-[#0A1F44] hover:bg-[#0A1F44]/90 text-white font-medium text-xs rounded transition-colors"
+                        >
+                          Choix des options
+                        </button>
+                      </div>
                     </div>
 
                     {/* Product Info */}
@@ -396,29 +385,6 @@ export function ShopContentPage3() {
                   </Link>
                 </div>
               ))}
-            </div>
-
-            {/* Pagination */}
-            <div className="flex items-center justify-center gap-2 pb-16">
-              <Link
-                href="/products"
-                className="h-10 w-10 rounded-full bg-white border border-gray-300 text-gray-700 flex items-center justify-center font-medium hover:bg-gray-50 transition-colors"
-              >
-                1
-              </Link>
-              <Link
-                href="/products/page/2"
-                className="h-10 w-10 rounded-full bg-white border border-gray-300 text-gray-700 flex items-center justify-center font-medium hover:bg-gray-50 transition-colors"
-              >
-                2
-              </Link>
-              <button className="h-10 w-10 rounded-full bg-gray-900 text-white flex items-center justify-center font-medium hover:bg-gray-800 transition-colors">
-                3
-              </button>
-              <span className="px-2 text-gray-400">...</span>
-              <button className="h-10 w-10 rounded-full bg-white border border-gray-300 text-gray-700 flex items-center justify-center hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed" disabled>
-                <ChevronDown className="h-4 w-4 rotate-[-90deg]" />
-              </button>
             </div>
           </div>
         </div>
