@@ -12,7 +12,7 @@ const products = [
     name: 'Cagoule Koweïtienne - Une pièce',
     category: 'Accessoires',
     price: 2000,
-    image: '/accessoir1.jpg',
+    image: '/accesoir1.jpg',
     rating: 5,
   },
   {
@@ -20,7 +20,7 @@ const products = [
     name: 'Diana Hijab - 2 Pièces',
     category: 'Accessoires',
     price: 5500,
-    image: '/accessoir2.jpg',
+    image: '/accesoir2.jpg',
     rating: 5,
   },
   {
@@ -28,7 +28,7 @@ const products = [
     name: 'Mini hijab Lycra - 2 Pièces',
     category: 'Accessoires',
     price: 2500,
-    image: '/accessoir3.jpg',
+    image: '/accesoir3.jpg',
     rating: 5,
   },
   {
@@ -36,7 +36,7 @@ const products = [
     name: 'Saint Coran avec stylo intelligent',
     category: 'Accessoires',
     price: 35000,
-    image: '/accessoir4.jpg',
+    image: '/accesoir4.jpg',
     rating: 5,
   },
   {
@@ -44,7 +44,7 @@ const products = [
     name: 'Accessoire Premium 5',
     category: 'Accessoires',
     price: 8000,
-    image: '/accessoir5.jpg',
+    image: '/accesoir5.jpg',
     rating: 5,
   },
   {
@@ -52,7 +52,7 @@ const products = [
     name: 'Accessoire Premium 6',
     category: 'Accessoires',
     price: 12000,
-    image: '/accessoir6.jpg',
+    image: '/accesoir6.jpg',
     rating: 5,
   },
   {
@@ -60,7 +60,7 @@ const products = [
     name: 'Hijab Collection 7',
     category: 'Accessoires',
     price: 6500,
-    image: '/accessoir7.jpg',
+    image: '/accesoir7.jpg',
     rating: 5,
   },
   {
@@ -68,7 +68,7 @@ const products = [
     name: 'Hijab Collection 8',
     category: 'Accessoires',
     price: 7500,
-    image: '/accessoir8.jpg',
+    image: '/accesoir8.jpg',
     rating: 5,
   },
   {
@@ -76,7 +76,7 @@ const products = [
     name: 'Accessoire Spécial 9',
     category: 'Accessoires',
     price: 4500,
-    image: '/accessoir9.jpg',
+    image: '/accesoir9.jpg',
     rating: 5,
   },
 ]
