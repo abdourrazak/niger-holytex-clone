@@ -1,12 +1,12 @@
 import { Header } from '@/components/layout/Header'
 import { Footer } from '@/components/layout/Footer'
-import { AbayasContent } from '@/components/shop/AbayasContent'
+import { AbayasContentPage2 } from '@/components/abayas/AbayasContentPage2'
 
-export default function AbayasPage() {
+export default function AbayasPage2() {
   return (
     <div className="min-h-screen">
       <Header />
-      <AbayasContent />
+      <AbayasContentPage2 />
       <Footer />
     </div>
   )

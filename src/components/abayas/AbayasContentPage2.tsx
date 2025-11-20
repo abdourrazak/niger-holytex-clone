@@ -3,18 +3,82 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { ChevronDown, SlidersHorizontal, Grid2X2, Grid3X3, LayoutGrid, Rows3, List, X, Star } from 'lucide-react'
+import { ChevronDown, SlidersHorizontal, Grid2X2, Grid3X3, LayoutGrid, Rows3, List, X } from 'lucide-react'
+import { Star } from 'lucide-react'
 
 const products = [
-  { id: 17, name: 'Abaya Khalisah - Une pièce', price: 22000, image: '/abaya17.jpg', rating: 0 },
-  { id: 18, name: 'Abaya Latifah - Une pièce', price: 21000, image: '/abaya18.jpg', rating: 0 },
-  { id: 19, name: 'Abaya Layla - Une pièce', price: 23000, image: '/abaya19.jpg', rating: 0 },
-  { id: 20, name: 'Abaya Lubna - Une pièce', price: 20000, image: '/abaya20.jpg', rating: 0 },
-  { id: 21, name: 'Abaya Mahasin - Une pièce', price: 24000, image: '/abaya21.jpg', rating: 0 },
-  { id: 22, name: 'Abaya Maisarah - Une pièce', price: 19000, image: '/abaya22.jpg', rating: 0 },
-  { id: 23, name: 'Abaya Majidah - Une pièce', price: 25000, image: '/abaya23.jpg', rating: 0 },
-  { id: 24, name: 'Abaya Maram - Une pièce', price: 22000, image: '/abaya24.jpg', rating: 0 },
-  { id: 25, name: 'Abaya Mariam - Une pièce', price: 21000, image: '/abaya25.jpg', rating: 0 },
+  {
+    id: 117,
+    name: 'Abaya Qamar - Une pièce',
+    category: 'Abayas',
+    price: 23000,
+    image: '/abaya17.jpg',
+    rating: 5,
+  },
+  {
+    id: 118,
+    name: 'Abaya Rahma - Une pièce',
+    category: 'Abayas',
+    price: 26000,
+    image: '/abaya18.jpg',
+    rating: 5,
+  },
+  {
+    id: 119,
+    name: 'Abaya Safiya - Une pièce',
+    category: 'Abayas',
+    price: 21000,
+    image: '/abaya19.jpg',
+    rating: 5,
+  },
+  {
+    id: 120,
+    name: 'Abaya Taqwa - Une pièce',
+    category: 'Abayas',
+    price: 29000,
+    image: '/abaya20.jpg',
+    rating: 5,
+  },
+  {
+    id: 121,
+    name: 'Abaya Umm Salama - Une pièce',
+    category: 'Abayas',
+    price: 27000,
+    image: '/abaya21.jpg',
+    rating: 5,
+  },
+  {
+    id: 122,
+    name: 'Abaya Widad - Une pièce',
+    category: 'Abayas',
+    price: 25000,
+    image: '/abaya22.jpg',
+    rating: 5,
+  },
+  {
+    id: 123,
+    name: 'Abaya Yasmin - Une pièce',
+    category: 'Abayas',
+    price: 24000,
+    image: '/abaya23.jpg',
+    rating: 5,
+  },
+  {
+    id: 124,
+    name: 'Abaya Zeinab - Une pièce',
+    category: 'Abayas',
+    price: 28000,
+    image: '/abaya24.jpg',
+    rating: 5,
+  },
+  {
+    id: 125,
+    name: 'Abaya Zahra - Une pièce',
+    category: 'Abayas',
+    price: 30000,
+    image: '/abaya25.jpg',
+    rating: 5,
+  },
 ]
 
 const categories = [
@@ -28,16 +92,29 @@ type ViewMode = '2' | '3' | '4' | '5' | 'list'
 
 export function AbayasContentPage2() {
   const [viewMode, setViewMode] = useState<ViewMode>('4')
+  const [selectedCategory, setSelectedCategory] = useState<string>('Abayas')
+  const [priceFilter, setPriceFilter] = useState<string | null>('2000')
   const [sortBy, setSortBy] = useState('default')
+
+  const clearFilters = () => {
+    setSelectedCategory('')
+    setPriceFilter(null)
+  }
 
   const getGridClass = () => {
     switch (viewMode) {
-      case '2': return 'grid-cols-1 md:grid-cols-2'
-      case '3': return 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3'
-      case '4': return 'grid-cols-2 md:grid-cols-3 lg:grid-cols-4'
-      case '5': return 'grid-cols-2 md:grid-cols-3 lg:grid-cols-5'
-      case 'list': return 'grid-cols-1'
-      default: return 'grid-cols-2 md:grid-cols-3 lg:grid-cols-4'
+      case '2':
+        return 'grid-cols-1 md:grid-cols-2'
+      case '3':
+        return 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3'
+      case '4':
+        return 'grid-cols-2 md:grid-cols-3 lg:grid-cols-4'
+      case '5':
+        return 'grid-cols-2 md:grid-cols-3 lg:grid-cols-5'
+      case 'list':
+        return 'grid-cols-1'
+      default:
+        return 'grid-cols-2 md:grid-cols-3 lg:grid-cols-4'
     }
   }
 
@@ -46,11 +123,17 @@ export function AbayasContentPage2() {
       {/* Breadcrumb */}
       <div className="container-custom pt-6 pb-4">
         <nav className="flex items-center gap-2 text-sm">
-          <Link href="/" className="text-gray-600 hover:text-gray-900">Accueil</Link>
+          <Link href="/" className="text-gray-600 hover:text-gray-900">
+            Accueil
+          </Link>
           <span className="text-gray-400">&gt;</span>
-          <Link href="/products" className="text-gray-600 hover:text-gray-900">Boutique</Link>
+          <Link href="/products" className="text-gray-600 hover:text-gray-900">
+            Boutique
+          </Link>
           <span className="text-gray-400">&gt;</span>
-          <Link href="/products/abayas" className="text-gray-600 hover:text-gray-900">Abayas</Link>
+          <Link href="/abayas" className="text-gray-600 hover:text-gray-900">
+            Abayas
+          </Link>
           <span className="text-gray-400">&gt;</span>
           <span className="text-gray-900 font-medium">Page 2</span>
         </nav>
@@ -72,18 +155,19 @@ export function AbayasContentPage2() {
               <span className="font-medium">Filtrer les produits</span>
             </button>
 
-            {/* Refine by */}
-            <div className="mb-8 pb-8 border-b border-gray-200">
-              <div className="flex items-center justify-between mb-4">
-                <h3 className="font-semibold text-gray-900">Refine by</h3>
-                <Link href="/products" className="text-xs underline text-gray-600 hover:text-gray-900">
-                  Clear All
-                </Link>
-              </div>
-              <div className="flex flex-wrap gap-2">
-                <span className="inline-flex items-center gap-1 px-3 py-1 bg-gray-900 text-white text-xs font-medium rounded">
+            {/* Active Filter */}
+            <div className="mb-6">
+              <h3 className="font-semibold text-gray-900 mb-3">Refine by</h3>
+              <button 
+                onClick={clearFilters}
+                className="text-sm text-blue-600 hover:text-blue-800 mb-4"
+              >
+                Clear All
+              </button>
+              <div className="flex items-center gap-2 mb-4">
+                <span className="inline-flex items-center px-3 py-1 bg-gray-900 text-white text-sm rounded-full">
                   Abayas
-                  <X className="h-3 w-3 cursor-pointer" />
+                  <X className="h-3 w-3 ml-2" />
                 </span>
               </div>
             </div>
@@ -97,15 +181,14 @@ export function AbayasContentPage2() {
               <ul className="space-y-2">
                 {categories.map((cat) => (
                   <li key={cat.name}>
-                    <Link
-                      href={cat.name === 'Abayas' ? '/products/abayas' : '/products'}
-                      className={`text-sm hover:text-gray-900 flex justify-between ${
-                        cat.active ? 'text-gray-900 font-bold' : 'text-gray-600'
-                      } ${cat.name === 'Abayas' ? 'underline' : ''}`}
+                    <button
+                      onClick={() => setSelectedCategory(cat.name)}
+                      className={`text-sm hover:text-gray-900 ${
+                        cat.active ? 'text-gray-900 font-medium' : 'text-gray-600'
+                      }`}
                     >
-                      <span>{cat.name}</span>
-                      <span className="text-gray-400">({cat.count})</span>
-                    </Link>
+                      {cat.name} ({cat.count})
+                    </button>
                   </li>
                 ))}
               </ul>
@@ -121,7 +204,7 @@ export function AbayasContentPage2() {
                 <p className="text-sm text-gray-600">Prix : 2000 CFA — 40000 CFA</p>
                 <div className="relative">
                   <div className="h-2 bg-gray-200 rounded-full">
-                    <div className="h-2 bg-gray-800 rounded-full" style={{ width: '100%' }}></div>
+                    <div className="h-2 bg-gray-800 rounded-full" style={{ width: '60%' }}></div>
                   </div>
                   <div className="flex justify-between mt-2">
                     <span className="w-3 h-3 bg-gray-800 rounded-full"></span>
@@ -158,16 +241,46 @@ export function AbayasContentPage2() {
 
                 {/* View Mode Buttons */}
                 <div className="flex items-center gap-1 border-l border-gray-200 pl-4">
-                  <button onClick={() => setViewMode('2')} className={`p-2 rounded ${viewMode === '2' ? 'bg-gray-100' : 'hover:bg-gray-50'}`} title="2 colonnes"><Grid2X2 className="h-4 w-4" /></button>
-                  <button onClick={() => setViewMode('3')} className={`p-2 rounded ${viewMode === '3' ? 'bg-gray-100' : 'hover:bg-gray-50'}`} title="3 colonnes"><Grid3X3 className="h-4 w-4" /></button>
-                  <button onClick={() => setViewMode('4')} className={`p-2 rounded ${viewMode === '4' ? 'bg-gray-100' : 'hover:bg-gray-50'}`} title="4 colonnes"><LayoutGrid className="h-4 w-4" /></button>
-                  <button onClick={() => setViewMode('5')} className={`p-2 rounded ${viewMode === '5' ? 'bg-gray-100' : 'hover:bg-gray-50'}`} title="5 colonnes"><Rows3 className="h-4 w-4" /></button>
-                  <button onClick={() => setViewMode('list')} className={`p-2 rounded ${viewMode === 'list' ? 'bg-gray-100' : 'hover:bg-gray-50'}`} title="Liste"><List className="h-4 w-4" /></button>
+                  <button
+                    onClick={() => setViewMode('2')}
+                    className={`p-2 rounded ${viewMode === '2' ? 'bg-gray-100' : 'hover:bg-gray-50'}`}
+                    title="2 colonnes"
+                  >
+                    <Grid2X2 className="h-4 w-4" />
+                  </button>
+                  <button
+                    onClick={() => setViewMode('3')}
+                    className={`p-2 rounded ${viewMode === '3' ? 'bg-gray-100' : 'hover:bg-gray-50'}`}
+                    title="3 colonnes"
+                  >
+                    <Grid3X3 className="h-4 w-4" />
+                  </button>
+                  <button
+                    onClick={() => setViewMode('4')}
+                    className={`p-2 rounded ${viewMode === '4' ? 'bg-gray-100' : 'hover:bg-gray-50'}`}
+                    title="4 colonnes"
+                  >
+                    <LayoutGrid className="h-4 w-4" />
+                  </button>
+                  <button
+                    onClick={() => setViewMode('5')}
+                    className={`p-2 rounded ${viewMode === '5' ? 'bg-gray-100' : 'hover:bg-gray-50'}`}
+                    title="5 colonnes"
+                  >
+                    <Rows3 className="h-4 w-4" />
+                  </button>
+                  <button
+                    onClick={() => setViewMode('list')}
+                    className={`p-2 rounded ${viewMode === 'list' ? 'bg-gray-100' : 'hover:bg-gray-50'}`}
+                    title="Liste"
+                  >
+                    <List className="h-4 w-4" />
+                  </button>
                 </div>
               </div>
             </div>
 
-            {/* Products Grid - Minimaliste */}
+            {/* Products Grid - 9 produits */}
             <div className={`grid ${getGridClass()} gap-5 mb-12`}>
               {products.map((product) => (
                 <div
@@ -217,7 +330,7 @@ export function AbayasContentPage2() {
 
                     {/* Product Info */}
                     <div className="p-3">
-                      <p className="text-xs text-gray-500 mb-1 uppercase tracking-wide">Abayas</p>
+                      <p className="text-xs text-gray-500 mb-1 uppercase tracking-wide">{product.category}</p>
                       <h3 className="text-sm font-medium text-gray-900 mb-2 line-clamp-2 leading-tight">
                         {product.name}
                       </h3>
@@ -234,7 +347,7 @@ export function AbayasContentPage2() {
                             }`}
                           />
                         ))}
-                        {product.rating > 0 && <span className="text-xs text-gray-500 ml-1">(1)</span>}
+                        <span className="text-xs text-gray-500 ml-1">(1)</span>
                       </div>
 
                       {/* Price */}
@@ -250,7 +363,7 @@ export function AbayasContentPage2() {
             {/* Pagination */}
             <div className="flex items-center justify-center gap-2 pb-16">
               <Link
-                href="/products/abayas"
+                href="/abayas"
                 className="h-10 w-10 rounded-full bg-white border border-gray-300 text-gray-700 flex items-center justify-center font-medium hover:bg-gray-50 transition-colors"
               >
                 1

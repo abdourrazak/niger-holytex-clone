@@ -153,7 +153,7 @@ export function Header() {
               Boutique
             </Link>
             <Link
-              href="/categories/abayas"
+              href="/abayas"
               className="text-sm font-medium text-secondary hover:text-primary transition-colors"
             >
               Abayas
@@ -187,7 +187,7 @@ export function Header() {
               Boutique
             </Link>
             <Link
-              href="/categories/abayas"
+              href="/abayas"
               className="block py-2 text-sm font-medium text-secondary hover:text-primary transition-colors"
               onClick={() => setMobileMenuOpen(false)}
             >
