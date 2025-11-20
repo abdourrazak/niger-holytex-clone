@@ -8,132 +8,92 @@ import { Star } from 'lucide-react'
 
 const products = [
   {
-    id: 1,
-    name: 'Abaya alchir - 3 pièces',
+    id: 25,
+    name: 'Abaya Soraya - Une pièce',
     category: 'Abayas',
-    price: 30000,
-    image: '/Niger3.jpg',
+    price: 23000,
+    image: '/slide9.jpg',
     rating: 5,
   },
   {
-    id: 2,
-    name: 'Abaya Al malikah',
+    id: 26,
+    name: 'Abaya Taqwa - Une pièce',
     category: 'Abayas',
-    price: 20000,
-    image: '/Niger4.jpg',
+    price: 24000,
+    image: '/slide10.jpg',
     rating: 5,
   },
   {
-    id: 3,
-    name: 'Abaya Anam - Une pièce',
+    id: 27,
+    name: 'Abaya Umm Kulthum - Une pièce',
     category: 'Abayas',
-    price: 20000,
-    image: '/Niger6.jpg',
+    price: 25000,
+    image: '/slide11.jpg',
     rating: 5,
   },
   {
-    id: 4,
-    name: 'Abaya Atyaf - Une pièce',
+    id: 28,
+    name: 'Abaya Widad - Une pièce',
     category: 'Abayas',
-    price: 20000,
-    image: '/Niger7.jpg',
+    price: 26000,
+    image: '/slide12.jpg',
     rating: 5,
   },
   {
-    id: 5,
-    name: 'Abaya Ayaat - Une pièce',
+    id: 29,
+    name: 'Abaya Yasmin - Une pièce',
     category: 'Abayas',
-    price: 16000,
-    image: '/Niger1.jpg',
+    price: 27000,
+    image: '/slide13.jpg',
     rating: 5,
   },
   {
-    id: 6,
-    name: 'Abaya Basmalah - Une pièce',
+    id: 30,
+    name: 'Abaya Zeinab - Une pièce',
     category: 'Abayas',
-    price: 20000,
-    image: '/Niger2.jpg',
+    price: 28000,
+    image: '/slide14.jpg',
     rating: 5,
   },
   {
-    id: 7,
-    name: 'Abaya Dayyi - Une pièce',
+    id: 31,
+    name: 'Ensemble Amina - 2 pièces',
+    category: 'Ensembles',
+    price: 32000,
+    image: '/Sandy.png',
+    rating: 5,
+  },
+  {
+    id: 32,
+    name: 'Ensemble Khadija - 2 pièces',
+    category: 'Ensembles',
+    price: 35000,
+    image: '/ZamZam.png',
+    rating: 5,
+  },
+  {
+    id: 33,
+    name: 'Accessoire Holytex Premium',
+    category: 'Accessoires',
+    price: 15000,
+    image: '/Acc-holytex.png',
+    rating: 5,
+  },
+  {
+    id: 34,
+    name: 'Abaya Malak - Une pièce',
     category: 'Abayas',
-    price: 18000,
+    price: 19500,
     image: '/Niger8.jpg',
-    rating: 5,
-  },
-  {
-    id: 8,
-    name: 'Abaya Djannat',
-    category: 'Abayas',
-    price: 20000,
-    image: '/Niger5.jpg',
-    rating: 5,
-  },
-  {
-    id: 9,
-    name: 'Abaya Fairouz - Une pièce',
-    category: 'Abayas',
-    price: 20000,
-    image: '/Niger9.jpg',
-    rating: 5,
-  },
-  {
-    id: 10,
-    name: 'Abaya Fatouma - Une pièce',
-    category: 'Abayas',
-    price: 20000,
-    image: '/Niger10.jpg',
-    rating: 5,
-  },
-  {
-    id: 11,
-    name: 'Abaya Gonia - Une pièce',
-    category: 'Abayas',
-    price: 22000,
-    image: '/Niger1.jpg',
-    rating: 5,
-  },
-  {
-    id: 12,
-    name: 'Abaya Goufrane - Une pièce',
-    category: 'Abayas',
-    price: 22000,
-    image: '/Niger2.jpg',
-    rating: 5,
-  },
-  {
-    id: 13,
-    name: 'Abaya Hind - Une Pièce',
-    category: 'Abayas',
-    price: 22000,
-    image: '/Niger3.jpg',
     rating: 5,
     outOfStock: true,
   },
   {
-    id: 14,
-    name: 'Abaya Houdna - Une Pièce',
+    id: 35,
+    name: 'Abaya Nadia - Une pièce',
     category: 'Abayas',
-    price: 16000,
-    image: '/Niger4.jpg',
-    rating: 5,
-  },
-  {
-    id: 15,
-    name: 'Abaya Lina - 2 Pièces',
-    category: 'Abayas',
-    price: 27000,
-    image: '/Niger5.jpg',
-    rating: 5,
-  },
-  {
-    id: 16,
-    name: 'Abaya Liyan - 2 pièces',
-    category: 'Abayas',
-    price: 30000,
-    image: '/Niger6.jpg',
+    price: 21500,
+    image: '/Niger9.jpg',
     rating: 5,
   },
 ]
@@ -143,14 +103,15 @@ const categories = [
   { name: 'Tunique', count: 3 },
   { name: 'Accessoires', count: 9 },
   { name: 'Jilbab', count: 10 },
+  { name: 'Ensembles', count: 5 },
 ]
 
 type ViewMode = '2' | '3' | '4' | '5' | 'list'
 
-export function ShopContent() {
+export function ShopContentPage3() {
   const [viewMode, setViewMode] = useState<ViewMode>('4')
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null)
-  const [priceFilter, setPriceFilter] = useState<string | null>('2650')
+  const [priceFilter, setPriceFilter] = useState<string | null>('1500')
   const [sortBy, setSortBy] = useState('default')
 
   const clearFilters = () => {
@@ -184,7 +145,11 @@ export function ShopContent() {
             Accueil
           </Link>
           <span className="text-gray-400">&gt;</span>
-          <span className="text-gray-900 font-medium">Boutique</span>
+          <Link href="/products" className="text-gray-600 hover:text-gray-900">
+            Boutique
+          </Link>
+          <span className="text-gray-400">&gt;</span>
+          <span className="text-gray-900 font-medium">Page 3</span>
         </nav>
       </div>
 
@@ -203,32 +168,6 @@ export function ShopContent() {
               <SlidersHorizontal className="h-5 w-5" />
               <span className="font-medium">Filtrer les produits</span>
             </button>
-
-            {/* Refine By */}
-            <div className="mb-8">
-              <div className="flex items-center justify-between mb-4">
-                <h3 className="font-semibold text-gray-900">Refine by</h3>
-                <button 
-                  onClick={clearFilters}
-                  className="text-sm text-gray-600 hover:text-gray-900 underline"
-                >
-                  Clear All
-                </button>
-              </div>
-
-              {/* Active Filters */}
-              {priceFilter && (
-                <div className="mb-4">
-                  <button
-                    onClick={() => setPriceFilter(null)}
-                    className="inline-flex items-center gap-2 px-3 py-1.5 bg-gray-900 text-white text-sm rounded"
-                  >
-                    <span>Price: 2650 CFA +</span>
-                    <X className="h-3 w-3" />
-                  </button>
-                </div>
-              )}
-            </div>
 
             {/* Filter by Category */}
             <div className="mb-8">
@@ -258,7 +197,18 @@ export function ShopContent() {
                 <h3 className="font-semibold text-gray-900">Prix</h3>
                 <ChevronDown className="h-4 w-4" />
               </button>
-              {/* Price filter options would go here */}
+              <div className="space-y-3">
+                <p className="text-sm text-gray-600">Prix : 1500 CFA — 35000 CFA</p>
+                <div className="relative">
+                  <div className="h-2 bg-gray-200 rounded-full">
+                    <div className="h-2 bg-gray-800 rounded-full" style={{ width: '75%' }}></div>
+                  </div>
+                  <div className="flex justify-between mt-2">
+                    <span className="w-3 h-3 bg-gray-800 rounded-full"></span>
+                    <span className="w-3 h-3 bg-gray-800 rounded-full"></span>
+                  </div>
+                </div>
+              </div>
             </div>
           </aside>
 
@@ -267,7 +217,7 @@ export function ShopContent() {
             {/* Toolbar */}
             <div className="flex items-center justify-between mb-8 pb-5 border-b border-gray-200">
               <p className="text-sm text-gray-600">
-                1–16 of 46 Results
+                33–43 of 47 Results
               </p>
 
               <div className="flex items-center gap-4">
@@ -327,19 +277,19 @@ export function ShopContent() {
               </div>
             </div>
 
-            {/* Products Grid */}
-            <div className={`grid ${getGridClass()} gap-7 mb-12`}>
+            {/* Products Grid - 11 produits avec grille adaptée */}
+            <div className={`grid ${getGridClass()} gap-5 mb-12`}>
               {products.map((product) => (
                 <div
                   key={product.id}
-                  className="group relative bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow"
+                  className="group relative bg-white rounded-lg overflow-hidden hover:shadow-lg transition-shadow duration-300"
                 >
                   <Link href={`/products/${product.id}`} className="block">
                     {/* Product Image */}
                     <div className="relative aspect-[3/4] bg-gray-50 overflow-hidden">
                       {/* Badge */}
-                      <div className="absolute top-3 left-3 z-10">
-                        <span className="inline-block px-2.5 py-1 bg-orange-500 text-white text-xs font-semibold rounded shadow-sm">
+                      <div className="absolute top-2 left-2 z-10">
+                        <span className="inline-block px-2 py-0.5 bg-orange-500 text-white text-xs font-medium rounded">
                           Niger - Holytex
                         </span>
                       </div>
@@ -347,9 +297,9 @@ export function ShopContent() {
                       {/* Wishlist Icon */}
                       <button 
                         onClick={(e) => e.preventDefault()}
-                        className="absolute top-3 right-3 z-10 h-10 w-10 rounded-full bg-white/90 hover:bg-white flex items-center justify-center shadow-md opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                        className="absolute top-2 right-2 z-10 h-8 w-8 rounded-full bg-white/80 hover:bg-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                       >
-                        <svg className="h-5 w-5 text-gray-600 hover:text-red-500 hover:fill-red-500 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg className="h-4 w-4 text-gray-600 hover:text-red-500 hover:fill-red-500 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
                         </svg>
                       </button>
@@ -361,21 +311,21 @@ export function ShopContent() {
                         className="object-cover group-hover:scale-105 transition-transform duration-300"
                       />
                       
-                      {/* Choix des options Button - Bottom */}
+                      {/* Choix des options Button */}
                       {!product.outOfStock && (
-                        <div className="absolute bottom-0 left-0 right-0 p-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <div className="absolute bottom-0 left-0 right-0 p-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                           <button
                             onClick={(e) => {
                               e.preventDefault()
                               // Add to cart logic here
                             }}
-                            className="w-full py-2.5 bg-[#0A1F44] hover:bg-[#0A1F44]/90 text-white font-semibold text-sm rounded transition-colors"
+                            className="w-full py-2 bg-[#0A1F44] hover:bg-[#0A1F44]/90 text-white font-medium text-xs rounded transition-colors"
                           >
                             Choix des options
                           </button>
                         </div>
                       )}
-                      
+
                       {/* Out of Stock Overlay */}
                       {product.outOfStock && (
                         <div className="absolute inset-0 bg-white/80 flex items-center justify-center">
@@ -387,18 +337,18 @@ export function ShopContent() {
                     </div>
 
                     {/* Product Info */}
-                    <div className="p-4">
-                      <p className="text-xs text-gray-500 mb-1.5 uppercase tracking-wide">{product.category}</p>
-                      <h3 className="text-sm font-medium text-gray-900 mb-2 line-clamp-2 min-h-[40px]">
+                    <div className="p-3">
+                      <p className="text-xs text-gray-500 mb-1 uppercase tracking-wide">{product.category}</p>
+                      <h3 className="text-sm font-medium text-gray-900 mb-2 line-clamp-2 leading-tight">
                         {product.name}
                       </h3>
 
                       {/* Rating */}
-                      <div className="flex items-center gap-1 mb-3">
+                      <div className="flex items-center gap-1 mb-2">
                         {[...Array(5)].map((_, i) => (
                           <Star
                             key={i}
-                            className={`h-3.5 w-3.5 ${
+                            className={`h-3 w-3 ${
                               i < product.rating
                                 ? 'fill-orange-400 text-orange-400'
                                 : 'fill-gray-200 text-gray-200'
@@ -409,7 +359,7 @@ export function ShopContent() {
                       </div>
 
                       {/* Price */}
-                      <p className="text-lg font-bold text-gray-900">
+                      <p className="text-base font-bold text-gray-900">
                         {product.price.toLocaleString()} CFA
                       </p>
                     </div>
@@ -420,28 +370,25 @@ export function ShopContent() {
 
             {/* Pagination */}
             <div className="flex items-center justify-center gap-2 pb-16">
-              <button className="h-10 w-10 rounded-full bg-gray-900 text-white flex items-center justify-center font-medium hover:bg-gray-800 transition-colors">
+              <Link
+                href="/products"
+                className="h-10 w-10 rounded-full bg-white border border-gray-300 text-gray-700 flex items-center justify-center font-medium hover:bg-gray-50 transition-colors"
+              >
                 1
-              </button>
+              </Link>
               <Link
                 href="/products/page/2"
                 className="h-10 w-10 rounded-full bg-white border border-gray-300 text-gray-700 flex items-center justify-center font-medium hover:bg-gray-50 transition-colors"
               >
                 2
               </Link>
-              <Link
-                href="/products/page/3"
-                className="h-10 w-10 rounded-full bg-white border border-gray-300 text-gray-700 flex items-center justify-center font-medium hover:bg-gray-50 transition-colors"
-              >
+              <button className="h-10 w-10 rounded-full bg-gray-900 text-white flex items-center justify-center font-medium hover:bg-gray-800 transition-colors">
                 3
-              </Link>
+              </button>
               <span className="px-2 text-gray-400">...</span>
-              <Link
-                href="/products/page/2"
-                className="h-10 w-10 rounded-full bg-white border border-gray-300 text-gray-700 flex items-center justify-center hover:bg-gray-50 transition-colors"
-              >
+              <button className="h-10 w-10 rounded-full bg-white border border-gray-300 text-gray-700 flex items-center justify-center hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed" disabled>
                 <ChevronDown className="h-4 w-4 rotate-[-90deg]" />
-              </Link>
+              </button>
             </div>
           </div>
         </div>

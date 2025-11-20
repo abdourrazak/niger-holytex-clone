@@ -342,9 +342,12 @@ export function ShopContentPage2() {
               <button className="h-10 w-10 rounded-full bg-gray-900 text-white flex items-center justify-center font-medium hover:bg-gray-800 transition-colors">
                 2
               </button>
-              <button className="h-10 w-10 rounded-full bg-white border border-gray-300 text-gray-700 flex items-center justify-center font-medium hover:bg-gray-50 transition-colors">
+              <Link
+                href="/products/page/3"
+                className="h-10 w-10 rounded-full bg-white border border-gray-300 text-gray-700 flex items-center justify-center font-medium hover:bg-gray-50 transition-colors"
+              >
                 3
-              </button>
+              </Link>
               <span className="px-2 text-gray-400">...</span>
               <button className="h-10 w-10 rounded-full bg-white border border-gray-300 text-gray-700 flex items-center justify-center hover:bg-gray-50 transition-colors">
                 <ChevronDown className="h-4 w-4 rotate-[-90deg]" />
