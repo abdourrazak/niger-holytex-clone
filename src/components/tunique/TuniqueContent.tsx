@@ -12,7 +12,7 @@ const products = [
     name: 'Abaya Taliya - Une pièce',
     category: 'Tunique',
     price: 17500,
-    image: '/public1.jpg',
+    image: '/tunique1.jpg',
     rating: 5,
   },
   {
@@ -20,7 +20,7 @@ const products = [
     name: 'Tunique Israh',
     category: 'Tunique',
     price: 14000,
-    image: '/public2.jpg',
+    image: '/tunique2.jpg',
     rating: 5,
   },
   {
@@ -28,7 +28,7 @@ const products = [
     name: 'Tunique Layali - 2 Pièces',
     category: 'Tunique',
     price: 14000,
-    image: '/public3.jpg',
+    image: '/tunique3.png',
     rating: 5,
   },
 ]
@@ -239,36 +239,6 @@ export function TuniqueContent() {
 
             {/* Products Grid - 3 produits */}
             <div className={`grid ${getGridClass()} gap-5 mb-12`}>
-              {/* Placeholder pour le premier produit */}
-              <div className="group relative bg-white rounded-lg overflow-hidden hover:shadow-lg transition-shadow duration-300">
-                <div className="relative aspect-[3/4] bg-gray-100 flex items-center justify-center">
-                  <div className="text-center text-gray-400">
-                    <div className="w-16 h-16 mx-auto mb-2 bg-gray-200 rounded-lg flex items-center justify-center">
-                      <svg className="w-8 h-8" fill="currentColor" viewBox="0 0 20 20">
-                        <path fillRule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clipRule="evenodd" />
-                      </svg>
-                    </div>
-                    <p className="text-sm">Image placeholder</p>
-                  </div>
-                </div>
-                <div className="p-3">
-                  <p className="text-xs text-gray-500 mb-1 uppercase tracking-wide">Tunique</p>
-                  <h3 className="text-sm font-medium text-gray-900 mb-2 line-clamp-2 leading-tight">
-                    Abaya Taliya - Une pièce
-                  </h3>
-                  <div className="flex items-center gap-1 mb-2">
-                    {[...Array(5)].map((_, i) => (
-                      <Star
-                        key={i}
-                        className="h-3 w-3 fill-orange-400 text-orange-400"
-                      />
-                    ))}
-                    <span className="text-xs text-gray-500 ml-1">(1)</span>
-                  </div>
-                  <p className="text-base font-bold text-gray-900">17500 CFA</p>
-                </div>
-              </div>
-
               {products.map((product) => (
                 <div
                   key={product.id}
