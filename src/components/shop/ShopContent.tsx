@@ -239,14 +239,23 @@ export function ShopContent() {
               <ul className="space-y-2">
                 {categories.map((cat) => (
                   <li key={cat.name}>
-                    <button
-                      onClick={() => setSelectedCategory(cat.name)}
-                      className={`text-sm hover:text-gray-900 ${
-                        selectedCategory === cat.name ? 'text-gray-900 font-medium' : 'text-gray-600'
-                      }`}
-                    >
-                      {cat.name} ({cat.count})
-                    </button>
+                    {cat.name === 'Abayas' ? (
+                      <Link
+                        href="/abayas"
+                        className="text-sm text-gray-600 hover:text-gray-900 transition-colors"
+                      >
+                        {cat.name} ({cat.count})
+                      </Link>
+                    ) : (
+                      <button
+                        onClick={() => setSelectedCategory(cat.name)}
+                        className={`text-sm hover:text-gray-900 ${
+                          selectedCategory === cat.name ? 'text-gray-900 font-medium' : 'text-gray-600'
+                        }`}
+                      >
+                        {cat.name} ({cat.count})
+                      </button>
+                    )}
                   </li>
                 ))}
               </ul>
