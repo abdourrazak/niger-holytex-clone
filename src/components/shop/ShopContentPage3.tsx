@@ -84,7 +84,7 @@ const products = [
     name: 'Abaya Malak - Une pièce',
     category: 'Abayas',
     price: 19500,
-    image: '/Niger8.jpg',
+    image: '/slide18.jpg',
     rating: 5,
     outOfStock: true,
   },
@@ -93,7 +93,7 @@ const products = [
     name: 'Abaya Nadia - Une pièce',
     category: 'Abayas',
     price: 21500,
-    image: '/Niger9.jpg',
+    image: '/slide19.jpg',
     rating: 5,
   },
 ]

@@ -12,7 +12,7 @@ const products = [
     name: 'Abaya alchir - 3 pièces',
     category: 'Abayas',
     price: 30000,
-    image: '/Niger3.jpg',
+    image: '/slide13.jpg',
     rating: 5,
   },
   {
@@ -20,7 +20,7 @@ const products = [
     name: 'Abaya Al malikah',
     category: 'Abayas',
     price: 20000,
-    image: '/Niger4.jpg',
+    image: '/slide14.jpg',
     rating: 5,
   },
   {
@@ -28,7 +28,7 @@ const products = [
     name: 'Abaya Anam - Une pièce',
     category: 'Abayas',
     price: 20000,
-    image: '/Niger6.jpg',
+    image: '/slide16.jpg',
     rating: 5,
   },
   {
@@ -36,7 +36,7 @@ const products = [
     name: 'Abaya Atyaf - Une pièce',
     category: 'Abayas',
     price: 20000,
-    image: '/Niger7.jpg',
+    image: '/slide7.jpg',
     rating: 5,
   },
   {
@@ -44,7 +44,7 @@ const products = [
     name: 'Abaya Ayaat - Une pièce',
     category: 'Abayas',
     price: 16000,
-    image: '/Niger1.jpg',
+    image: '/slide11.jpg',
     rating: 5,
   },
   {
@@ -52,7 +52,7 @@ const products = [
     name: 'Abaya Basmalah - Une pièce',
     category: 'Abayas',
     price: 20000,
-    image: '/Niger2.jpg',
+    image: '/slide12.jpg',
     rating: 5,
   },
   {
@@ -60,7 +60,7 @@ const products = [
     name: 'Abaya Dayyi - Une pièce',
     category: 'Abayas',
     price: 18000,
-    image: '/Niger8.jpg',
+    image: '/slide8.jpg',
     rating: 5,
   },
   {
@@ -68,7 +68,7 @@ const products = [
     name: 'Abaya Djannat',
     category: 'Abayas',
     price: 20000,
-    image: '/Niger5.jpg',
+    image: '/slide15.jpg',
     rating: 5,
   },
   {
@@ -76,7 +76,7 @@ const products = [
     name: 'Abaya Fairouz - Une pièce',
     category: 'Abayas',
     price: 20000,
-    image: '/Niger9.jpg',
+    image: '/slide9.jpg',
     rating: 5,
   },
   {
@@ -84,7 +84,7 @@ const products = [
     name: 'Abaya Fatouma - Une pièce',
     category: 'Abayas',
     price: 20000,
-    image: '/Niger10.jpg',
+    image: '/slide10.jpg',
     rating: 5,
   },
   {
@@ -92,7 +92,7 @@ const products = [
     name: 'Abaya Gonia - Une pièce',
     category: 'Abayas',
     price: 22000,
-    image: '/Niger1.jpg',
+    image: '/slide11.jpg',
     rating: 5,
   },
   {
@@ -100,7 +100,7 @@ const products = [
     name: 'Abaya Goufrane - Une pièce',
     category: 'Abayas',
     price: 22000,
-    image: '/Niger2.jpg',
+    image: '/slide12.jpg',
     rating: 5,
   },
   {
@@ -108,7 +108,7 @@ const products = [
     name: 'Abaya Hind - Une Pièce',
     category: 'Abayas',
     price: 22000,
-    image: '/Niger3.jpg',
+    image: '/slide13.jpg',
     rating: 5,
     outOfStock: true,
   },
@@ -117,7 +117,7 @@ const products = [
     name: 'Abaya Houdna - Une Pièce',
     category: 'Abayas',
     price: 16000,
-    image: '/Niger4.jpg',
+    image: '/slide14.jpg',
     rating: 5,
   },
   {
@@ -125,7 +125,7 @@ const products = [
     name: 'Abaya Lina - 2 Pièces',
     category: 'Abayas',
     price: 27000,
-    image: '/Niger5.jpg',
+    image: '/slide15.jpg',
     rating: 5,
   },
   {
@@ -133,7 +133,7 @@ const products = [
     name: 'Abaya Liyan - 2 pièces',
     category: 'Abayas',
     price: 30000,
-    image: '/Niger6.jpg',
+    image: '/slide16.jpg',
     rating: 5,
   },
 ]

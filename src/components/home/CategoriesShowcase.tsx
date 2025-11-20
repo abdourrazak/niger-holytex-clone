@@ -20,25 +20,25 @@ const categories = [
     products: [
       {
         id: 1,
-        image: '/Niger1.jpg',
+        image: '/abaya19.jpg',
         name: 'Abaya Lina - 2 Pièces',
         price: '27000 CFA',
       },
       {
         id: 2,
-        image: '/Niger2.jpg',
+        image: '/abaya12.jpg',
         name: 'Abaya Qamar - Une pièce',
         price: '21000 CFA',
       },
       {
         id: 3,
-        image: '/Niger3.jpg',
+        image: '/abaya13.jpg',
         name: 'Abaya alchir - 3 pièces',
         price: '30000 CFA',
       },
       {
         id: 4,
-        image: '/Niger4.jpg',
+        image: '/abaya14.jpg',
         name: 'Abaya sabaya - Une pièce',
         price: '21000 CFA',
       },
@@ -56,25 +56,25 @@ const categories = [
     products: [
       {
         id: 5,
-        image: '/Niger5.jpg',
+        image: '/abaya15.jpg',
         name: 'Ensemble Amina - 2 Pièces',
         price: '28000 CFA',
       },
       {
         id: 6,
-        image: '/Niger6.jpg',
+        image: '/abaya16.jpg',
         name: 'Ensemble Leila - 3 pièces',
         price: '32000 CFA',
       },
       {
         id: 7,
-        image: '/Niger7.jpg',
+        image: '/abaya17.jpg',
         name: 'Ensemble Yasmine - 2 pièces',
         price: '29000 CFA',
       },
       {
         id: 8,
-        image: '/Niger8.jpg',
+        image: '/abaya18.jpg',
         name: 'Ensemble Salma - Une pièce',
         price: '25000 CFA',
       },
