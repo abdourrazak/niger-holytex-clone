@@ -8,88 +8,48 @@ import { Star } from 'lucide-react'
 
 const products = [
   {
-    id: 17,
-    name: 'Abaya Nairouz - Une pièce',
-    category: 'Abayas',
-    price: 22000,
-    image: '/slide1.jpg',
+    id: 201,
+    name: 'Abaya Taliya - Une pièce',
+    category: 'Tunique',
+    price: 17500,
+    image: '/public1.jpg',
     rating: 5,
   },
   {
-    id: 18,
-    name: 'Abaya Nour mawaddah - Une pièce',
-    category: 'Abayas',
-    price: 22000,
-    image: '/slide2.jpg',
-    rating: 5,
-  },
-  {
-    id: 19,
-    name: 'Abaya Ounoud - Une pièce',
-    category: 'Abayas',
+    id: 202,
+    name: 'Tunique Israh',
+    category: 'Tunique',
     price: 14000,
-    image: '/slide3.jpg',
+    image: '/public2.jpg',
     rating: 5,
   },
   {
-    id: 20,
-    name: 'Abaya Qamar - Une pièce',
-    category: 'Abayas',
-    price: 21000,
-    image: '/slide4.jpg',
-    rating: 5,
-  },
-  {
-    id: 21,
-    name: 'Abaya Rahma - Une pièce',
-    category: 'Abayas',
-    price: 18000,
-    image: '/slide5.jpg',
-    rating: 5,
-  },
-  {
-    id: 22,
-    name: 'Abaya Safiya - Une pièce',
-    category: 'Abayas',
-    price: 19000,
-    image: '/slide6.jpg',
-    rating: 5,
-  },
-  {
-    id: 23,
-    name: 'Abaya Salma - Une pièce',
-    category: 'Abayas',
-    price: 20000,
-    image: '/slide7.jpg',
-    rating: 5,
-  },
-  {
-    id: 24,
-    name: 'Abaya Samira - Une pièce',
-    category: 'Abayas',
-    price: 17000,
-    image: '/slide8.jpg',
+    id: 203,
+    name: 'Tunique Layali - 2 Pièces',
+    category: 'Tunique',
+    price: 14000,
+    image: '/public3.jpg',
     rating: 5,
   },
 ]
 
 const categories = [
   { name: 'Abayas', count: 25 },
-  { name: 'Tunique', count: 3 },
+  { name: 'Tunique', count: 3, active: true },
   { name: 'Accessoires', count: 9 },
   { name: 'Jilbab', count: 10 },
 ]
 
 type ViewMode = '2' | '3' | '4' | '5' | 'list'
 
-export function ShopContentPage2() {
+export function TuniqueContent() {
   const [viewMode, setViewMode] = useState<ViewMode>('4')
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(null)
+  const [selectedCategory, setSelectedCategory] = useState<string>('Tunique')
   const [priceFilter, setPriceFilter] = useState<string | null>('2000')
   const [sortBy, setSortBy] = useState('default')
 
   const clearFilters = () => {
-    setSelectedCategory(null)
+    setSelectedCategory('')
     setPriceFilter(null)
   }
 
@@ -123,13 +83,13 @@ export function ShopContentPage2() {
             Boutique
           </Link>
           <span className="text-gray-400">&gt;</span>
-          <span className="text-gray-900 font-medium">Page 2</span>
+          <span className="text-gray-900 font-medium">Tunique</span>
         </nav>
       </div>
 
       {/* Page Title */}
       <div className="container-custom py-12">
-        <h1 className="text-4xl font-bold text-gray-900 text-center">Boutique</h1>
+        <h1 className="text-4xl font-bold text-gray-900 text-center">Tunique</h1>
       </div>
 
       {/* Main Content */}
@@ -142,6 +102,23 @@ export function ShopContentPage2() {
               <SlidersHorizontal className="h-5 w-5" />
               <span className="font-medium">Filtrer les produits</span>
             </button>
+
+            {/* Active Filter */}
+            <div className="mb-6">
+              <h3 className="font-semibold text-gray-900 mb-3">Refine by</h3>
+              <button 
+                onClick={clearFilters}
+                className="text-sm text-blue-600 hover:text-blue-800 mb-4"
+              >
+                Clear All
+              </button>
+              <div className="flex items-center gap-2 mb-4">
+                <span className="inline-flex items-center px-3 py-1 bg-gray-900 text-white text-sm rounded-full">
+                  Tunique
+                  <X className="h-3 w-3 ml-2" />
+                </span>
+              </div>
+            </div>
 
             {/* Filter by Category */}
             <div className="mb-8">
@@ -159,18 +136,11 @@ export function ShopContentPage2() {
                       >
                         {cat.name} ({cat.count})
                       </Link>
-                    ) : cat.name === 'Tunique' ? (
-                      <Link
-                        href="/tunique"
-                        className="text-sm text-gray-600 hover:text-gray-900 transition-colors"
-                      >
-                        {cat.name} ({cat.count})
-                      </Link>
                     ) : (
                       <button
                         onClick={() => setSelectedCategory(cat.name)}
                         className={`text-sm hover:text-gray-900 ${
-                          selectedCategory === cat.name ? 'text-gray-900 font-medium' : 'text-gray-600'
+                          cat.active ? 'text-gray-900 font-medium' : 'text-gray-600'
                         }`}
                       >
                         {cat.name} ({cat.count})
@@ -191,7 +161,7 @@ export function ShopContentPage2() {
                 <p className="text-sm text-gray-600">Prix : 2000 CFA — 40000 CFA</p>
                 <div className="relative">
                   <div className="h-2 bg-gray-200 rounded-full">
-                    <div className="h-2 bg-gray-800 rounded-full" style={{ width: '60%' }}></div>
+                    <div className="h-2 bg-gray-800 rounded-full" style={{ width: '35%' }}></div>
                   </div>
                   <div className="flex justify-between mt-2">
                     <span className="w-3 h-3 bg-gray-800 rounded-full"></span>
@@ -207,7 +177,7 @@ export function ShopContentPage2() {
             {/* Toolbar */}
             <div className="flex items-center justify-between mb-8 pb-5 border-b border-gray-200">
               <p className="text-sm text-gray-600">
-                17–32 of 47 Results
+                3 Results
               </p>
 
               <div className="flex items-center gap-4">
@@ -267,24 +237,54 @@ export function ShopContentPage2() {
               </div>
             </div>
 
-            {/* Products Grid - Minimaliste */}
+            {/* Products Grid - 3 produits */}
             <div className={`grid ${getGridClass()} gap-5 mb-12`}>
+              {/* Placeholder pour le premier produit */}
+              <div className="group relative bg-white rounded-lg overflow-hidden hover:shadow-lg transition-shadow duration-300">
+                <div className="relative aspect-[3/4] bg-gray-100 flex items-center justify-center">
+                  <div className="text-center text-gray-400">
+                    <div className="w-16 h-16 mx-auto mb-2 bg-gray-200 rounded-lg flex items-center justify-center">
+                      <svg className="w-8 h-8" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clipRule="evenodd" />
+                      </svg>
+                    </div>
+                    <p className="text-sm">Image placeholder</p>
+                  </div>
+                </div>
+                <div className="p-3">
+                  <p className="text-xs text-gray-500 mb-1 uppercase tracking-wide">Tunique</p>
+                  <h3 className="text-sm font-medium text-gray-900 mb-2 line-clamp-2 leading-tight">
+                    Abaya Taliya - Une pièce
+                  </h3>
+                  <div className="flex items-center gap-1 mb-2">
+                    {[...Array(5)].map((_, i) => (
+                      <Star
+                        key={i}
+                        className="h-3 w-3 fill-orange-400 text-orange-400"
+                      />
+                    ))}
+                    <span className="text-xs text-gray-500 ml-1">(1)</span>
+                  </div>
+                  <p className="text-base font-bold text-gray-900">17500 CFA</p>
+                </div>
+              </div>
+
               {products.map((product) => (
                 <div
                   key={product.id}
                   className="group relative bg-white rounded-lg overflow-hidden hover:shadow-lg transition-shadow duration-300"
                 >
                   <Link href={`/products/${product.id}`} className="block">
-                    {/* Product Image - Plus compact */}
+                    {/* Product Image */}
                     <div className="relative aspect-[3/4] bg-gray-50 overflow-hidden">
-                      {/* Badge - Plus petit */}
+                      {/* Badge */}
                       <div className="absolute top-2 left-2 z-10">
                         <span className="inline-block px-2 py-0.5 bg-orange-500 text-white text-xs font-medium rounded">
                           Niger - Holytex
                         </span>
                       </div>
                       
-                      {/* Wishlist Icon - Plus discret */}
+                      {/* Wishlist Icon */}
                       <button 
                         onClick={(e) => e.preventDefault()}
                         className="absolute top-2 right-2 z-10 h-8 w-8 rounded-full bg-white/80 hover:bg-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300"
@@ -301,7 +301,7 @@ export function ShopContentPage2() {
                         className="object-cover group-hover:scale-105 transition-transform duration-300"
                       />
                       
-                      {/* Choix des options Button - Plus subtil */}
+                      {/* Choix des options Button */}
                       <div className="absolute bottom-0 left-0 right-0 p-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                         <button
                           onClick={(e) => {
@@ -315,14 +315,14 @@ export function ShopContentPage2() {
                       </div>
                     </div>
 
-                    {/* Product Info - Plus compact */}
+                    {/* Product Info */}
                     <div className="p-3">
                       <p className="text-xs text-gray-500 mb-1 uppercase tracking-wide">{product.category}</p>
                       <h3 className="text-sm font-medium text-gray-900 mb-2 line-clamp-2 leading-tight">
                         {product.name}
                       </h3>
 
-                      {/* Rating - Plus petit */}
+                      {/* Rating */}
                       <div className="flex items-center gap-1 mb-2">
                         {[...Array(5)].map((_, i) => (
                           <Star
@@ -345,29 +345,6 @@ export function ShopContentPage2() {
                   </Link>
                 </div>
               ))}
-            </div>
-
-            {/* Pagination */}
-            <div className="flex items-center justify-center gap-2 pb-16">
-              <Link
-                href="/products"
-                className="h-10 w-10 rounded-full bg-white border border-gray-300 text-gray-700 flex items-center justify-center font-medium hover:bg-gray-50 transition-colors"
-              >
-                1
-              </Link>
-              <button className="h-10 w-10 rounded-full bg-gray-900 text-white flex items-center justify-center font-medium hover:bg-gray-800 transition-colors">
-                2
-              </button>
-              <Link
-                href="/products/page/3"
-                className="h-10 w-10 rounded-full bg-white border border-gray-300 text-gray-700 flex items-center justify-center font-medium hover:bg-gray-50 transition-colors"
-              >
-                3
-              </Link>
-              <span className="px-2 text-gray-400">...</span>
-              <button className="h-10 w-10 rounded-full bg-white border border-gray-300 text-gray-700 flex items-center justify-center hover:bg-gray-50 transition-colors">
-                <ChevronDown className="h-4 w-4 rotate-[-90deg]" />
-              </button>
             </div>
           </div>
         </div>
