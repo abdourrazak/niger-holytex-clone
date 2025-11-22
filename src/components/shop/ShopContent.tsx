@@ -1,10 +1,15 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { ChevronDown, SlidersHorizontal, Grid2X2, Grid3X3, LayoutGrid, Rows3, List, X } from 'lucide-react'
+import { ChevronDown, SlidersHorizontal, Grid2X2, Grid3X3, LayoutGrid, Rows3, List, X, Filter } from 'lucide-react'
 import { Star } from 'lucide-react'
+import { ProductFilters } from './ProductFilters'
+import { Sheet, SheetContent, SheetTrigger, SheetHeader, SheetTitle, SheetDescription } from '@/components/ui/sheet'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+import { Button } from '@/components/ui/button'
+import { Badge } from '@/components/ui/badge'
 
 const products = [
   {
@@ -149,330 +154,305 @@ type ViewMode = '2' | '3' | '4' | '5' | 'list'
 
 export function ShopContent() {
   const [viewMode, setViewMode] = useState<ViewMode>('4')
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(null)
-  const [priceFilter, setPriceFilter] = useState<string | null>('2650')
+  const [selectedCategories, setSelectedCategories] = useState<string[]>([])
+  const [priceRange, setPriceRange] = useState<[number, number]>([0, 50000])
   const [sortBy, setSortBy] = useState('default')
 
-  const clearFilters = () => {
-    setSelectedCategory(null)
-    setPriceFilter(null)
+  const handleCategoryChange = (category: string) => {
+    if (category === 'reset') {
+      setSelectedCategories([])
+      return
+    }
+    setSelectedCategories(prev =>
+      prev.includes(category)
+        ? prev.filter(c => c !== category)
+        : [...prev, category]
+    )
   }
+
+  const filteredProducts = useMemo(() => {
+    return products.filter(product => {
+      // Filter by category
+      if (selectedCategories.length > 0 && !selectedCategories.includes(product.category)) {
+        return false
+      }
+      // Filter by price
+      if (product.price < priceRange[0] || product.price > priceRange[1]) {
+        return false
+      }
+      return true
+    }).sort((a, b) => {
+      if (sortBy === 'price-asc') return a.price - b.price
+      if (sortBy === 'price-desc') return b.price - a.price
+      if (sortBy === 'name') return a.name.localeCompare(b.name)
+      return 0
+    })
+  }, [selectedCategories, priceRange, sortBy])
 
   const getGridClass = () => {
     switch (viewMode) {
-      case '2':
-        return 'grid-cols-1 md:grid-cols-2'
-      case '3':
-        return 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3'
-      case '4':
-        return 'grid-cols-2 md:grid-cols-3 lg:grid-cols-4'
-      case '5':
-        return 'grid-cols-2 md:grid-cols-3 lg:grid-cols-5'
-      case 'list':
-        return 'grid-cols-1'
-      default:
-        return 'grid-cols-2 md:grid-cols-3 lg:grid-cols-4'
+      case '2': return 'grid-cols-1 sm:grid-cols-2'
+      case '3': return 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3'
+      case '4': return 'grid-cols-2 md:grid-cols-3 lg:grid-cols-4'
+      case '5': return 'grid-cols-2 md:grid-cols-3 lg:grid-cols-5'
+      case 'list': return 'grid-cols-1'
+      default: return 'grid-cols-2 md:grid-cols-3 lg:grid-cols-4'
     }
   }
 
   return (
-    <main className="bg-white">
+    <main className="bg-gray-50 min-h-screen">
       {/* Breadcrumb */}
-      <div className="container-custom pt-6 pb-4">
-        <nav className="flex items-center gap-2 text-sm">
-          <Link href="/" className="text-gray-600 hover:text-gray-900">
-            Accueil
-          </Link>
-          <span className="text-gray-400">&gt;</span>
-          <span className="text-gray-900 font-medium">Boutique</span>
-        </nav>
+      <div className="bg-white border-b">
+        <div className="container-custom py-4">
+          <nav className="flex items-center gap-2 text-sm">
+            <Link href="/" className="text-gray-500 hover:text-gray-900 transition-colors">
+              Accueil
+            </Link>
+            <span className="text-gray-300">/</span>
+            <span className="text-gray-900 font-medium">Boutique</span>
+          </nav>
+        </div>
       </div>
 
       {/* Page Title */}
-      <div className="container-custom py-12">
-        <h1 className="text-4xl font-bold text-gray-900 text-center">Boutique</h1>
+      <div className="bg-white pb-8 pt-4 mb-6 shadow-sm">
+        <div className="container-custom">
+          <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">Notre Boutique</h1>
+          <p className="text-gray-500 max-w-2xl">
+            Découvrez notre collection exclusive de vêtements modestes et élégants.
+          </p>
+        </div>
       </div>
 
       {/* Main Content */}
       <div className="container-custom pb-16">
-        <div className="flex gap-8">
-          {/* Sidebar Filters */}
-          <aside className="hidden lg:block w-64 flex-shrink-0">
-            {/* Filter Button */}
-            <button className="flex items-center gap-2 text-gray-700 mb-6 hover:text-gray-900">
-              <SlidersHorizontal className="h-5 w-5" />
-              <span className="font-medium">Filtrer les produits</span>
-            </button>
+        <div className="flex flex-col lg:flex-row gap-8">
 
-            {/* Refine By */}
-            <div className="mb-8">
-              <div className="flex items-center justify-between mb-4">
-                <h3 className="font-semibold text-gray-900">Refine by</h3>
-                <button 
-                  onClick={clearFilters}
-                  className="text-sm text-gray-600 hover:text-gray-900 underline"
-                >
-                  Clear All
-                </button>
-              </div>
-
-              {/* Active Filters */}
-              {priceFilter && (
-                <div className="mb-4">
-                  <button
-                    onClick={() => setPriceFilter(null)}
-                    className="inline-flex items-center gap-2 px-3 py-1.5 bg-gray-900 text-white text-sm rounded"
-                  >
-                    <span>Price: 2650 CFA +</span>
-                    <X className="h-3 w-3" />
-                  </button>
-                </div>
-              )}
-            </div>
-
-            {/* Filter by Category */}
-            <div className="mb-8">
-              <button className="flex items-center justify-between w-full mb-4">
-                <h3 className="font-semibold text-gray-900">Filtrer par catégorie</h3>
-                <ChevronDown className="h-4 w-4" />
-              </button>
-              <ul className="space-y-2">
-                {categories.map((cat) => (
-                  <li key={cat.name}>
-                    {cat.name === 'Abayas' ? (
-                      <Link
-                        href="/abayas"
-                        className="text-sm text-gray-600 hover:text-gray-900 transition-colors"
-                      >
-                        {cat.name} ({cat.count})
-                      </Link>
-                    ) : cat.name === 'Tunique' ? (
-                      <Link
-                        href="/tunique"
-                        className="text-sm text-gray-600 hover:text-gray-900 transition-colors"
-                      >
-                        {cat.name} ({cat.count})
-                      </Link>
-                    ) : cat.name === 'Accessoires' ? (
-                      <Link
-                        href="/accessoires"
-                        className="text-sm text-gray-600 hover:text-gray-900 transition-colors"
-                      >
-                        {cat.name} ({cat.count})
-                      </Link>
-                    ) : cat.name === 'Jilbab' ? (
-                      <Link
-                        href="/jilbab"
-                        className="text-sm text-gray-600 hover:text-gray-900 transition-colors"
-                      >
-                        {cat.name} ({cat.count})
-                      </Link>
-                    ) : (
-                      <button
-                        onClick={() => setSelectedCategory(cat.name)}
-                        className={`text-sm hover:text-gray-900 ${
-                          selectedCategory === cat.name ? 'text-gray-900 font-medium' : 'text-gray-600'
-                        }`}
-                      >
-                        {cat.name} ({cat.count})
-                      </button>
-                    )}
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            {/* Filter by Price */}
-            <div className="mb-8">
-              <button className="flex items-center justify-between w-full mb-4">
-                <h3 className="font-semibold text-gray-900">Prix</h3>
-                <ChevronDown className="h-4 w-4" />
-              </button>
-              {/* Price filter options would go here */}
+          {/* Desktop Sidebar */}
+          <aside className="hidden lg:block w-72 flex-shrink-0">
+            <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 sticky top-24">
+              <ProductFilters
+                categories={categories}
+                selectedCategories={selectedCategories}
+                onCategoryChange={handleCategoryChange}
+                priceRange={priceRange}
+                onPriceChange={setPriceRange}
+              />
             </div>
           </aside>
+
+          {/* Mobile Filter Sheet */}
+          <div className="lg:hidden mb-4">
+            <Sheet>
+              <SheetTrigger asChild>
+                <Button variant="outline" className="w-full flex items-center justify-center gap-2">
+                  <SlidersHorizontal className="h-4 w-4" />
+                  Filtrer les produits
+                </Button>
+              </SheetTrigger>
+              <SheetContent side="left" className="w-[300px] sm:w-[400px] overflow-y-auto">
+                <SheetHeader>
+                  <SheetTitle>Filtres</SheetTitle>
+                  <SheetDescription>
+                    Affinez votre recherche pour trouver le produit parfait.
+                  </SheetDescription>
+                </SheetHeader>
+                <div className="mt-6">
+                  <ProductFilters
+                    categories={categories}
+                    selectedCategories={selectedCategories}
+                    onCategoryChange={handleCategoryChange}
+                    priceRange={priceRange}
+                    onPriceChange={setPriceRange}
+                  />
+                </div>
+              </SheetContent>
+            </Sheet>
+          </div>
 
           {/* Products Grid */}
           <div className="flex-1">
             {/* Toolbar */}
-            <div className="flex items-center justify-between mb-8 pb-5 border-b border-gray-200">
-              <p className="text-sm text-gray-600">
-                1–16 of 46 Results
+            <div className="bg-white p-4 rounded-xl shadow-sm border border-gray-100 mb-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+              <p className="text-sm text-gray-600 font-medium">
+                Affichage de <span className="text-gray-900">{filteredProducts.length}</span> résultats
               </p>
 
-              <div className="flex items-center gap-4">
+              <div className="flex items-center gap-4 w-full sm:w-auto justify-between sm:justify-end">
                 {/* Sort Dropdown */}
                 <div className="flex items-center gap-2">
-                  <span className="text-sm text-gray-600">Trier par:</span>
-                  <select
-                    value={sortBy}
-                    onChange={(e) => setSortBy(e.target.value)}
-                    className="text-sm border-0 bg-transparent text-gray-900 focus:ring-0 cursor-pointer"
-                  >
-                    <option value="default">Par défaut</option>
-                    <option value="price-asc">Prix croissant</option>
-                    <option value="price-desc">Prix décroissant</option>
-                    <option value="name">Nom</option>
-                  </select>
+                  <span className="text-sm text-gray-500 hidden sm:inline">Trier par:</span>
+                  <Select value={sortBy} onValueChange={setSortBy}>
+                    <SelectTrigger className="w-[180px] h-9">
+                      <SelectValue placeholder="Trier par" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="default">Par défaut</SelectItem>
+                      <SelectItem value="price-asc">Prix croissant</SelectItem>
+                      <SelectItem value="price-desc">Prix décroissant</SelectItem>
+                      <SelectItem value="name">Nom (A-Z)</SelectItem>
+                    </SelectContent>
+                  </Select>
                 </div>
 
                 {/* View Mode Buttons */}
-                <div className="flex items-center gap-1 border-l border-gray-200 pl-4">
-                  <button
+                <div className="hidden sm:flex items-center gap-1 border-l border-gray-200 pl-4">
+                  <Button
+                    variant="ghost"
+                    size="icon"
                     onClick={() => setViewMode('2')}
-                    className={`p-2 rounded ${viewMode === '2' ? 'bg-gray-100' : 'hover:bg-gray-50'}`}
-                    title="2 colonnes"
+                    className={`h-8 w-8 ${viewMode === '2' ? 'bg-gray-100 text-gray-900' : 'text-gray-400'}`}
                   >
                     <Grid2X2 className="h-4 w-4" />
-                  </button>
-                  <button
+                  </Button>
+                  <Button
+                    variant="ghost"
+                    size="icon"
                     onClick={() => setViewMode('3')}
-                    className={`p-2 rounded ${viewMode === '3' ? 'bg-gray-100' : 'hover:bg-gray-50'}`}
-                    title="3 colonnes"
+                    className={`h-8 w-8 ${viewMode === '3' ? 'bg-gray-100 text-gray-900' : 'text-gray-400'}`}
                   >
                     <Grid3X3 className="h-4 w-4" />
-                  </button>
-                  <button
+                  </Button>
+                  <Button
+                    variant="ghost"
+                    size="icon"
                     onClick={() => setViewMode('4')}
-                    className={`p-2 rounded ${viewMode === '4' ? 'bg-gray-100' : 'hover:bg-gray-50'}`}
-                    title="4 colonnes"
+                    className={`h-8 w-8 ${viewMode === '4' ? 'bg-gray-100 text-gray-900' : 'text-gray-400'}`}
                   >
                     <LayoutGrid className="h-4 w-4" />
-                  </button>
-                  <button
-                    onClick={() => setViewMode('5')}
-                    className={`p-2 rounded ${viewMode === '5' ? 'bg-gray-100' : 'hover:bg-gray-50'}`}
-                    title="5 colonnes"
-                  >
-                    <Rows3 className="h-4 w-4" />
-                  </button>
-                  <button
-                    onClick={() => setViewMode('list')}
-                    className={`p-2 rounded ${viewMode === 'list' ? 'bg-gray-100' : 'hover:bg-gray-50'}`}
-                    title="Liste"
-                  >
-                    <List className="h-4 w-4" />
-                  </button>
+                  </Button>
                 </div>
               </div>
             </div>
 
             {/* Products Grid */}
-            <div className={`grid ${getGridClass()} gap-7 mb-12`}>
-              {products.map((product) => (
-                <div
-                  key={product.id}
-                  className="group relative bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow"
-                >
-                  <Link href={`/products/${product.id}`} className="block">
-                    {/* Product Image */}
-                    <div className="relative aspect-[3/4] bg-gray-50 overflow-hidden">
-                      {/* Badge */}
-                      <div className="absolute top-3 left-3 z-10">
-                        <span className="inline-block px-2.5 py-1 bg-orange-500 text-white text-xs font-semibold rounded shadow-sm">
-                          Niger - Holytex
-                        </span>
-                      </div>
-                      
-                      {/* Wishlist Icon */}
-                      <button 
-                        onClick={(e) => e.preventDefault()}
-                        className="absolute top-3 right-3 z-10 h-10 w-10 rounded-full bg-white/90 hover:bg-white flex items-center justify-center shadow-md opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                      >
-                        <svg className="h-5 w-5 text-gray-600 hover:text-red-500 hover:fill-red-500 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-                        </svg>
-                      </button>
-
-                      <Image
-                        src={product.image}
-                        alt={product.name}
-                        fill
-                        className="object-cover group-hover:scale-105 transition-transform duration-300"
-                      />
-                      
-                      {/* Choix des options Button - Bottom */}
-                      {!product.outOfStock && (
-                        <div className="absolute bottom-0 left-0 right-0 p-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                          <button
-                            onClick={(e) => {
-                              e.preventDefault()
-                              // Add to cart logic here
-                            }}
-                            className="w-full py-2.5 bg-[#0A1F44] hover:bg-[#0A1F44]/90 text-white font-semibold text-sm rounded transition-colors"
-                          >
-                            Choix des options
-                          </button>
+            {filteredProducts.length > 0 ? (
+              <div className={`grid ${getGridClass()} gap-6 mb-12`}>
+                {filteredProducts.map((product) => (
+                  <div
+                    key={product.id}
+                    className="group relative bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 border border-gray-100"
+                  >
+                    <Link href={`/products/${product.id}`} className="block">
+                      {/* Product Image */}
+                      <div className="relative aspect-[3/4] bg-gray-100 overflow-hidden">
+                        {/* Badge */}
+                        <div className="absolute top-3 left-3 z-10 flex flex-col gap-2">
+                          <Badge className="bg-orange-500 hover:bg-orange-600 text-white border-none">
+                            Niger - Holytex
+                          </Badge>
+                          {product.outOfStock && (
+                            <Badge variant="destructive">Rupture</Badge>
+                          )}
                         </div>
-                      )}
-                      
-                      {/* Out of Stock Overlay */}
-                      {product.outOfStock && (
-                        <div className="absolute inset-0 bg-white/80 flex items-center justify-center">
-                          <span className="px-4 py-2 bg-gray-100 text-gray-700 text-sm font-medium rounded">
-                            En Rupture De Stock
-                          </span>
-                        </div>
-                      )}
-                    </div>
 
-                    {/* Product Info */}
-                    <div className="p-4">
-                      <p className="text-xs text-gray-500 mb-1.5 uppercase tracking-wide">{product.category}</p>
-                      <h3 className="text-sm font-medium text-gray-900 mb-2 line-clamp-2 min-h-[40px]">
-                        {product.name}
-                      </h3>
+                        {/* Wishlist Icon */}
+                        <button
+                          onClick={(e) => {
+                            e.preventDefault()
+                            e.stopPropagation()
+                          }}
+                          className="absolute top-3 right-3 z-10 h-9 w-9 rounded-full bg-white/90 hover:bg-white flex items-center justify-center shadow-sm opacity-0 group-hover:opacity-100 transition-all duration-300 hover:scale-110"
+                        >
+                          <Star className="h-4 w-4 text-gray-600 hover:text-orange-500 hover:fill-orange-500 transition-colors" />
+                        </button>
 
-                      {/* Rating */}
-                      <div className="flex items-center gap-1 mb-3">
-                        {[...Array(5)].map((_, i) => (
-                          <Star
-                            key={i}
-                            className={`h-3.5 w-3.5 ${
-                              i < product.rating
-                                ? 'fill-orange-400 text-orange-400'
-                                : 'fill-gray-200 text-gray-200'
-                            }`}
-                          />
-                        ))}
-                        <span className="text-xs text-gray-500 ml-1">(1)</span>
+                        <Image
+                          src={product.image}
+                          alt={product.name}
+                          fill
+                          className={`object-cover transition-transform duration-500 group-hover:scale-110 ${product.outOfStock ? 'opacity-60 grayscale' : ''}`}
+                        />
+
+                        {/* Quick Add Button - Slide Up */}
+                        {!product.outOfStock && (
+                          <div className="absolute bottom-0 left-0 right-0 p-4 translate-y-full group-hover:translate-y-0 transition-transform duration-300">
+                            <Button className="w-full bg-gray-900 hover:bg-gray-800 text-white shadow-lg">
+                              Ajouter au panier
+                            </Button>
+                          </div>
+                        )}
                       </div>
 
-                      {/* Price */}
-                      <p className="text-lg font-bold text-gray-900">
-                        {product.price.toLocaleString()} CFA
-                      </p>
-                    </div>
-                  </Link>
+                      {/* Product Info */}
+                      <div className="p-4">
+                        <p className="text-xs text-gray-500 mb-1 font-medium uppercase tracking-wider">{product.category}</p>
+                        <h3 className="text-sm font-semibold text-gray-900 mb-2 line-clamp-2 min-h-[40px] group-hover:text-orange-600 transition-colors">
+                          {product.name}
+                        </h3>
+
+                        {/* Rating */}
+                        <div className="flex items-center gap-1 mb-3">
+                          {[...Array(5)].map((_, i) => (
+                            <Star
+                              key={i}
+                              className={`h-3 w-3 ${i < product.rating
+                                  ? 'fill-orange-400 text-orange-400'
+                                  : 'fill-gray-200 text-gray-200'
+                                }`}
+                            />
+                          ))}
+                          <span className="text-xs text-gray-400 ml-1">(4.8)</span>
+                        </div>
+
+                        {/* Price */}
+                        <div className="flex items-center justify-between">
+                          <p className="text-lg font-bold text-gray-900">
+                            {product.price.toLocaleString()} CFA
+                          </p>
+                          <div className="h-8 w-8 rounded-full bg-gray-50 flex items-center justify-center group-hover:bg-orange-50 transition-colors">
+                            <ChevronDown className="h-4 w-4 text-gray-400 group-hover:text-orange-500 -rotate-90" />
+                          </div>
+                        </div>
+                      </div>
+                    </Link>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <div className="text-center py-20 bg-white rounded-xl border border-dashed border-gray-300">
+                <div className="inline-flex h-16 w-16 items-center justify-center rounded-full bg-gray-50 mb-4">
+                  <Filter className="h-8 w-8 text-gray-400" />
                 </div>
-              ))}
-            </div>
+                <h3 className="text-lg font-medium text-gray-900">Aucun produit trouvé</h3>
+                <p className="text-gray-500 mt-2 max-w-md mx-auto">
+                  Essayez de modifier vos filtres ou de réinitialiser la recherche pour voir plus de produits.
+                </p>
+                <Button
+                  variant="outline"
+                  className="mt-6"
+                  onClick={() => {
+                    setSelectedCategories([])
+                    setPriceRange([0, 50000])
+                  }}
+                >
+                  Réinitialiser tous les filtres
+                </Button>
+              </div>
+            )}
 
             {/* Pagination */}
-            <div className="flex items-center justify-center gap-2 pb-16">
-              <button className="h-10 w-10 rounded-full bg-gray-900 text-white flex items-center justify-center font-medium hover:bg-gray-800 transition-colors">
-                1
-              </button>
-              <Link
-                href="/products/page/2"
-                className="h-10 w-10 rounded-full bg-white border border-gray-300 text-gray-700 flex items-center justify-center font-medium hover:bg-gray-50 transition-colors"
-              >
-                2
-              </Link>
-              <Link
-                href="/products/page/3"
-                className="h-10 w-10 rounded-full bg-white border border-gray-300 text-gray-700 flex items-center justify-center font-medium hover:bg-gray-50 transition-colors"
-              >
-                3
-              </Link>
-              <span className="px-2 text-gray-400">...</span>
-              <Link
-                href="/products/page/2"
-                className="h-10 w-10 rounded-full bg-white border border-gray-300 text-gray-700 flex items-center justify-center hover:bg-gray-50 transition-colors"
-              >
-                <ChevronDown className="h-4 w-4 rotate-[-90deg]" />
-              </Link>
-            </div>
+            {filteredProducts.length > 0 && (
+              <div className="flex items-center justify-center gap-2 pb-8">
+                <Button variant="outline" size="icon" disabled>
+                  <ChevronDown className="h-4 w-4 rotate-90" />
+                </Button>
+                <Button variant="default" size="icon" className="bg-gray-900 text-white hover:bg-gray-800">
+                  1
+                </Button>
+                <Button variant="outline" size="icon">
+                  2
+                </Button>
+                <Button variant="outline" size="icon">
+                  3
+                </Button>
+                <span className="px-2 text-gray-400">...</span>
+                <Button variant="outline" size="icon">
+                  <ChevronDown className="h-4 w-4 -rotate-90" />
+                </Button>
+              </div>
+            )}
           </div>
         </div>
       </div>
