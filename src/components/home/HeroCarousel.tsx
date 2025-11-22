@@ -18,12 +18,12 @@ const slides = [
     cta2: 'Découvrir Holytex',
     link1: '/products',
     link2: '/about',
-    bgColor: 'bg-[#0A1F44]',
+    bgColor: 'bg-[#001529]', // Darker blue to match image
     textColor: 'text-white',
-    badgeColor: 'text-white/60',
-    descColor: 'text-white/70',
-    btn1Color: 'bg-primary hover:bg-primary/90 text-white',
-    btn2Color: 'border-white text-white hover:bg-white hover:text-secondary',
+    badgeColor: 'text-white/80',
+    descColor: 'text-white/90',
+    btn1Color: 'bg-[#F97316] hover:bg-[#F97316]/90 text-white border-none', // Orange button
+    btn2Color: 'text-white underline hover:text-white/80 p-0 h-auto font-normal border-none hover:bg-transparent', // Text link style
     arrowColor: 'text-white',
     arrowBg: 'bg-white/10 hover:bg-white/20',
   },
@@ -128,39 +128,43 @@ export function HeroCarousel() {
                       </p>
 
                       {/* CTA Buttons */}
-                      <div className="flex flex-wrap gap-3 pt-2">
-                        <Button 
-                          asChild 
-                          size="default"
-                          className={`${slide.btn1Color} rounded-full px-6`}
+                      <div className="flex items-center gap-6 pt-4">
+                        <Button
+                          asChild
+                          size="lg"
+                          className={`${slide.btn1Color} rounded-full px-8 font-medium text-base`}
                         >
                           <Link href={slide.link1}>
                             {slide.cta1}
                           </Link>
                         </Button>
-                        <Button 
-                          asChild 
-                          size="default"
-                          variant="outline"
-                          className={`${slide.btn2Color} rounded-full px-6`}
+                        <Link
+                          href={slide.link2}
+                          className={`${slide.btn2Color} text-sm font-medium underline underline-offset-4 transition-colors`}
                         >
-                          <Link href={slide.link2}>
-                            {slide.cta2}
-                          </Link>
-                        </Button>
+                          {slide.cta2}
+                        </Link>
                       </div>
                     </div>
 
                     {/* Image - Droite */}
                     <div className="relative flex justify-center lg:justify-end">
-                      <div className="relative w-full h-[400px] md:h-[450px] lg:h-[500px] rounded-3xl overflow-hidden">
-                        <Image
-                          src={slide.image}
-                          alt={slide.title}
-                          fill
-                          className="object-contain"
-                          priority={slide.id === 1}
-                        />
+                      <div className="relative w-full max-w-[500px] aspect-[4/3]">
+                        {/* White decorative shape background */}
+                        {slide.id === 1 && (
+                          <div className="absolute top-0 right-0 w-[90%] h-[90%] bg-white rounded-[3rem] rotate-3 translate-x-4 -translate-y-4 z-0" />
+                        )}
+
+                        {/* Image container */}
+                        <div className={`relative w-full h-full rounded-[2.5rem] overflow-hidden z-10 ${slide.id === 1 ? 'rotate-0' : ''}`}>
+                          <Image
+                            src={slide.image}
+                            alt={slide.title}
+                            fill
+                            className="object-cover"
+                            priority={slide.id === 1}
+                          />
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -194,11 +198,10 @@ export function HeroCarousel() {
           <button
             key={index}
             onClick={() => scrollTo(index)}
-            className={`h-2 w-2 rounded-full transition-all ${
-              index === selectedIndex 
-                ? 'bg-white w-8' 
+            className={`h-2 w-2 rounded-full transition-all ${index === selectedIndex
+                ? 'bg-white w-8'
                 : 'bg-white/40 hover:bg-white/60'
-            }`}
+              }`}
             aria-label={`Aller au slide ${index + 1}`}
           />
         ))}

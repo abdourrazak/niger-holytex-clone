@@ -159,24 +159,6 @@ export function Header() {
               Abayas
             </Link>
             <Link
-              href="/tunique"
-              className="text-sm font-medium text-secondary hover:text-primary transition-colors"
-            >
-              Tunique
-            </Link>
-            <Link
-              href="/accessoires"
-              className="text-sm font-medium text-secondary hover:text-primary transition-colors"
-            >
-              Accessoires
-            </Link>
-            <Link
-              href="/jilbab"
-              className="text-sm font-medium text-secondary hover:text-primary transition-colors"
-            >
-              Jilbab
-            </Link>
-            <Link
               href="/categories/ensembles"
               className="text-sm font-medium text-secondary hover:text-primary transition-colors"
             >
