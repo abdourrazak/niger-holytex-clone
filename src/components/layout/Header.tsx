@@ -86,17 +86,11 @@ export function Header() {
             {/* Wishlist */}
             <Button variant="ghost" size="icon" className="hidden sm:inline-flex relative">
               <Heart className="h-5 w-5" />
-              <span className="absolute -top-1 -right-1 h-5 w-5 rounded-full bg-red-500 text-xs text-white flex items-center justify-center">
-                0
-              </span>
             </Button>
 
             {/* Cart */}
             <Button variant="ghost" size="icon" className="relative">
               <ShoppingCart className="h-5 w-5" />
-              <span className="absolute -top-1 -right-1 h-5 w-5 rounded-full bg-primary text-xs text-white flex items-center justify-center font-semibold">
-                0
-              </span>
             </Button>
 
             {/* User Nav */}
