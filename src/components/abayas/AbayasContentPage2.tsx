@@ -85,10 +85,10 @@ const products = [
 ]
 
 const categories = [
-  { name: 'Abayas', count: 25 },
-  { name: 'Tunique', count: 3 },
-  { name: 'Accessoires', count: 9 },
-  { name: 'Jilbab', count: 10 },
+  { name: 'Abayas', count: 25, href: '/abayas' },
+  { name: 'Tunique', count: 3, href: '/tunique' },
+  { name: 'Accessoires', count: 9, href: '/accessoires' },
+  { name: 'Jilbab', count: 10, href: '/jilbab' },
 ]
 
 type ViewMode = '2' | '3' | '4' | '5' | 'list'
@@ -331,8 +331,8 @@ export function AbayasContentPage2() {
                           <Star
                             key={i}
                             className={`h-3 w-3 ${i < product.rating
-                                ? 'fill-orange-400 text-orange-400'
-                                : 'fill-gray-200 text-gray-200'
+                              ? 'fill-orange-400 text-orange-400'
+                              : 'fill-gray-200 text-gray-200'
                               }`}
                           />
                         ))}

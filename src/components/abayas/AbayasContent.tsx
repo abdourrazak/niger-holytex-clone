@@ -141,10 +141,10 @@ const products = [
 ]
 
 const categories = [
-  { name: 'Abayas', count: 25 },
-  { name: 'Tunique', count: 3 },
-  { name: 'Accessoires', count: 9 },
-  { name: 'Jilbab', count: 10 },
+  { name: 'Abayas', count: 25, href: '/abayas' },
+  { name: 'Tunique', count: 3, href: '/tunique' },
+  { name: 'Accessoires', count: 9, href: '/accessoires' },
+  { name: 'Jilbab', count: 10, href: '/jilbab' },
 ]
 
 type ViewMode = '2' | '3' | '4' | '5' | 'list'
@@ -387,8 +387,8 @@ export function AbayasContent() {
                           <Star
                             key={i}
                             className={`h-3 w-3 ${i < product.rating
-                                ? 'fill-orange-400 text-orange-400'
-                                : 'fill-gray-200 text-gray-200'
+                              ? 'fill-orange-400 text-orange-400'
+                              : 'fill-gray-200 text-gray-200'
                               }`}
                           />
                         ))}
@@ -410,16 +410,20 @@ export function AbayasContent() {
               ))}
             </div>
 
-            {/* Pagination (Mock) */}
+            {/* Pagination */}
             <div className="flex items-center justify-center gap-2 pb-16">
               <Button variant="default" size="icon" className="bg-[#001529] hover:bg-[#001529]/90">
                 1
               </Button>
-              <Button variant="outline" size="icon">
-                2
+              <Button variant="outline" size="icon" asChild>
+                <Link href="/abayas/page/2">
+                  2
+                </Link>
               </Button>
-              <Button variant="outline" size="icon">
-                <ChevronRight className="h-4 w-4" />
+              <Button variant="outline" size="icon" asChild>
+                <Link href="/abayas/page/2">
+                  <ChevronRight className="h-4 w-4" />
+                </Link>
               </Button>
             </div>
           </div>

@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import Link from 'next/link'
 import { Check, Minus, Plus } from 'lucide-react'
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion'
 import { Checkbox } from '@/components/ui/checkbox'
@@ -11,7 +12,7 @@ import { ScrollArea } from '@/components/ui/scroll-area'
 import { Button } from '@/components/ui/button'
 
 interface ProductFiltersProps {
-    categories: { name: string; count: number }[]
+    categories: { name: string; count: number; href?: string }[]
     selectedCategories: string[]
     onCategoryChange: (category: string) => void
     priceRange: [number, number]
@@ -48,18 +49,33 @@ export function ProductFilters({
                             <div className="space-y-3 pt-2">
                                 {categories.map((category) => (
                                     <div key={category.name} className="flex items-center space-x-2">
-                                        <Checkbox
-                                            id={`category-${category.name}`}
-                                            checked={selectedCategories.includes(category.name)}
-                                            onCheckedChange={() => onCategoryChange(category.name)}
-                                        />
-                                        <Label
-                                            htmlFor={`category-${category.name}`}
-                                            className="text-sm font-normal text-gray-600 cursor-pointer flex-1 flex justify-between"
-                                        >
-                                            <span>{category.name}</span>
-                                            <span className="text-gray-400 text-xs">({category.count})</span>
-                                        </Label>
+                                        {category.href ? (
+                                            <Link
+                                                href={category.href}
+                                                className={`flex-1 flex justify-between items-center text-sm transition-colors py-1 ${selectedCategories.includes(category.name)
+                                                    ? 'text-primary font-medium'
+                                                    : 'text-gray-600 hover:text-primary'
+                                                    }`}
+                                            >
+                                                <span>{category.name}</span>
+                                                <span className="text-gray-400 text-xs">({category.count})</span>
+                                            </Link>
+                                        ) : (
+                                            <>
+                                                <Checkbox
+                                                    id={`category-${category.name}`}
+                                                    checked={selectedCategories.includes(category.name)}
+                                                    onCheckedChange={() => onCategoryChange(category.name)}
+                                                />
+                                                <Label
+                                                    htmlFor={`category-${category.name}`}
+                                                    className="text-sm font-normal text-gray-600 cursor-pointer flex-1 flex justify-between"
+                                                >
+                                                    <span>{category.name}</span>
+                                                    <span className="text-gray-400 text-xs">({category.count})</span>
+                                                </Label>
+                                            </>
+                                        )}
                                     </div>
                                 ))}
                             </div>
