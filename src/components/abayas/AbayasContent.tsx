@@ -1,10 +1,13 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { ChevronDown, SlidersHorizontal, Grid2X2, Grid3X3, LayoutGrid, Rows3, List, X } from 'lucide-react'
-import { Star } from 'lucide-react'
+import { ChevronDown, Grid2X2, Grid3X3, LayoutGrid, Rows3, List, Star, SlidersHorizontal, ChevronRight } from 'lucide-react'
+import { ProductFilters } from '@/components/shop/ProductFilters'
+import { Button } from '@/components/ui/button'
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription, SheetTrigger } from '@/components/ui/sheet'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 
 const products = [
   {
@@ -138,7 +141,7 @@ const products = [
 ]
 
 const categories = [
-  { name: 'Abayas', count: 25, active: true },
+  { name: 'Abayas', count: 25 },
   { name: 'Tunique', count: 3 },
   { name: 'Accessoires', count: 9 },
   { name: 'Jilbab', count: 10 },
@@ -148,287 +151,276 @@ type ViewMode = '2' | '3' | '4' | '5' | 'list'
 
 export function AbayasContent() {
   const [viewMode, setViewMode] = useState<ViewMode>('4')
-  const [selectedCategory, setSelectedCategory] = useState<string>('Abayas')
-  const [priceFilter, setPriceFilter] = useState<string | null>('2000')
+  const [selectedCategories, setSelectedCategories] = useState<string[]>(['Abayas'])
+  const [priceRange, setPriceRange] = useState<[number, number]>([0, 50000])
   const [sortBy, setSortBy] = useState('default')
 
-  const clearFilters = () => {
-    setSelectedCategory('')
-    setPriceFilter(null)
+  const handleCategoryChange = (category: string) => {
+    if (category === 'reset') {
+      setSelectedCategories([])
+      return
+    }
+    setSelectedCategories(prev =>
+      prev.includes(category)
+        ? prev.filter(c => c !== category)
+        : [...prev, category]
+    )
   }
+
+  const filteredProducts = useMemo(() => {
+    return products.filter(product => {
+      // Filter by category (if any selected, otherwise show all)
+      if (selectedCategories.length > 0 && !selectedCategories.includes(product.category)) {
+        // For this specific page, we might want to default to showing Abayas if nothing is selected,
+        // or just respect the filter. Since it's the Abayas page, let's keep 'Abayas' selected by default.
+        return false
+      }
+      // Filter by price
+      if (product.price < priceRange[0] || product.price > priceRange[1]) {
+        return false
+      }
+      return true
+    }).sort((a, b) => {
+      if (sortBy === 'price-asc') return a.price - b.price
+      if (sortBy === 'price-desc') return b.price - a.price
+      if (sortBy === 'name') return a.name.localeCompare(b.name)
+      return 0
+    })
+  }, [selectedCategories, priceRange, sortBy])
 
   const getGridClass = () => {
     switch (viewMode) {
-      case '2':
-        return 'grid-cols-1 md:grid-cols-2'
-      case '3':
-        return 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3'
-      case '4':
-        return 'grid-cols-2 md:grid-cols-3 lg:grid-cols-4'
-      case '5':
-        return 'grid-cols-2 md:grid-cols-3 lg:grid-cols-5'
-      case 'list':
-        return 'grid-cols-1'
-      default:
-        return 'grid-cols-2 md:grid-cols-3 lg:grid-cols-4'
+      case '2': return 'grid-cols-1 sm:grid-cols-2'
+      case '3': return 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3'
+      case '4': return 'grid-cols-2 md:grid-cols-3 lg:grid-cols-4'
+      case '5': return 'grid-cols-2 md:grid-cols-3 lg:grid-cols-5'
+      case 'list': return 'grid-cols-1'
+      default: return 'grid-cols-2 md:grid-cols-3 lg:grid-cols-4'
     }
   }
 
   return (
-    <main className="bg-white">
-      {/* Breadcrumb */}
-      <div className="container-custom pt-6 pb-4">
-        <nav className="flex items-center gap-2 text-sm">
-          <Link href="/" className="text-gray-600 hover:text-gray-900">
-            Accueil
-          </Link>
-          <span className="text-gray-400">&gt;</span>
-          <Link href="/products" className="text-gray-600 hover:text-gray-900">
-            Boutique
-          </Link>
-          <span className="text-gray-400">&gt;</span>
-          <span className="text-gray-900 font-medium">Abayas</span>
-        </nav>
-      </div>
+    <main className="bg-gray-50 min-h-screen">
+      {/* Hero Header */}
+      <div className="bg-[#001529] text-white py-16 relative overflow-hidden">
+        {/* Decorative circle */}
+        <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full -translate-y-1/2 translate-x-1/2 blur-3xl" />
+        <div className="absolute bottom-0 left-0 w-96 h-96 bg-orange-500/10 rounded-full translate-y-1/2 -translate-x-1/2 blur-3xl" />
 
-      {/* Page Title */}
-      <div className="container-custom py-12">
-        <h1 className="text-4xl font-bold text-gray-900 text-center">Abayas</h1>
+        <div className="container-custom relative z-10">
+          <div className="flex flex-col items-center text-center">
+            <h1 className="text-4xl md:text-5xl font-bold mb-4">Collection Abayas</h1>
+            <p className="text-lg text-gray-300 max-w-2xl mb-8">
+              Découvrez notre sélection exclusive d'abayas alliant élégance, modestie et qualité supérieure.
+            </p>
+
+            {/* Breadcrumb */}
+            <nav className="flex items-center gap-2 text-sm text-gray-400 bg-white/5 px-4 py-2 rounded-full backdrop-blur-sm">
+              <Link href="/" className="hover:text-white transition-colors">
+                Accueil
+              </Link>
+              <ChevronRight className="h-3 w-3" />
+              <Link href="/products" className="hover:text-white transition-colors">
+                Boutique
+              </Link>
+              <ChevronRight className="h-3 w-3" />
+              <span className="text-white font-medium">Abayas</span>
+            </nav>
+          </div>
+        </div>
       </div>
 
       {/* Main Content */}
-      <div className="container-custom pb-16">
-        <div className="flex gap-8">
-          {/* Sidebar Filters */}
-          <aside className="hidden lg:block w-64 flex-shrink-0">
-            {/* Filter Button */}
-            <button className="flex items-center gap-2 text-gray-700 mb-6 hover:text-gray-900">
-              <SlidersHorizontal className="h-5 w-5" />
-              <span className="font-medium">Filtrer les produits</span>
-            </button>
+      <div className="container-custom py-12">
+        <div className="flex flex-col lg:flex-row gap-8">
 
-            {/* Active Filter */}
-            <div className="mb-6">
-              <h3 className="font-semibold text-gray-900 mb-3">Refine by</h3>
-              <button 
-                onClick={clearFilters}
-                className="text-sm text-blue-600 hover:text-blue-800 mb-4"
-              >
-                Clear All
-              </button>
-              <div className="flex items-center gap-2 mb-4">
-                <span className="inline-flex items-center px-3 py-1 bg-gray-900 text-white text-sm rounded-full">
-                  Abayas
-                  <X className="h-3 w-3 ml-2" />
-                </span>
-              </div>
-            </div>
-
-            {/* Filter by Category */}
-            <div className="mb-8">
-              <button className="flex items-center justify-between w-full mb-4">
-                <h3 className="font-semibold text-gray-900">Filtrer par catégorie</h3>
-                <ChevronDown className="h-4 w-4" />
-              </button>
-              <ul className="space-y-2">
-                {categories.map((cat) => (
-                  <li key={cat.name}>
-                    <button
-                      onClick={() => setSelectedCategory(cat.name)}
-                      className={`text-sm hover:text-gray-900 ${
-                        cat.active ? 'text-gray-900 font-medium' : 'text-gray-600'
-                      }`}
-                    >
-                      {cat.name} ({cat.count})
-                    </button>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            {/* Filter by Price */}
-            <div className="mb-8">
-              <button className="flex items-center justify-between w-full mb-4">
-                <h3 className="font-semibold text-gray-900">Prix</h3>
-                <ChevronDown className="h-4 w-4" />
-              </button>
-              <div className="space-y-3">
-                <p className="text-sm text-gray-600">Prix : 2000 CFA — 40000 CFA</p>
-                <div className="relative">
-                  <div className="h-2 bg-gray-200 rounded-full">
-                    <div className="h-2 bg-gray-800 rounded-full" style={{ width: '60%' }}></div>
-                  </div>
-                  <div className="flex justify-between mt-2">
-                    <span className="w-3 h-3 bg-gray-800 rounded-full"></span>
-                    <span className="w-3 h-3 bg-gray-800 rounded-full"></span>
-                  </div>
-                </div>
-              </div>
+          {/* Desktop Sidebar */}
+          <aside className="hidden lg:block w-72 flex-shrink-0">
+            <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 sticky top-24">
+              <ProductFilters
+                categories={categories}
+                selectedCategories={selectedCategories}
+                onCategoryChange={handleCategoryChange}
+                priceRange={priceRange}
+                onPriceChange={setPriceRange}
+              />
             </div>
           </aside>
 
-          {/* Products Grid */}
+          {/* Mobile Filter Sheet */}
+          <div className="lg:hidden mb-4">
+            <Sheet>
+              <SheetTrigger asChild>
+                <Button variant="outline" className="w-full flex items-center justify-center gap-2 bg-white">
+                  <SlidersHorizontal className="h-4 w-4" />
+                  Filtrer les produits
+                </Button>
+              </SheetTrigger>
+              <SheetContent side="left" className="w-[300px] sm:w-[400px] overflow-y-auto">
+                <SheetHeader>
+                  <SheetTitle>Filtres</SheetTitle>
+                  <SheetDescription>
+                    Affinez votre recherche pour trouver l'abaya parfaite.
+                  </SheetDescription>
+                </SheetHeader>
+                <div className="mt-6">
+                  <ProductFilters
+                    categories={categories}
+                    selectedCategories={selectedCategories}
+                    onCategoryChange={handleCategoryChange}
+                    priceRange={priceRange}
+                    onPriceChange={setPriceRange}
+                  />
+                </div>
+              </SheetContent>
+            </Sheet>
+          </div>
+
+          {/* Products Grid Section */}
           <div className="flex-1">
             {/* Toolbar */}
-            <div className="flex items-center justify-between mb-8 pb-5 border-b border-gray-200">
-              <p className="text-sm text-gray-600">
-                1–16 of 25 Results
+            <div className="bg-white p-4 rounded-xl shadow-sm border border-gray-100 mb-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+              <p className="text-sm text-gray-600 font-medium">
+                Affichage de <span className="text-gray-900">{filteredProducts.length}</span> résultats
               </p>
 
-              <div className="flex items-center gap-4">
+              <div className="flex items-center gap-4 w-full sm:w-auto justify-between sm:justify-end">
                 {/* Sort Dropdown */}
                 <div className="flex items-center gap-2">
-                  <span className="text-sm text-gray-600">Trier par:</span>
-                  <select
-                    value={sortBy}
-                    onChange={(e) => setSortBy(e.target.value)}
-                    className="text-sm border-0 bg-transparent text-gray-900 focus:ring-0 cursor-pointer"
-                  >
-                    <option value="default">Par défaut</option>
-                    <option value="price-asc">Prix croissant</option>
-                    <option value="price-desc">Prix décroissant</option>
-                    <option value="name">Nom</option>
-                  </select>
+                  <span className="text-sm text-gray-500 hidden sm:inline">Trier par:</span>
+                  <Select value={sortBy} onValueChange={setSortBy}>
+                    <SelectTrigger className="w-[180px] h-9 border-gray-200">
+                      <SelectValue placeholder="Trier par" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="default">Par défaut</SelectItem>
+                      <SelectItem value="price-asc">Prix croissant</SelectItem>
+                      <SelectItem value="price-desc">Prix décroissant</SelectItem>
+                      <SelectItem value="name">Nom (A-Z)</SelectItem>
+                    </SelectContent>
+                  </Select>
                 </div>
 
                 {/* View Mode Buttons */}
-                <div className="flex items-center gap-1 border-l border-gray-200 pl-4">
-                  <button
+                <div className="hidden sm:flex items-center gap-1 border-l border-gray-200 pl-4">
+                  <Button
+                    variant="ghost"
+                    size="icon"
                     onClick={() => setViewMode('2')}
-                    className={`p-2 rounded ${viewMode === '2' ? 'bg-gray-100' : 'hover:bg-gray-50'}`}
-                    title="2 colonnes"
+                    className={`h-8 w-8 ${viewMode === '2' ? 'bg-gray-100 text-gray-900' : 'text-gray-400'}`}
                   >
                     <Grid2X2 className="h-4 w-4" />
-                  </button>
-                  <button
+                  </Button>
+                  <Button
+                    variant="ghost"
+                    size="icon"
                     onClick={() => setViewMode('3')}
-                    className={`p-2 rounded ${viewMode === '3' ? 'bg-gray-100' : 'hover:bg-gray-50'}`}
-                    title="3 colonnes"
+                    className={`h-8 w-8 ${viewMode === '3' ? 'bg-gray-100 text-gray-900' : 'text-gray-400'}`}
                   >
                     <Grid3X3 className="h-4 w-4" />
-                  </button>
-                  <button
+                  </Button>
+                  <Button
+                    variant="ghost"
+                    size="icon"
                     onClick={() => setViewMode('4')}
-                    className={`p-2 rounded ${viewMode === '4' ? 'bg-gray-100' : 'hover:bg-gray-50'}`}
-                    title="4 colonnes"
+                    className={`h-8 w-8 ${viewMode === '4' ? 'bg-gray-100 text-gray-900' : 'text-gray-400'}`}
                   >
                     <LayoutGrid className="h-4 w-4" />
-                  </button>
-                  <button
-                    onClick={() => setViewMode('5')}
-                    className={`p-2 rounded ${viewMode === '5' ? 'bg-gray-100' : 'hover:bg-gray-50'}`}
-                    title="5 colonnes"
-                  >
-                    <Rows3 className="h-4 w-4" />
-                  </button>
-                  <button
-                    onClick={() => setViewMode('list')}
-                    className={`p-2 rounded ${viewMode === 'list' ? 'bg-gray-100' : 'hover:bg-gray-50'}`}
-                    title="Liste"
-                  >
-                    <List className="h-4 w-4" />
-                  </button>
+                  </Button>
                 </div>
               </div>
             </div>
 
-            {/* Products Grid - 16 produits */}
-            <div className={`grid ${getGridClass()} gap-5 mb-12`}>
-              {products.map((product) => (
+            {/* Products Grid */}
+            <div className={`grid ${getGridClass()} gap-6 mb-12`}>
+              {filteredProducts.map((product) => (
                 <div
                   key={product.id}
-                  className="group relative bg-white rounded-lg overflow-hidden hover:shadow-lg transition-shadow duration-300"
+                  className="group relative bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 border border-gray-100"
                 >
                   <Link href={`/products/${product.id}`} className="block">
                     {/* Product Image */}
-                    <div className="relative aspect-[3/4] bg-gray-50 overflow-hidden">
+                    <div className="relative aspect-[3/4] bg-gray-100 overflow-hidden">
                       {/* Badge */}
-                      <div className="absolute top-2 left-2 z-10">
-                        <span className="inline-block px-2 py-0.5 bg-orange-500 text-white text-xs font-medium rounded">
+                      <div className="absolute top-3 left-3 z-10">
+                        <span className="inline-block px-3 py-1 bg-orange-500 text-white text-[10px] font-bold uppercase tracking-wider rounded-full shadow-sm">
                           Niger - Holytex
                         </span>
                       </div>
-                      
+
                       {/* Wishlist Icon */}
-                      <button 
-                        onClick={(e) => e.preventDefault()}
-                        className="absolute top-2 right-2 z-10 h-8 w-8 rounded-full bg-white/80 hover:bg-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                      <button
+                        onClick={(e) => {
+                          e.preventDefault()
+                          e.stopPropagation()
+                        }}
+                        className="absolute top-3 right-3 z-10 h-9 w-9 rounded-full bg-white/90 hover:bg-white flex items-center justify-center shadow-sm opacity-0 group-hover:opacity-100 transition-all duration-300 hover:scale-110"
                       >
-                        <svg className="h-4 w-4 text-gray-600 hover:text-red-500 hover:fill-red-500 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-                        </svg>
+                        <Star className="h-4 w-4 text-gray-600 hover:text-orange-500 hover:fill-orange-500 transition-colors" />
                       </button>
 
                       <Image
                         src={product.image}
                         alt={product.name}
                         fill
-                        className="object-cover group-hover:scale-105 transition-transform duration-300"
+                        className="object-cover transition-transform duration-500 group-hover:scale-110"
                       />
-                      
-                      {/* Choix des options Button */}
-                      <div className="absolute bottom-0 left-0 right-0 p-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                        <button
-                          onClick={(e) => {
-                            e.preventDefault()
-                            // Add to cart logic here
-                          }}
-                          className="w-full py-2 bg-[#0A1F44] hover:bg-[#0A1F44]/90 text-white font-medium text-xs rounded transition-colors"
-                        >
-                          Choix des options
-                        </button>
+
+                      {/* Quick Add Button - Slide Up */}
+                      <div className="absolute bottom-0 left-0 right-0 p-4 translate-y-full group-hover:translate-y-0 transition-transform duration-300">
+                        <Button className="w-full bg-[#001529] hover:bg-[#001529]/90 text-white shadow-lg">
+                          Ajouter au panier
+                        </Button>
                       </div>
                     </div>
 
                     {/* Product Info */}
-                    <div className="p-3">
-                      <p className="text-xs text-gray-500 mb-1 uppercase tracking-wide">{product.category}</p>
-                      <h3 className="text-sm font-medium text-gray-900 mb-2 line-clamp-2 leading-tight">
+                    <div className="p-4">
+                      <p className="text-xs text-gray-500 mb-1 font-medium uppercase tracking-wider">{product.category}</p>
+                      <h3 className="text-sm font-semibold text-gray-900 mb-2 line-clamp-2 min-h-[40px] group-hover:text-orange-600 transition-colors">
                         {product.name}
                       </h3>
 
                       {/* Rating */}
-                      <div className="flex items-center gap-1 mb-2">
+                      <div className="flex items-center gap-1 mb-3">
                         {[...Array(5)].map((_, i) => (
                           <Star
                             key={i}
-                            className={`h-3 w-3 ${
-                              i < product.rating
+                            className={`h-3 w-3 ${i < product.rating
                                 ? 'fill-orange-400 text-orange-400'
                                 : 'fill-gray-200 text-gray-200'
-                            }`}
+                              }`}
                           />
                         ))}
-                        <span className="text-xs text-gray-500 ml-1">(1)</span>
+                        <span className="text-xs text-gray-400 ml-1">(1)</span>
                       </div>
 
                       {/* Price */}
-                      <p className="text-base font-bold text-gray-900">
-                        {product.price.toLocaleString()} CFA
-                      </p>
+                      <div className="flex items-center justify-between">
+                        <p className="text-lg font-bold text-gray-900">
+                          {product.price.toLocaleString()} CFA
+                        </p>
+                        <div className="h-8 w-8 rounded-full bg-gray-50 flex items-center justify-center group-hover:bg-orange-50 transition-colors">
+                          <ChevronDown className="h-4 w-4 text-gray-400 group-hover:text-orange-500 -rotate-90" />
+                        </div>
+                      </div>
                     </div>
                   </Link>
                 </div>
               ))}
             </div>
 
-            {/* Pagination */}
+            {/* Pagination (Mock) */}
             <div className="flex items-center justify-center gap-2 pb-16">
-              <button className="h-10 w-10 rounded-full bg-gray-900 text-white flex items-center justify-center font-medium hover:bg-gray-800 transition-colors">
+              <Button variant="default" size="icon" className="bg-[#001529] hover:bg-[#001529]/90">
                 1
-              </button>
-              <Link
-                href="/abayas/page/2"
-                className="h-10 w-10 rounded-full bg-white border border-gray-300 text-gray-700 flex items-center justify-center font-medium hover:bg-gray-50 transition-colors"
-              >
+              </Button>
+              <Button variant="outline" size="icon">
                 2
-              </Link>
-              <Link
-                href="/abayas/page/2"
-                className="h-10 w-10 rounded-full bg-white border border-gray-300 text-gray-700 flex items-center justify-center hover:bg-gray-50 transition-colors"
-              >
-                <ChevronDown className="h-4 w-4 rotate-[-90deg]" />
-              </Link>
+              </Button>
+              <Button variant="outline" size="icon">
+                <ChevronRight className="h-4 w-4" />
+              </Button>
             </div>
           </div>
         </div>
