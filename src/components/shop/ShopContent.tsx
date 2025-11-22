@@ -3,15 +3,16 @@
 import { useState, useMemo } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { ChevronDown, SlidersHorizontal, Grid2X2, Grid3X3, LayoutGrid, Rows3, List, X, Filter } from 'lucide-react'
+import { ChevronDown, SlidersHorizontal, Grid2X2, Grid3X3, LayoutGrid, Rows3, List, X, Filter, ChevronLeft, ChevronRight } from 'lucide-react'
 import { Star } from 'lucide-react'
 import { ProductFilters } from './ProductFilters'
-import { Sheet, SheetContent, SheetTrigger, SheetHeader, SheetTitle, SheetDescription } from '@/components/ui/sheet'
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription, SheetTrigger } from '@/components/ui/sheet'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 
 const products = [
+  // Abayas
   {
     id: 1,
     name: 'Abaya alchir - 3 pièces',
@@ -141,22 +142,115 @@ const products = [
     image: '/slide16.jpg',
     rating: 5,
   },
+  // Tuniques
+  {
+    id: 17,
+    name: 'Tunique Élégance - Rose Poudré',
+    category: 'Tunique',
+    price: 12000,
+    image: '/slide13.jpg',
+    rating: 4,
+  },
+  {
+    id: 18,
+    name: 'Tunique Moderne - Bleu Nuit',
+    category: 'Tunique',
+    price: 14500,
+    image: '/slide14.jpg',
+    rating: 5,
+  },
+  {
+    id: 19,
+    name: 'Ensemble Tunique & Pantalon',
+    category: 'Tunique',
+    price: 18000,
+    image: '/slide16.jpg',
+    rating: 5,
+  },
+  // Accessoires
+  {
+    id: 20,
+    name: 'Hijab Soie de Médine - Beige',
+    category: 'Accessoires',
+    price: 5000,
+    image: '/slide7.jpg',
+    rating: 5,
+  },
+  {
+    id: 21,
+    name: 'Broche Magnétique Premium',
+    category: 'Accessoires',
+    price: 2000,
+    image: '/slide11.jpg',
+    rating: 4,
+  },
+  {
+    id: 22,
+    name: 'Sous-Hijab Ninja - Noir',
+    category: 'Accessoires',
+    price: 3500,
+    image: '/slide12.jpg',
+    rating: 5,
+  },
+  {
+    id: 23,
+    name: 'Sac à Main Élégant',
+    category: 'Accessoires',
+    price: 15000,
+    image: '/slide8.jpg',
+    rating: 4,
+  },
+  // Jilbab
+  {
+    id: 24,
+    name: 'Jilbab 2 Pièces - Umm Hafsa',
+    category: 'Jilbab',
+    price: 25000,
+    image: '/slide15.jpg',
+    rating: 5,
+  },
+  {
+    id: 25,
+    name: 'Jilbab Saoudien - Noir Intense',
+    category: 'Jilbab',
+    price: 28000,
+    image: '/slide9.jpg',
+    rating: 5,
+  },
+  {
+    id: 26,
+    name: 'Jilbab de Portage',
+    category: 'Jilbab',
+    price: 30000,
+    image: '/slide10.jpg',
+    rating: 5,
+  },
+  {
+    id: 27,
+    name: 'Jilbab Enfant - Rose',
+    category: 'Jilbab',
+    price: 12000,
+    image: '/slide11.jpg',
+    rating: 5,
+  },
 ]
 
 const categories = [
-  { name: 'Abayas', count: 25 },
+  { name: 'Abayas', count: 16 },
   { name: 'Tunique', count: 3 },
-  { name: 'Accessoires', count: 9 },
-  { name: 'Jilbab', count: 10 },
+  { name: 'Accessoires', count: 4 },
+  { name: 'Jilbab', count: 4 },
 ]
 
 type ViewMode = '2' | '3' | '4' | '5' | 'list'
+const ITEMS_PER_PAGE = 12
 
 export function ShopContent() {
   const [viewMode, setViewMode] = useState<ViewMode>('4')
   const [selectedCategories, setSelectedCategories] = useState<string[]>([])
   const [priceRange, setPriceRange] = useState<[number, number]>([0, 50000])
   const [sortBy, setSortBy] = useState('default')
+  const [currentPage, setCurrentPage] = useState(1)
 
   const handleCategoryChange = (category: string) => {
     if (category === 'reset') {
@@ -168,6 +262,7 @@ export function ShopContent() {
         ? prev.filter(c => c !== category)
         : [...prev, category]
     )
+    setCurrentPage(1) // Reset page when filtering
   }
 
   const filteredProducts = useMemo(() => {
@@ -188,6 +283,13 @@ export function ShopContent() {
       return 0
     })
   }, [selectedCategories, priceRange, sortBy])
+
+  // Pagination Logic
+  const totalPages = Math.ceil(filteredProducts.length / ITEMS_PER_PAGE)
+  const paginatedProducts = filteredProducts.slice(
+    (currentPage - 1) * ITEMS_PER_PAGE,
+    currentPage * ITEMS_PER_PAGE
+  )
 
   const getGridClass = () => {
     switch (viewMode) {
@@ -276,7 +378,10 @@ export function ShopContent() {
             {/* Toolbar */}
             <div className="bg-white p-4 rounded-xl shadow-sm border border-gray-100 mb-6 flex flex-col sm:flex-row items-center justify-between gap-4">
               <p className="text-sm text-gray-600 font-medium">
-                Affichage de <span className="text-gray-900">{filteredProducts.length}</span> résultats
+                Affichage de <span className="text-gray-900">
+                  {Math.min((currentPage - 1) * ITEMS_PER_PAGE + 1, filteredProducts.length)}–
+                  {Math.min(currentPage * ITEMS_PER_PAGE, filteredProducts.length)}
+                </span> sur <span className="text-gray-900">{filteredProducts.length}</span> résultats
               </p>
 
               <div className="flex items-center gap-4 w-full sm:w-auto justify-between sm:justify-end">
@@ -327,9 +432,9 @@ export function ShopContent() {
             </div>
 
             {/* Products Grid */}
-            {filteredProducts.length > 0 ? (
+            {paginatedProducts.length > 0 ? (
               <div className={`grid ${getGridClass()} gap-6 mb-12`}>
-                {filteredProducts.map((product) => (
+                {paginatedProducts.map((product) => (
                   <div
                     key={product.id}
                     className="group relative bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 border border-gray-100"
@@ -388,12 +493,12 @@ export function ShopContent() {
                             <Star
                               key={i}
                               className={`h-3 w-3 ${i < product.rating
-                                  ? 'fill-orange-400 text-orange-400'
-                                  : 'fill-gray-200 text-gray-200'
+                                ? 'fill-orange-400 text-orange-400'
+                                : 'fill-gray-200 text-gray-200'
                                 }`}
                             />
                           ))}
-                          <span className="text-xs text-gray-400 ml-1">(4.8)</span>
+                          <span className="text-xs text-gray-400 ml-1">({product.rating})</span>
                         </div>
 
                         {/* Price */}
@@ -425,6 +530,7 @@ export function ShopContent() {
                   onClick={() => {
                     setSelectedCategories([])
                     setPriceRange([0, 50000])
+                    setCurrentPage(1)
                   }}
                 >
                   Réinitialiser tous les filtres
@@ -433,23 +539,36 @@ export function ShopContent() {
             )}
 
             {/* Pagination */}
-            {filteredProducts.length > 0 && (
+            {totalPages > 1 && (
               <div className="flex items-center justify-center gap-2 pb-8">
-                <Button variant="outline" size="icon" disabled>
-                  <ChevronDown className="h-4 w-4 rotate-90" />
+                <Button
+                  variant="outline"
+                  size="icon"
+                  onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
+                  disabled={currentPage === 1}
+                >
+                  <ChevronLeft className="h-4 w-4" />
                 </Button>
-                <Button variant="default" size="icon" className="bg-gray-900 text-white hover:bg-gray-800">
-                  1
-                </Button>
-                <Button variant="outline" size="icon">
-                  2
-                </Button>
-                <Button variant="outline" size="icon">
-                  3
-                </Button>
-                <span className="px-2 text-gray-400">...</span>
-                <Button variant="outline" size="icon">
-                  <ChevronDown className="h-4 w-4 -rotate-90" />
+
+                {[...Array(totalPages)].map((_, i) => (
+                  <Button
+                    key={i + 1}
+                    variant={currentPage === i + 1 ? "default" : "outline"}
+                    size="icon"
+                    onClick={() => setCurrentPage(i + 1)}
+                    className={currentPage === i + 1 ? "bg-gray-900 text-white hover:bg-gray-800" : ""}
+                  >
+                    {i + 1}
+                  </Button>
+                ))}
+
+                <Button
+                  variant="outline"
+                  size="icon"
+                  onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
+                  disabled={currentPage === totalPages}
+                >
+                  <ChevronRight className="h-4 w-4" />
                 </Button>
               </div>
             )}
